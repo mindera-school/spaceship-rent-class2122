@@ -25,7 +25,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "spaceships")
-public class SpaceshipEntity {
+
+public class SpaceShipEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,6 +46,6 @@ public class SpaceshipEntity {
     @Column(nullable = false)
     private float priceDay;
 
-    @OneToMany(mappedBy="vehicleEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="spaceShipEntity", cascade = CascadeType.ALL)
     private List<RentEntity> rentEntity;
 }

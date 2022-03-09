@@ -1,7 +1,7 @@
-package com.mindera.school.spaceshiprent.service;
+package com.mindera.school.spaceshiprent.service.userService;
 
-import com.mindera.school.spaceshiprent.dto.CreateOrUpdateUserDto;
-import com.mindera.school.spaceshiprent.dto.UserDetailsDto;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 
 import java.util.List;
 

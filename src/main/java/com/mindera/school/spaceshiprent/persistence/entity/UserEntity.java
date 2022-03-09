@@ -29,6 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,6 +60,6 @@ public class UserEntity {
     @Column(nullable = false)
     private UserType userType;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<RentEntity> rentEntity;
 }

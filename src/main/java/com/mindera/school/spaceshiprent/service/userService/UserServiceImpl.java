@@ -1,12 +1,12 @@
-package com.mindera.school.spaceshiprent.service;
+package com.mindera.school.spaceshiprent.service.userService;
 
 import com.mindera.school.spaceshiprent.converter.UserConverter;
-import com.mindera.school.spaceshiprent.dto.CreateOrUpdateUserDto;
-import com.mindera.school.spaceshiprent.dto.UserDetailsDto;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import com.mindera.school.spaceshiprent.service.userService.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

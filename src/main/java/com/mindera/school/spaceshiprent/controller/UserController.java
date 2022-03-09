@@ -1,8 +1,8 @@
 package com.mindera.school.spaceshiprent.controller;
 
-import com.mindera.school.spaceshiprent.dto.CreateOrUpdateUserDto;
-import com.mindera.school.spaceshiprent.dto.UserDetailsDto;
-import com.mindera.school.spaceshiprent.service.UserServiceImpl;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
+import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+
 public class UserController {
 
     private final UserServiceImpl userService;

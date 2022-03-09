@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.dto;
+package com.mindera.school.spaceshiprent.dto.user;
 
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import lombok.Data;

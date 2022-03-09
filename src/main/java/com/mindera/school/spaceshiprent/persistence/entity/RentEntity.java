@@ -1,24 +1,11 @@
 package com.mindera.school.spaceshiprent.persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @ToString
 @Builder
 @NoArgsConstructor
@@ -32,26 +19,26 @@ public class RentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity accountEntity;
+    private UserEntity userEntity;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spaceship_id")
-    private SpaceshipEntity vehicleEntity;
+    private SpaceShipEntity spaceShipEntity;
 
     @Column(nullable = false)
-    private Date expectedpickdate;
+    private LocalDate expectedPickupDate;
 
     @Column(nullable = false)
-    private Date expectedreturndate;
+    private LocalDate expectedReturnDate;
+
+    @Column(nullable = true)
+    private LocalDate pickupDate;
+
+    @Column(nullable = true)
+    private LocalDate returnDate;
 
     @Column(nullable = false)
-    private Date pickdate;
-
-    @Column(nullable = false)
-    private Date returndate;
-
-    @Column(nullable = false)
-    private float priceperday;
+    private float pricePerDay;
 
     @Column(nullable = false)
     private int discount;

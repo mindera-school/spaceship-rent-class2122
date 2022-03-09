@@ -1,7 +1,7 @@
 package com.mindera.school.spaceshiprent.converter;
 
-import com.mindera.school.spaceshiprent.dto.CreateOrUpdateUserDto;
-import com.mindera.school.spaceshiprent.dto.UserDetailsDto;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 
 public class UserConverter {

@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.dto;
+package com.mindera.school.spaceshiprent.dto.user;
 
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import lombok.Builder;
@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
+
 public class UserDetailsDto {
     private Long id;
     private String name;
