@@ -46,3 +46,6 @@ public class RentController {
         return ResponseEntity.ok(rentService.updateRent(id,dto));
     }
 }
+
+
+
