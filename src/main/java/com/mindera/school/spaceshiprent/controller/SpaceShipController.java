@@ -5,7 +5,6 @@ import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.service.spaceShipService.SpaceShipServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +26,12 @@ public class SpaceShipController {
         return ResponseEntity.ok(spaceShipService.getAllSpaceShips());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<SpaceShipDetailsDto> getSpaceShipById(@PathVariable Long id){
         return ResponseEntity.ok(spaceShipService.getSpaceShipById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<SpaceShipDetailsDto> updateSpaceshipById(@PathVariable Long id, @RequestBody CreateOrUpdateSpaceShipDto dto){
         return ResponseEntity.ok(spaceShipService.updateSpaceShipById(id,dto));
     }

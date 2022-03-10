@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rent")
+@RequestMapping("/rents")
 public class RentController {
 
     private final RentService rentService;
@@ -31,12 +31,12 @@ public class RentController {
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping("/customers/{customerId}")
     public ResponseEntity<List<RentDetailsDto>> getRentByCostumerId(@PathVariable Long costumerId){
         return ResponseEntity.ok(rentService.getRentByCustomerId(costumerId));
     }
 
-    @GetMapping("/{spaceshipId}")
+    @GetMapping("/spaceships/{spaceshipId}")
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId){
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
