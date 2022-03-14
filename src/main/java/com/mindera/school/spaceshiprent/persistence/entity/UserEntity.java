@@ -45,12 +45,12 @@ public class UserEntity {
     private String licenseNumber;
 
     @Column(nullable = false, unique = true)
-    private String ssn;
+    private Long ssn;
 
     @Column(nullable = false)
     private String planet;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)

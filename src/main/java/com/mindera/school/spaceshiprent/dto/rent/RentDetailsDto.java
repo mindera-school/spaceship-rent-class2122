@@ -18,5 +18,5 @@ public class RentDetailsDto {
     private LocalDate pickDate;
     private LocalDate returnDate;
     private float pricePerDay;
-    private int discount;
+    private float discount;
 }

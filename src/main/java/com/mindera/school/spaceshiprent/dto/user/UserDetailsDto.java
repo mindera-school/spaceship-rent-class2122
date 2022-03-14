@@ -12,7 +12,7 @@ public class UserDetailsDto {
     private String name;
     private int age;
     private String licenseNumber;
-    private String ssn;
+    private Long ssn;
     private String planet;
     private String email;
     private UserType userType;

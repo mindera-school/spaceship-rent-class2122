@@ -12,5 +12,5 @@ public class CreateOrUpdateRentDto {
     private LocalDate expectedPickupDate;
     private LocalDate expectedReturnDate;
     private float pricePerDay;
-    private int discount;
+    private float discount;
 }

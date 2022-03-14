@@ -13,8 +13,17 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "rents")
 public class RentEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "rents_id_generator"
+    )
+    @SequenceGenerator(
+            name = "rents_id_generator",
+            allocationSize = 1,
+            sequenceName = "rents_id_generator"
+    )
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,5 +50,5 @@ public class RentEntity {
     private float pricePerDay;
 
     @Column(nullable = false)
-    private int discount;
+    private float discount;
 }
