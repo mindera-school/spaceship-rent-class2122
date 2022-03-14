@@ -1,0 +1,25 @@
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+spring:
+  flyway:
+    enabled: true
+    locations: classpath:migration
+    baselineOnMigrate: "true"
+    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
+    user: nunoneto
+    password:
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
+    username: nunoneto
+    password:
+
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
