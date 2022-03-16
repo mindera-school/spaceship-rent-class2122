@@ -1,6 +1,9 @@
 package com.mindera.school.spaceshiprent.dto.rent;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 

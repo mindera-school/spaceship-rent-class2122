@@ -1,23 +1,9 @@
 package com.mindera.school.spaceshiprent.persistence.entity;
 
 import com.mindera.school.spaceshiprent.enumerator.UserType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 
@@ -31,8 +17,17 @@ import java.util.List;
 @Table(name = "users")
 
 public class UserEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "users_id_generator"
+    )
+    @SequenceGenerator(
+            name = "users_id_generator",
+            allocationSize = 1,
+            sequenceName = "users_id_generator"
+    )
     private Long id;
 
     @Column(nullable = false)

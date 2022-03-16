@@ -4,10 +4,9 @@ import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessages;
-import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.NotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
-import com.mindera.school.spaceshiprent.service.userService.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
         return userEntity.map(UserConverter::toUserDetailsDto)
-                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
+                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
 
     @Override
@@ -51,8 +50,7 @@ public class UserServiceImpl implements UserService {
             UserEntity user = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
             user.setId(id);
             return UserConverter.toUserDetailsDto(userRepository.save(user));
-
         }
-        return null;
+        throw new NotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id));
     }
 }

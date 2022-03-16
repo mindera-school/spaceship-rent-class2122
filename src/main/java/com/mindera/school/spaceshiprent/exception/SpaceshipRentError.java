@@ -1,10 +1,11 @@
 package com.mindera.school.spaceshiprent.exception;
 
 import lombok.Builder;
+import lombok.Data;
 
 @Builder
-public class SpaceshipError {
-
+@Data
+public class SpaceshipRentError {
     private String message;
     private String exception;
     private String path;
