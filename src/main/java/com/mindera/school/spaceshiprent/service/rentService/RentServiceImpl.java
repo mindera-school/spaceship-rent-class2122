@@ -14,8 +14,6 @@ import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceShipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,8 +32,8 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto createRent(CreateOrUpdateRentDto createOrUpdateRentDto) {
         RentEntity rent = RentConverter.fromCreateOrUpdateRentDto(createOrUpdateRentDto);
-        UserEntity user = userRepository.findById(createOrUpdateRentDto.getCustomerId())
-                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, createOrUpdateRentDto.getCustomerId())));
+        UserEntity user = userRepository.findById(createOrUpdateRentDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, createOrUpdateRentDto.getUserId())));
         SpaceShipEntity spaceShip = spaceShipRepository.findById(createOrUpdateRentDto.getSpaceshipId())
                 .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, createOrUpdateRentDto.getSpaceshipId())));
         rent.setUserEntity(user);
@@ -69,9 +67,9 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public List<RentDetailsDto> getRentByCustomerId(Long id) {
+    public List<RentDetailsDto> getRentByUserId(Long id) {
         List<RentEntity> rentEntity = userRepository.findById(id)
-                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND_W_CUSTOMER, id))).getRentEntity();
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND_W_USER, id))).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
                 .collect(Collectors.toList());

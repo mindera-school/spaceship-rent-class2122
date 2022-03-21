@@ -13,38 +13,38 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rents")
+@RequestMapping("/")
 public class RentController {
 
     private final RentService rentService;
 
 
-    @PostMapping
+    @PostMapping("/rent/")
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
-    @GetMapping
+    @GetMapping("/rent/")
     public ResponseEntity<List<RentDetailsDto>> getAllRents() {
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rent/{id}")
     public ResponseEntity<RentDetailsDto> getRentById(@PathVariable Long id){
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
-    @GetMapping("/customers/{customerId}")
-    public ResponseEntity<List<RentDetailsDto>> getRentByCostumerId(@PathVariable Long costumerId){
-        return ResponseEntity.ok(rentService.getRentByCustomerId(costumerId));
+    @GetMapping("/user/{id}/rent")
+    public ResponseEntity<List<RentDetailsDto>> getRentByUserId(@PathVariable Long userid){
+        return ResponseEntity.ok(rentService.getRentByUserId(userid));
     }
 
-    @GetMapping("/spaceships/{spaceshipId}")
+    @GetMapping("/spaceship/{id}/rent")
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId){
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/rent/{id}")
     public ResponseEntity<RentDetailsDto> updateRentById(@PathVariable Long id, @RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.updateRent(id,dto));
     }

@@ -18,7 +18,7 @@ public class RentConverter {
     public static RentDetailsDto toRentDetailsDto(RentEntity rentEntity) {
         return RentDetailsDto.builder()
                 .id(rentEntity.getId())
-                .customerId(rentEntity.getUserEntity().getId())
+                .userId(rentEntity.getUserEntity().getId())
                 .spaceshipId(rentEntity.getSpaceShipEntity().getId())
                 .expectedPickupDate(rentEntity.getExpectedPickupDate())
                 .expectedReturnDate(rentEntity.getExpectedReturnDate())

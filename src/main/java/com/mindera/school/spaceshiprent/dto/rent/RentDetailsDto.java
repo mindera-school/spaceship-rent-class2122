@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class RentDetailsDto {
 
     private Long id;
-    private Long customerId;
+    private Long userId;
     private Long spaceshipId;
     private LocalDate expectedPickupDate;
     private LocalDate expectedReturnDate;

@@ -15,7 +15,7 @@ public interface RentService {
 
     RentDetailsDto updateRent (Long id, CreateOrUpdateRentDto createOrUpdateRentDto);
 
-    List<RentDetailsDto> getRentByCustomerId (Long id);
+    List<RentDetailsDto> getRentByUserId (Long id);
 
     List<RentDetailsDto> getRentBySpaceShipId (Long id);
 

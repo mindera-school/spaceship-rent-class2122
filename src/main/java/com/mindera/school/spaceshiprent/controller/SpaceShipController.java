@@ -11,27 +11,27 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/spaceships")
+@RequestMapping("/")
 public class SpaceShipController {
 
     private final SpaceShipServiceImpl spaceShipService;
 
-    @PostMapping()
+    @PostMapping("/spaceship/")
     public ResponseEntity<SpaceShipDetailsDto> createSpaceship(@RequestBody CreateOrUpdateSpaceShipDto dto){
         return ResponseEntity.ok(spaceShipService.createSpaceShip(dto));
     }
 
-    @GetMapping()
+    @GetMapping("/spaceship/")
     public ResponseEntity<List<SpaceShipDetailsDto>> getAllSpaceShips(){
         return ResponseEntity.ok(spaceShipService.getAllSpaceShips());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/spaceship/{id}")
     public ResponseEntity<SpaceShipDetailsDto> getSpaceShipById(@PathVariable Long id){
         return ResponseEntity.ok(spaceShipService.getSpaceShipById(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/spaceship/{id}")
     public ResponseEntity<SpaceShipDetailsDto> updateSpaceshipById(@PathVariable Long id, @RequestBody CreateOrUpdateSpaceShipDto dto){
         return ResponseEntity.ok(spaceShipService.updateSpaceShipById(id,dto));
     }

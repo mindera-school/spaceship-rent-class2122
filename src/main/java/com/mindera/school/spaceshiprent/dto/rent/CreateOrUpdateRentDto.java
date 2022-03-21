@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class CreateOrUpdateRentDto {
 
-    private Long customerId;
+    private Long userId;
     private Long spaceshipId;
     private LocalDate expectedPickupDate;
     private LocalDate expectedReturnDate;
