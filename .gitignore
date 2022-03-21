@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,jetbrains+all,vscode,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,jetbrains+all,vscode,linux
 
+
+logs/
+
 .env
 node_modules
 
