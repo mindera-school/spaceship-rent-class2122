@@ -1,6 +1,8 @@
 package com.mindera.school.spaceshiprent.dto.rent;
 
 
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,8 +13,8 @@ import java.time.LocalDate;
 public class RentDetailsDto {
 
     private Long id;
-    private Long userId;
-    private Long spaceshipId;
+    private UserDetailsDto userDetailsDto;
+    private SpaceShipDetailsDto spaceshipDetailsDto;
     private LocalDate expectedPickupDate;
     private LocalDate expectedReturnDate;
     private LocalDate pickDate;
