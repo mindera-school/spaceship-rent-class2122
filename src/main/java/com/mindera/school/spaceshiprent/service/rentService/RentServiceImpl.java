@@ -3,6 +3,10 @@ package com.mindera.school.spaceshiprent.service.rentService;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.SpaceshipNotFoundException;
+import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -10,6 +14,8 @@ import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceShipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -28,8 +34,10 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto createRent(CreateOrUpdateRentDto createOrUpdateRentDto) {
         RentEntity rent = RentConverter.fromCreateOrUpdateRentDto(createOrUpdateRentDto);
-        UserEntity user = userRepository.findById(createOrUpdateRentDto.getCustomerId()).orElse(null);
-        SpaceShipEntity spaceShip = spaceShipRepository.findById(createOrUpdateRentDto.getSpaceshipId()).orElse(null);
+        UserEntity user = userRepository.findById(createOrUpdateRentDto.getCustomerId())
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, createOrUpdateRentDto.getCustomerId())));
+        SpaceShipEntity spaceShip = spaceShipRepository.findById(createOrUpdateRentDto.getSpaceshipId())
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, createOrUpdateRentDto.getSpaceshipId())));
         rent.setUserEntity(user);
         rent.setSpaceShipEntity(spaceShip);
         return RentConverter.toRentDetailsDto(rentRepository.save(rent));
@@ -45,7 +53,8 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto getRentById(Long id) {
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElse(null);
+        return rentEntityOptional.map(RentConverter::toRentDetailsDto)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND, id)));
     }
 
     @Override
@@ -61,30 +70,29 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public List<RentDetailsDto> getRentByCustomerId(Long id) {
-        List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = userRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND_W_CUSTOMER, id))).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<RentDetailsDto> getRentBySpaceShipId(Long id) {
-        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = spaceShipRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND_W_SPACESHIP, id))).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override
     public RentDetailsDto updatePickUpDate(Long id) {
         Optional<RentEntity> rentEntity = rentRepository.findById(id);
-        if(rentEntity.isPresent()) {
-            rentEntity.get().setPickupDate(LocalDate.now());
-            return RentConverter.toRentDetailsDto(rentEntity.get());
-        }
-        return null;
+        rentEntity.orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND, id)));
+
+        rentEntity.get().setPickupDate(LocalDate.now());
+        return RentConverter.toRentDetailsDto(rentEntity.get());
     }
 
     @Override
