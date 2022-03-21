@@ -35,12 +35,12 @@ public class RentController {
     }
 
     @GetMapping("/user/{id}/rent")
-    public ResponseEntity<List<RentDetailsDto>> getRentByUserId(@PathVariable Long userid){
+    public ResponseEntity<List<RentDetailsDto>> getRentByUserId(@PathVariable("id")  Long userid){
         return ResponseEntity.ok(rentService.getRentByUserId(userid));
     }
 
     @GetMapping("/spaceship/{id}/rent")
-    public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId){
+    public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable("id") Long spaceshipId){
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
