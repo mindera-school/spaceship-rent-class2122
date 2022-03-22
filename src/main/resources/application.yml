@@ -1,25 +1,32 @@
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
 spring:
+  application:
+    name : SpaceShipEntity Application
   flyway:
-    enabled: true
+    enable: true
     locations: classpath:migration
-    baselineOnMigrate: "true"
-    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    user: nunoneto
-    password:
+    baselineOnmigrate: "true"
+    url: jdbc:postgresql://localhost:5432/spaceship_database
+    user: ruiteixeira
+    password: dro
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    username: nunoneto
-    password:
-
+    url: jdbc:postgresql://localhost:5432/spaceship_database
+    username: ruiteixeira
+    password: dro
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl:auto: validate
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        formate_sql: true
+  springdoc:
+    swagger-ui:
+      path: /swagger-ui-html
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

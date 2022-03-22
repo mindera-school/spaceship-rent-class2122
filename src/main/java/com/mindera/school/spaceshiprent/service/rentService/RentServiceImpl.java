@@ -3,6 +3,8 @@ package com.mindera.school.spaceshiprent.service.rentService;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -45,7 +47,7 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto getRentById(Long id) {
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElse(null);
+        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElseThrow(()-> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id)));
     }
 
     @Override

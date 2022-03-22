@@ -12,12 +12,37 @@ import javax.servlet.http.HttpServletRequest;
 public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {UserNotFoundException.class})
-    public ResponseEntity<SpaceshipError> handleNotFoundException(Exception ex, HttpServletRequest req) {
+    public ResponseEntity<SpaceshipError> handleClientNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipError error = SpaceshipError.builder()
                 .message(ex.getMessage())
                 .exception(ex.getClass().getSimpleName())
                 .path(req.getRequestURI())
                 .build();
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {SpaceShipNotFoundException.class})
+    public ResponseEntity<SpaceshipError> handleSpaceShipNotFoundException(Exception ex, HttpServletRequest req) {
+        SpaceshipError error = SpaceshipError.builder()
+                .message(ex.getMessage())
+                .exception(ex.getClass().getSimpleName())
+                .path(req.getRequestURI())
+                .build();
+
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(value = {RentNotFoundException.class})
+    public ResponseEntity<SpaceshipError> handleRentNotFoundException(Exception ex, HttpServletRequest req) {
+        SpaceshipError error = SpaceshipError.builder()
+                .message(ex.getMessage())
+                .exception(ex.getClass().getSimpleName())
+                .path(req.getRequestURI())
+                .build();
+
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
