@@ -45,13 +45,12 @@ public class SpaceShipServiceImpl  implements SpaceShipService{
 
     @Override
     public SpaceShipDetailsDto updateSpaceShipById(Long id, CreateOrUpdateSpaceShipDto createOrUpdateSpaceShipDto) {
-        Optional<SpaceShipEntity> spaceShipEntityOptional = spaceShipRepository.findById(id);
+        SpaceShipEntity spaceShipEntityOptional = spaceShipRepository.findById(id)
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, id)));
 
-        if(spaceShipEntityOptional.isPresent()){
-            SpaceShipEntity spaceShip = SpaceShipConverter.fromCreateOrUpdateDto(createOrUpdateSpaceShipDto);
-            spaceShip.setId(id);
-            return SpaceShipConverter.toSpaceShipDetailsDto(spaceShipRepository.save(spaceShip));
-        }
-        return null;
+        SpaceShipEntity spaceShip = SpaceShipConverter.fromCreateOrUpdateDto(createOrUpdateSpaceShipDto);
+        spaceShip.setId(id);
+        return SpaceShipConverter.toSpaceShipDetailsDto(spaceShipRepository.save(spaceShip));
+
     }
 }

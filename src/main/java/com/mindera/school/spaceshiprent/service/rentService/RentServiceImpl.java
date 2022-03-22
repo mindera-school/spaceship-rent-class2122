@@ -57,13 +57,17 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public RentDetailsDto updateRent(Long id, CreateOrUpdateRentDto createOrUpdateRentDto) {
-        Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-        if (rentEntityOptional.isPresent()) {
-            RentEntity rent = RentConverter.fromCreateOrUpdateRentDto(createOrUpdateRentDto);
-            rent.setId(id);
-            return RentConverter.toRentDetailsDto(rentRepository.save(rent));
-        }
-        return null;
+        RentEntity rentEntityOptional = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND, id)));
+        RentEntity rent = RentConverter.fromCreateOrUpdateRentDto(createOrUpdateRentDto);
+        UserEntity user = userRepository.findById(createOrUpdateRentDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, createOrUpdateRentDto.getUserId())));
+        SpaceShipEntity spaceShip = spaceShipRepository.findById(createOrUpdateRentDto.getSpaceshipId())
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, createOrUpdateRentDto.getSpaceshipId())));
+        rent.setUserEntity(user);
+        rent.setSpaceShipEntity(spaceShip);
+        rent.setId(id);
+        return RentConverter.toRentDetailsDto(rentRepository.save(rent));
     }
 
     @Override

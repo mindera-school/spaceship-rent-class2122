@@ -46,13 +46,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
-        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
-        if (userEntityOptional.isPresent()) {
-            UserEntity user = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
-            user.setId(id);
-            return UserConverter.toUserDetailsDto(userRepository.save(user));
+        UserEntity userEntityOptional = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
 
-        }
-        return null;
+        UserEntity user = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
+        user.setId(id);
+        return UserConverter.toUserDetailsDto(userRepository.save(user));
     }
 }
