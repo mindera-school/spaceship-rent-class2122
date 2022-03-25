@@ -1,8 +1,6 @@
 package com.mindera.school.spaceshiprent.exception;
 
-import com.mindera.school.spaceshiprent.service.rentService.RentServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,11 +9,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.servlet.http.HttpServletRequest;
 
+@Slf4j
 @ControllerAdvice
 public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpaceshipRentExceptionHandler.class);
 
     @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipNotFoundException.class, RentNotFoundException.class})
     public ResponseEntity<SpaceshipError> handleNotFoundException(Exception ex, HttpServletRequest req) {
@@ -25,7 +23,7 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
                 .path(req.getRequestURI())
                 .build();
 
-        LOGGER.error(ex.getMessage() + " | ERROR: " + ex.getClass().getSimpleName() +" | PATH: "+ req.getRequestURI());
+        log.error(ex.getMessage() + " | ERROR: " + ex.getClass().getSimpleName() +" | PATH: "+ req.getRequestURI());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }

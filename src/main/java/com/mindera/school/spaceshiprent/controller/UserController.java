@@ -2,8 +2,10 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
+import com.mindera.school.spaceshiprent.messaging.QueueSender;
 import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,8 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceImpl userService;
+    private final QueueSender queueSender;
+
 
     @PostMapping("/user/")
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
@@ -41,5 +45,10 @@ public class UserController {
     @PutMapping("/user/{id}")
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
         return ResponseEntity.ok(userService.updateUserById(id,createOrUpdateUserDto));
+    }
+
+    @PostMapping("/testingpost/")
+    public void testingPost(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
+          queueSender.sender(createOrUpdateUserDto.getEmail());
     }
 }
