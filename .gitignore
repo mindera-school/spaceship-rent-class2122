@@ -4,7 +4,6 @@
 
 
 logs/
-credentials.json
 
 .env
 node_modules
@@ -180,3 +179,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,jetbrains+all,vscode,linux
 
 node_modules
+src/main/resources/credentials.json
