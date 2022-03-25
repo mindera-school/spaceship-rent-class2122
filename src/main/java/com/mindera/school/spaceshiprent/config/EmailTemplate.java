@@ -45,4 +45,21 @@ public class EmailTemplate {
         in.close();
         return template.toString();
     }
+
+    public static String getBodyTemplate(String templateName, String... args) {
+        String template = getBodyTemplate(templateName);
+        for (int i = 0; i < args.length; i++) {
+            template = template.replace("{"+i+"}", args[i]);
+        }
+        return template;
+    }
+
+    public static String getSubjectTemplate(String templateName, String... args) {
+        String template = getSubjectTemplate(templateName);
+        for (int i = 0; i < args.length; i++) {
+            template = template.replace("{" + i + "}", args[i]);
+        }
+        return template;
+    }
+
 }

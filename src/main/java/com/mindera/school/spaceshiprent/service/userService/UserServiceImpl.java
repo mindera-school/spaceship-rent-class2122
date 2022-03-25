@@ -5,6 +5,7 @@ import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessages;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.messaging.QueueSender;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.userService.UserService;
@@ -20,12 +21,15 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final QueueSender queueSender;
 
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
-        return UserConverter.toUserDetailsDto(userRepository.save(userEntity));
+        UserDetailsDto userDetailsDto =  UserConverter.toUserDetailsDto(userRepository.save(userEntity));
+        queueSender.sender(userDetailsDto);
+        return userDetailsDto;
     }
 
     @Override

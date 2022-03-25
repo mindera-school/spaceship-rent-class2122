@@ -20,7 +20,7 @@ public class EmailGatewayImpl implements EmailGateway {
     private static final String MAILJET_API_KEY = CredentialsConfiguration.getCredentials("MAILJET_API_KEY");
     private static final String MAILJET_API_SECRET = CredentialsConfiguration.getCredentials("MAILJET_API_SECRET");
 
-    private static final String MAILJET_SENDER_EMAIL = "no-reply@spaceshiprent.space";
+    private static final String MAILJET_SENDER_EMAIL = "rafael.martins@school.mindera.com";
     private static final String MAILJET_SENDER_NAME = "Spaceship Rent";
 
 
@@ -28,8 +28,6 @@ public class EmailGatewayImpl implements EmailGateway {
     @Override
     public void sendEmail(String to, String subject, String content) {
         log.info("Sending email to {} about {}", to, subject);
-        System.out.println(MAILJET_API_KEY);
-        System.out.println(MAILJET_API_SECRET);
         final MailjetClient client = new MailjetClient(MAILJET_API_KEY, MAILJET_API_SECRET);
         final MailjetRequest request;
         request = new MailjetRequest(Emailv31.resource)
