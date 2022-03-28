@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
+import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
@@ -29,7 +30,8 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(userRepository);
+        this.userService = new UserServiceImpl(
+                new UserConverter(), userRepository);
     }
 
     @Test
