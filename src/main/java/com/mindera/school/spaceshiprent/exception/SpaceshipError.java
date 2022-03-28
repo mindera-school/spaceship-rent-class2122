@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
+@Data
 public class SpaceshipError {
 
     private String message;

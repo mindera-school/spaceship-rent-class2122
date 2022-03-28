@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.service.userService;
+package com.mindera.school.spaceshiprent.service.user;
 
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;

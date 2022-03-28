@@ -3,7 +3,7 @@ package com.mindera.school.spaceshiprent.controller;
 import com.mindera.school.spaceshiprent.components.messages.MessageSender;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
-import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
+import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
@@ -24,14 +24,12 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
 public class UserController {
 
     private final UserServiceImpl userService;
     private final MessageSender MESSAGESENDER;
-   // public static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
-    @PostMapping()
+    @PostMapping("/users")
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
        // LOGGER.info("created user {}",createOrUpdateUserDto);
         log.info("created user {}",createOrUpdateUserDto);
@@ -40,19 +38,19 @@ public class UserController {
         return ResponseEntity.ok(userDetailsDtoResponseEntity);
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public ResponseEntity<List<UserDetailsDto>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
        // LOGGER.info("created user {}",id);
         log.info("get user {}",id);
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
        // LOGGER.info("created user {}{}",createOrUpdateUserDto,id);
         log.info("created user {}{}",createOrUpdateUserDto,id);

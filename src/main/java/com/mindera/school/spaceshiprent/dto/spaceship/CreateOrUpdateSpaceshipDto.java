@@ -3,7 +3,7 @@ package com.mindera.school.spaceshiprent.dto.spaceship;
 import lombok.Data;
 
 @Data
-public class CreateOrUpdateSpaceShipDto {
+public class CreateOrUpdateSpaceshipDto {
 
     private String name;
     private String brand;

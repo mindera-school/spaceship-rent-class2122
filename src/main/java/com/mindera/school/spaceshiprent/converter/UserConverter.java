@@ -3,10 +3,12 @@ package com.mindera.school.spaceshiprent.converter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserConverter {
 
-    public static UserEntity fromCreateOrUpdateDto(CreateOrUpdateUserDto dto) {
+    public UserEntity convertToEntity(CreateOrUpdateUserDto dto) {
         return UserEntity.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
@@ -19,10 +21,11 @@ public class UserConverter {
                 .build();
     }
 
-    public static UserDetailsDto toUserDetailsDto(UserEntity entity) {
+    public UserDetailsDto convertToUserDetailsDto(UserEntity entity) {
         return UserDetailsDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .email(entity.getEmail())
                 .age(entity.getAge())
                 .licenseNumber(entity.getLicenseNumber())
                 .ssn(entity.getSsn())

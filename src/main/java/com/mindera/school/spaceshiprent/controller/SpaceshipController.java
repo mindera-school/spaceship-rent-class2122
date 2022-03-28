@@ -1,8 +1,8 @@
 package com.mindera.school.spaceshiprent.controller;
 
-import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceShipDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
-import com.mindera.school.spaceshiprent.service.spaceShipService.SpaceShipServiceImpl;
+import com.mindera.school.spaceshiprent.service.spaceship.SpaceShipServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,31 +13,30 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/spaceships")
 public class SpaceShipController {
 
     private final SpaceShipServiceImpl spaceShipService;
     public static final Logger LOGGER = LoggerFactory.getLogger(SpaceShipController.class);
 
-    @PostMapping()
-    public ResponseEntity<SpaceShipDetailsDto> createSpaceship(@RequestBody CreateOrUpdateSpaceShipDto dto){
+    @PostMapping("/spaceships")
+    public ResponseEntity<SpaceShipDetailsDto> createSpaceship(@RequestBody CreateOrUpdateSpaceshipDto dto){
         LOGGER.info("created Spaceship {}",dto);
         return ResponseEntity.ok(spaceShipService.createSpaceShip(dto));
     }
 
-    @GetMapping()
+    @GetMapping("/spaceships")
     public ResponseEntity<List<SpaceShipDetailsDto>> getAllSpaceShips(){
         return ResponseEntity.ok(spaceShipService.getAllSpaceShips());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/spaceships/{id}")
     public ResponseEntity<SpaceShipDetailsDto> getSpaceShipById(@PathVariable Long id){
         LOGGER.info("requested Spaceship {}",id);
         return ResponseEntity.ok(spaceShipService.getSpaceShipById(id));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<SpaceShipDetailsDto> updateSpaceshipById(@PathVariable Long id, @RequestBody CreateOrUpdateSpaceShipDto dto){
+    @PutMapping("/spaceships/{id}")
+    public ResponseEntity<SpaceShipDetailsDto> updateSpaceshipById(@PathVariable Long id, @RequestBody CreateOrUpdateSpaceshipDto dto){
         LOGGER.info("updated Spaceship {}",id);
         return ResponseEntity.ok(spaceShipService.updateSpaceShipById(id,dto));
     }
