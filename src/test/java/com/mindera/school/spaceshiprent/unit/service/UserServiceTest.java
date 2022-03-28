@@ -5,7 +5,7 @@ import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
-import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
+import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

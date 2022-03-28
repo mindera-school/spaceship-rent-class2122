@@ -2,7 +2,7 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
-import com.mindera.school.spaceshiprent.service.rentService.RentService;
+import com.mindera.school.spaceshiprent.service.rent.RentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
