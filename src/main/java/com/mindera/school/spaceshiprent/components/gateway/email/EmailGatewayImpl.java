@@ -18,7 +18,7 @@ public class EmailGatewayImpl implements emailGateway {
         @SneakyThrows
         @Override
         public void sendEmail(String to, String subject, String content){
-        client = new MailjetClient(System.getenv("****************************1234"), System.getenv("****************************abcd"), new ClientOptions("v3.1"));
+        client = new MailjetClient("b21a8467ed7882e93db57f97961c80bb","27dafe402d146feab3dd41dc90f82c4f", new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
