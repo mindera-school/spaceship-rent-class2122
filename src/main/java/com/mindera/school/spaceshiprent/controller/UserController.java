@@ -2,7 +2,7 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
-import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
+import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,28 +17,26 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
-
 public class UserController {
 
     private final UserServiceImpl userService;
 
-    @PostMapping()
+    @PostMapping("/users")
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
         return ResponseEntity.ok(userService.createUser(createOrUpdateUserDto));
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public ResponseEntity<List<UserDetailsDto>> getUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
         return ResponseEntity.ok(userService.updateUserById(id,createOrUpdateUserDto));
     }

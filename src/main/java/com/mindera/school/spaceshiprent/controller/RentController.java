@@ -2,7 +2,7 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
-import com.mindera.school.spaceshiprent.service.rentService.RentService;
+import com.mindera.school.spaceshiprent.service.rent.RentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +11,11 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rents")
 public class RentController {
 
     private final RentService rentService;
 
-    @PostMapping
+    @PostMapping("/rents")
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.createRent(dto));
     }
@@ -26,22 +25,22 @@ public class RentController {
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rents/{id}")
     public ResponseEntity<RentDetailsDto> getRentById(@PathVariable Long id){
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/customers/{customerId}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentByCostumerId(@PathVariable Long costumerId){
         return ResponseEntity.ok(rentService.getRentByCustomerId(costumerId));
     }
 
-    @GetMapping("/spaceships/{spaceshipId}")
+    @GetMapping("/spaceships/{spaceshipId}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId){
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/rents/{id}")
     public ResponseEntity<RentDetailsDto> updateRentById(@PathVariable Long id, @RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.updateRent(id,dto));
     }

@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.service.rentService;
+package com.mindera.school.spaceshiprent.service.rent;
 
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
