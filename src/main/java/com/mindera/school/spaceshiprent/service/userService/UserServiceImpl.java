@@ -9,6 +9,7 @@ import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.userService.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
@@ -40,7 +40,8 @@ public class UserServiceImpl implements UserService {
     public UserDetailsDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
-        return userEntity.map(UserConverter::toUserDetailsDto)
+        return userEntity
+                .map(UserConverter::toUserDetailsDto)
                 .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
 
