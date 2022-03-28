@@ -19,32 +19,32 @@ public class RentController {
     private final RentService rentService;
 
 
-    @PostMapping("/rent/")
+    @PostMapping("/rents/")
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
-    @GetMapping("/rent/")
+    @GetMapping("/rents/")
     public ResponseEntity<List<RentDetailsDto>> getAllRents() {
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
-    @GetMapping("/rent/{id}")
+    @GetMapping("/rents/{id}")
     public ResponseEntity<RentDetailsDto> getRentById(@PathVariable Long id){
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
-    @GetMapping("/user/{id}/rent")
+    @GetMapping("/users/{id}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentByUserId(@PathVariable("id")  Long userid){
         return ResponseEntity.ok(rentService.getRentByUserId(userid));
     }
 
-    @GetMapping("/spaceship/{id}/rent")
+    @GetMapping("/spaceships/{id}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable("id") Long spaceshipId){
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
-    @PutMapping("/rent/{id}")
+    @PutMapping("/rents/{id}")
     public ResponseEntity<RentDetailsDto> updateRentById(@PathVariable Long id, @RequestBody CreateOrUpdateRentDto dto) {
         return ResponseEntity.ok(rentService.updateRent(id,dto));
     }

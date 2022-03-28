@@ -16,22 +16,22 @@ public class SpaceShipController {
 
     private final SpaceShipServiceImpl spaceShipService;
 
-    @PostMapping("/spaceship/")
+    @PostMapping("/spaceships/")
     public ResponseEntity<SpaceShipDetailsDto> createSpaceship(@RequestBody CreateOrUpdateSpaceShipDto dto){
         return ResponseEntity.ok(spaceShipService.createSpaceShip(dto));
     }
 
-    @GetMapping("/spaceship/")
+    @GetMapping("/spaceships/")
     public ResponseEntity<List<SpaceShipDetailsDto>> getAllSpaceShips(){
         return ResponseEntity.ok(spaceShipService.getAllSpaceShips());
     }
 
-    @GetMapping("/spaceship/{id}")
+    @GetMapping("/spaceships/{id}")
     public ResponseEntity<SpaceShipDetailsDto> getSpaceShipById(@PathVariable Long id){
         return ResponseEntity.ok(spaceShipService.getSpaceShipById(id));
     }
 
-    @PutMapping("/spaceship/{id}")
+    @PutMapping("/spaceships/{id}")
     public ResponseEntity<SpaceShipDetailsDto> updateSpaceshipById(@PathVariable Long id, @RequestBody CreateOrUpdateSpaceShipDto dto){
         return ResponseEntity.ok(spaceShipService.updateSpaceShipById(id,dto));
     }
