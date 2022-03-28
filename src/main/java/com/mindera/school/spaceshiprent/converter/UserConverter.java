@@ -27,6 +27,7 @@ public class UserConverter {
                 .licenseNumber(entity.getLicenseNumber())
                 .ssn(entity.getSsn())
                 .planet(entity.getPlanet())
+                .email(entity.getEmail())
                 .userType(entity.getUserType())
                 .build();
     }

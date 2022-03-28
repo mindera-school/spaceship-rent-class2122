@@ -66,8 +66,8 @@ public class RentServiceImpl implements RentService {
         List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -75,8 +75,8 @@ public class RentServiceImpl implements RentService {
         List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
+
     }
 
     @Override
