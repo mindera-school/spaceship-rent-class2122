@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailsDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
-
         return userEntity
                 .map(converter::convertToUserDetailsDto)
                 .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, id)));

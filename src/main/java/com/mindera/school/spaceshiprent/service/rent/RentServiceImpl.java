@@ -3,8 +3,6 @@ package com.mindera.school.spaceshiprent.service.rent;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
-import com.mindera.school.spaceshiprent.exception.ErrorMessages;
-import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -54,21 +52,13 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public RentDetailsDto getRentById(Long id) {
-
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-<<<<<<< HEAD:src/main/java/com/mindera/school/spaceshiprent/service/rentService/RentServiceImpl.java
-        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElseThrow(()-> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id)));
-=======
-
         return rentEntityOptional.map(converter::convertToRentDetailsDto).orElse(null);
->>>>>>> master:src/main/java/com/mindera/school/spaceshiprent/service/rent/RentServiceImpl.java
     }
 
     @Override
     public RentDetailsDto updateRent(Long id, CreateOrUpdateRentDto createOrUpdateRentDto) {
-
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-
         if (rentEntityOptional.isPresent()) {
             RentEntity rent = converter.convertToEntity(createOrUpdateRentDto);
             rent.setId(id);
@@ -80,42 +70,25 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public List<RentDetailsDto> getRentByCustomerId(Long id) {
-
         List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
-
         return rentEntity.stream()
-<<<<<<< HEAD:src/main/java/com/mindera/school/spaceshiprent/service/rentService/RentServiceImpl.java
-                .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList());
-
-=======
                 .map(converter::convertToRentDetailsDto)
                 .collect(Collectors.toList());
->>>>>>> master:src/main/java/com/mindera/school/spaceshiprent/service/rent/RentServiceImpl.java
+
     }
 
     @Override
     public List<RentDetailsDto> getRentBySpaceShipId(Long id) {
-
         List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
-
         return rentEntity.stream()
-<<<<<<< HEAD:src/main/java/com/mindera/school/spaceshiprent/service/rentService/RentServiceImpl.java
-                .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList());
-
-=======
                 .map(converter::convertToRentDetailsDto)
                 .collect(Collectors.toList())
                 ;
->>>>>>> master:src/main/java/com/mindera/school/spaceshiprent/service/rent/RentServiceImpl.java
     }
 
     @Override
     public RentDetailsDto updatePickUpDate(Long id) {
-
         Optional<RentEntity> rentEntity = rentRepository.findById(id);
-
         if (rentEntity.isPresent()) {
             rentEntity.get().setPickupDate(LocalDate.now());
             return converter.convertToRentDetailsDto(rentEntity.get());
@@ -126,9 +99,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public RentDetailsDto updateReturnDate(Long id) {
-
         Optional<RentEntity> rentEntity = rentRepository.findById(id);
-
         if (rentEntity.isPresent()) {
             rentEntity.get().setReturnDate(LocalDate.now());
             return converter.convertToRentDetailsDto(rentEntity.get());

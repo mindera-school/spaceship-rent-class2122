@@ -1,6 +1,6 @@
 package com.mindera.school.spaceshiprent.components.messages;
 
-import com.mindera.school.spaceshiprent.components.mailchimp.MailChimp;
+import com.mindera.school.spaceshiprent.components.gateway.MailChimp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;

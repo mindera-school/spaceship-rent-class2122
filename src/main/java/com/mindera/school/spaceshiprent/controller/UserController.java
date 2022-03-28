@@ -31,7 +31,6 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
-       // LOGGER.info("created user {}",createOrUpdateUserDto);
         log.info("created user {}",createOrUpdateUserDto);
         UserDetailsDto userDetailsDtoResponseEntity = userService.createUser(createOrUpdateUserDto);
         MESSAGESENDER.sendUserCreated(userDetailsDtoResponseEntity.toString());
@@ -45,14 +44,12 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
-       // LOGGER.info("created user {}",id);
         log.info("get user {}",id);
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
-       // LOGGER.info("created user {}{}",createOrUpdateUserDto,id);
         log.info("created user {}{}",createOrUpdateUserDto,id);
         return ResponseEntity.ok(userService.updateUserById(id,createOrUpdateUserDto));
     }
