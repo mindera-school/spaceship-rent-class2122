@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +62,12 @@ public class UserServiceTest {
 
         // then
         assertThrows(UserNotFoundException.class, action);
+    }
+
+    @Test
+    public void test_thisIsSupposedToFail_DontWorry() {
+        // fail please
+        assertTrue(false);
     }
 
     private UserEntity getMockedEntity() {
