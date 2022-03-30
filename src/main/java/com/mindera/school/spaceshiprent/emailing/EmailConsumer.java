@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.components;
+package com.mindera.school.spaceshiprent.emailing;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;

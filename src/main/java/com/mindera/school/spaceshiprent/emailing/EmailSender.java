@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.components;
+package com.mindera.school.spaceshiprent.emailing;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
