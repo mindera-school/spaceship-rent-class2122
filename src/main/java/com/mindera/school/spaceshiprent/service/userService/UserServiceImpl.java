@@ -4,7 +4,7 @@ import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessages;
-import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.NotFoundException;
+import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
+    //private final EmailSender emailSender;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
+        String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
+        // emailSender.send(emailingInfo);
         return UserConverter.toUserDetailsDto(userRepository.save(userEntity));
     }
 
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
         return userEntity.map(UserConverter::toUserDetailsDto)
-                .orElseThrow(() -> new NotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
 
     @Override
@@ -51,6 +53,11 @@ public class UserServiceImpl implements UserService {
             user.setId(id);
             return UserConverter.toUserDetailsDto(userRepository.save(user));
         }
-        throw new NotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id));
+        throw new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id));
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+        userRepository.flush();
     }
 }

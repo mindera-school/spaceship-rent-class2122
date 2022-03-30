@@ -3,6 +3,9 @@ package com.mindera.school.spaceshiprent.service.spaceShipService;
 import com.mindera.school.spaceshiprent.converter.SpaceShipConverter;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceShipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.SpaceshipNotFoundException;
+import com.mindera.school.spaceshiprent.exception.SpaceshipRentException;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceShipRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SpaceShipServiceImpl  implements SpaceShipService{
+public class SpaceShipServiceImpl implements SpaceShipService {
 
     private final SpaceShipRepository spaceShipRepository;
 
@@ -30,24 +33,25 @@ public class SpaceShipServiceImpl  implements SpaceShipService{
         return spaceShipRepository.findAll().stream()
                 .map(SpaceShipConverter::toSpaceShipDetailsDto)
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public SpaceShipDetailsDto getSpaceShipById(Long id) {
-        Optional<SpaceShipEntity> spaceShipEntity = spaceShipRepository.findById(id);
-        return spaceShipEntity.map(SpaceShipConverter::toSpaceShipDetailsDto).orElse(null);
+        return SpaceShipConverter.toSpaceShipDetailsDto(spaceShipRepository.findById(id)
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, id)) {
+                })
+        );
     }
 
     @Override
     public SpaceShipDetailsDto updateSpaceShipById(Long id, CreateOrUpdateSpaceShipDto createOrUpdateSpaceShipDto) {
         Optional<SpaceShipEntity> spaceShipEntityOptional = spaceShipRepository.findById(id);
 
-        if(spaceShipEntityOptional.isPresent()){
+        if (spaceShipEntityOptional.isPresent()) {
             SpaceShipEntity spaceShip = SpaceShipConverter.fromCreateOrUpdateDto(createOrUpdateSpaceShipDto);
             spaceShip.setId(id);
             return SpaceShipConverter.toSpaceShipDetailsDto(spaceShipRepository.save(spaceShip));
         }
-        return null;
+        throw new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, id));
     }
 }

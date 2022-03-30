@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Getter
 @Setter
 @ToString
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-
 public class UserEntity {
 
     @Id

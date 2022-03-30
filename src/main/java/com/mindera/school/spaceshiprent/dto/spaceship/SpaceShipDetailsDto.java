@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 @Builder
-
 public class SpaceShipDetailsDto {
 
     private Long id;

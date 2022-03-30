@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.exception;
+package com.mindera.school.spaceshiprent.exception.errorModel;
 
 import lombok.Builder;
 import lombok.Data;
