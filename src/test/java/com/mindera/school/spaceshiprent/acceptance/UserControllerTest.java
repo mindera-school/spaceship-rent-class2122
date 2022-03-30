@@ -2,7 +2,7 @@ package com.mindera.school.spaceshiprent.acceptance;
 
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
-import com.mindera.school.spaceshiprent.exception.SpaceshipError;
+import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -67,11 +67,11 @@ public class UserControllerTest {
         String path = "/users/5";
 
         // WHEN
-        ResponseEntity<SpaceshipError> response = restTemplate.exchange(
+        ResponseEntity<SpaceshipRentError> response = restTemplate.exchange(
                 path,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
-                SpaceshipError.class);
+                SpaceshipRentError.class);
 
         // THEN
         verify(userRepository, times(1))

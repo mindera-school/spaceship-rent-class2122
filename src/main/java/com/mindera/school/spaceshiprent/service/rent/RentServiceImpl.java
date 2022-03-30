@@ -4,7 +4,7 @@ import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
-import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.RentNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;

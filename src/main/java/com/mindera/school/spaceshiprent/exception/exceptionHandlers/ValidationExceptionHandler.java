@@ -1,6 +1,6 @@
 package com.mindera.school.spaceshiprent.exception.exceptionHandlers;
 
-import com.mindera.school.spaceshiprent.exception.errorModel.ValidationError;
+import com.mindera.school.spaceshiprent.exception.model.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,30 +18,13 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
+
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
     private final static Logger LOGGER = LoggerFactory.getLogger(ValidationExceptionHandler.class);
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
-            HttpHeaders headers,
-            HttpStatus status,
-            WebRequest request) {
-        List<String> validationList = ex.getBindingResult().getFieldErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.toList());
 
-        ValidationError error = ValidationError.builder()
-                .failedValidationsList(validationList)
-                .exception(ex.getClass().getSimpleName())
-                .build();
-
-        LOGGER.error("Validation error list : " + validationList);
-        return new ResponseEntity<>(error, status);
-    }
 
 }
 
