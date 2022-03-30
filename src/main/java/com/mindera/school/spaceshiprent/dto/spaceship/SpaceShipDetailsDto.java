@@ -1,11 +1,7 @@
 package com.mindera.school.spaceshiprent.dto.spaceship;
 
-import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import lombok.Builder;
 import lombok.Data;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Builder

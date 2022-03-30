@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
-public class CreateOrUpdateSpaceShipDto {
+public class CreateOrUpdateSpaceshipDto {
 
     @NotBlank
     private String name;

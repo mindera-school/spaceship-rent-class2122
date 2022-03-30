@@ -1,9 +1,9 @@
-package com.mindera.school.spaceshiprent.service.userService;
+package com.mindera.school.spaceshiprent.service.user;
 
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
-import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
 import com.mindera.school.spaceshiprent.exception.NotFoundExceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
@@ -18,22 +18,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final UserConverter converter;
     private final UserRepository userRepository;
     //private final EmailSender emailSender;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
-        UserEntity userEntity = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
+        UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
         // emailSender.send(emailingInfo);
-        return UserConverter.toUserDetailsDto(userRepository.save(userEntity));
+        return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }
 
     @Override
     public List<UserDetailsDto> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(UserConverter::toUserDetailsDto)
+                .map(converter::convertToUserDetailsDto)
                 .collect(Collectors.toList());
     }
 
@@ -41,19 +42,20 @@ public class UserServiceImpl implements UserService {
     public UserDetailsDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
-        return userEntity.map(UserConverter::toUserDetailsDto)
-                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
+        return userEntity
+                .map(converter::convertToUserDetailsDto)
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, id)));
     }
 
     @Override
     public UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
         if (userEntityOptional.isPresent()) {
-            UserEntity user = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
+            UserEntity user = converter.convertToEntity(createOrUpdateUserDto);
             user.setId(id);
-            return UserConverter.toUserDetailsDto(userRepository.save(user));
+            return converter.convertToUserDetailsDto(userRepository.save(user));
         }
-        throw new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id));
+        throw new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, id));
     }
 
     public void deleteUserById(Long id) {

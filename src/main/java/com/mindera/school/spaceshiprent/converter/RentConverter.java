@@ -3,26 +3,30 @@ package com.mindera.school.spaceshiprent.converter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
+import org.springframework.stereotype.Component;
 
-public class RentConverter {
-    public static RentEntity fromCreateOrUpdateRentDto(CreateOrUpdateRentDto createOrUpdateRentDto) {
+@Component
+public final class RentConverter {
+
+    public RentEntity convertToEntity(CreateOrUpdateRentDto dto) {
         return RentEntity.builder()
-                .expectedPickupDate(createOrUpdateRentDto.getExpectedPickupDate())
-                .expectedReturnDate(createOrUpdateRentDto.getExpectedReturnDate())
-                .discount(createOrUpdateRentDto.getDiscount())
+                .expectedPickupDate(dto.getExpectedPickupDate())
+                .expectedReturnDate(dto.getExpectedReturnDate())
+                .discount(dto.getDiscount())
                 .build();
     }
 
-    public static RentDetailsDto toRentDetailsDto(RentEntity rentEntity) {
+    public RentDetailsDto convertToRentDetailsDto(RentEntity entity) {
         return RentDetailsDto.builder()
-                .id(rentEntity.getId())
-                .customerId(rentEntity.getUserEntity().getId())
-                .spaceshipId(rentEntity.getSpaceShipEntity().getId())
-                .expectedPickupDate(rentEntity.getExpectedPickupDate())
-                .expectedReturnDate(rentEntity.getExpectedReturnDate())
-                .returnDate(rentEntity.getReturnDate())
-                .pickDate(rentEntity.getPickupDate())
-                .discount(rentEntity.getDiscount())
+                .id(entity.getId())
+                .customerId(entity.getUserEntity().getId())
+                .spaceshipId(entity.getSpaceShipEntity().getId())
+                .expectedPickupDate(entity.getExpectedPickupDate())
+                .expectedReturnDate(entity.getExpectedReturnDate())
+                .returnDate(entity.getReturnDate())
+                .pickDate(entity.getPickupDate())
+                .pricePerDay(entity.getPricePerDay())
+                .discount(entity.getDiscount())
                 .build();
     }
 }

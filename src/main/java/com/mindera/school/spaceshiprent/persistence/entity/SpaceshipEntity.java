@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "spaceships")
 
-public class SpaceShipEntity {
+public class SpaceshipEntity {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,

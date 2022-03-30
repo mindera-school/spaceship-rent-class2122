@@ -2,11 +2,10 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
-import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
+import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import com.mindera.school.spaceshiprent.util.LoggerMessages;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,41 +13,40 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
 public class UserController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserServiceImpl userService;
 
-    @PostMapping()
+    @PostMapping("/users")
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody @Valid CreateOrUpdateUserDto userDto) {
-        LOGGER.info(LoggerMessages.POST_REQUEST, LoggerMessages.USER, LocalDate.now());
+        log.info(LoggerMessages.POST_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public ResponseEntity<List<UserDetailsDto>> getUsers() {
-        LOGGER.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.USER, LocalDate.now());
+        log.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
-        LOGGER.info(LoggerMessages.GET_REQUEST, LoggerMessages.USER, LocalDate.now());
+        log.info(LoggerMessages.GET_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody @Valid CreateOrUpdateUserDto createOrUpdateUserDto) {
-        LOGGER.info(LoggerMessages.PUT_REQUEST, LoggerMessages.USER, LocalDate.now());
+        log.info(LoggerMessages.PUT_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.updateUserById(id, createOrUpdateUserDto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
-        LOGGER.info(LoggerMessages.DELETE_REQUEST, LoggerMessages.USER, LocalDate.now());
+        log.info(LoggerMessages.DELETE_REQUEST, LoggerMessages.USER, LocalDate.now());
         userService.deleteUserById(id);
         return ResponseEntity.ok("User with id " + id + " was removed.");
     }
