@@ -23,6 +23,7 @@ public class UserConverter {
         return UserDetailsDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .email(entity.getEmail())
                 .age(entity.getAge())
                 .licenseNumber(entity.getLicenseNumber())
                 .ssn(entity.getSsn())

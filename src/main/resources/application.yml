@@ -2,24 +2,30 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   flyway:
     enabled: true
     locations: classpath:migration
     baselineOnMigrate: "true"
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    user: nunoneto
-    password:
+    user: ${DB_USER_ENV}
+    password: ${DB_PASS_ENV}
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    username: nunoneto
-    password:
+    username: ${DB_USER_ENV}
+    password: ${DB_PASS_ENV}
 
 
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false

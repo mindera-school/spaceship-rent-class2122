@@ -5,6 +5,7 @@ import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessages;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.messaging.SpaceshipRentQueueSender;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.userService.UserService;
@@ -20,11 +21,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+   // private final SpaceshipRentQueueSender sender;
 
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
+      //  sender.send(userEntity.getEmail());
         return UserConverter.toUserDetailsDto(userRepository.save(userEntity));
     }
 
@@ -40,9 +43,11 @@ public class UserServiceImpl implements UserService {
     public UserDetailsDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
-        return userEntity.map(UserConverter::toUserDetailsDto)
+        return userEntity
+                .map(UserConverter::toUserDetailsDto)
                 .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
+
 
     @Override
     public UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
@@ -53,6 +58,9 @@ public class UserServiceImpl implements UserService {
             return UserConverter.toUserDetailsDto(userRepository.save(user));
 
         }
-        return null;
+
+        return userEntityOptional
+                .map(UserConverter::toUserDetailsDto)
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
 }

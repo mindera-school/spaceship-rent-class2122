@@ -3,6 +3,10 @@ package com.mindera.school.spaceshiprent.service.rentService;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.SpaceshipNotFoundException;
+import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -45,7 +49,9 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto getRentById(Long id) {
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElse(null);
+        return rentEntityOptional
+                .map(RentConverter::toRentDetailsDto)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND, id)));
     }
 
     @Override
@@ -56,25 +62,30 @@ public class RentServiceImpl implements RentService {
             rent.setId(id);
             return RentConverter.toRentDetailsDto(rentRepository.save(rent));
         }
-        return null;
+        return rentEntityOptional.map(RentConverter::toRentDetailsDto)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND, id)));
     }
+
 
     @Override
     public List<RentDetailsDto> getRentByCustomerId(Long id) {
-        List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id))).getRentEntity();
+
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public List<RentDetailsDto> getRentBySpaceShipId(Long id) {
-        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = spaceShipRepository.findById(id)
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessages.SPACESHIP_NOT_FOUND, id))).getRentEntity();
+
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override

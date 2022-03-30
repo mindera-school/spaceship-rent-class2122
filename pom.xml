@@ -15,6 +15,8 @@
     <description>spaceshipRent</description>
     <properties>
         <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -48,28 +50,49 @@
         </dependency>
 
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>8.4.0</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+
+        </dependency>
+
+
+       <dependency>
+           <groupId>org.flywaydb</groupId>
+           <artifactId>flyway-core</artifactId>
+           <version>8.4.0</version>
+       </dependency>
+
+
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>2.4.2</version>
         </dependency>
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <configuration>
+                   <excludes>
+                       <exclude>
+                           <groupId>org.projectlombok</groupId>
+                           <artifactId>lombok</artifactId>
+                       </exclude>
+                   </excludes>
+               </configuration>
+           </plugin>
+       </plugins>
+   </build>
 
 </project>
