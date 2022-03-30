@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EmailGatewayImpl implements EmailGateway {
 
-    private static final String MAILJET_API_KEY = CredentialsConfiguration.getCredentials("MAILJET_API_KEY");
-    private static final String MAILJET_API_SECRET = CredentialsConfiguration.getCredentials("MAILJET_API_SECRET");
+    private static final String MAILJET_API_KEY = System.getenv("MAILJET_API_KEY");
+    private static final String MAILJET_API_SECRET = System.getenv("MAILJET_API_SECRET");
 
     private static final String MAILJET_SENDER_EMAIL = "rafael.martins@school.mindera.com";
-    private static final String MAILJET_SENDER_NAME = "Spaceship Rent";
+    private static final String  MAILJET_SENDER_NAME = "Spaceship Rent";
 
 
     @SneakyThrows
