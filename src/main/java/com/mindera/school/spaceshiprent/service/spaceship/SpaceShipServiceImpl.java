@@ -4,6 +4,8 @@ import com.mindera.school.spaceshiprent.converter.SpaceshipConverter;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 
+import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
+import com.mindera.school.spaceshiprent.exception.SpaceShipNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +44,7 @@ public class SpaceShipServiceImpl implements SpaceShipService {
         Optional<SpaceshipEntity> spaceShipEntity = spaceShipRepository.findById(id);
         return spaceShipEntity
                 .map(converter::convertToSpaceShipDetailsDto)
-                .orElse(null);
+                .orElseThrow(() -> new SpaceShipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, id)));
     }
 
     @Override

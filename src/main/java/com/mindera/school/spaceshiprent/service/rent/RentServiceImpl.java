@@ -3,6 +3,8 @@ package com.mindera.school.spaceshiprent.service.rent;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
+import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -33,7 +35,7 @@ public class RentServiceImpl implements RentService {
 
         SpaceshipEntity spaceShip = spaceShipRepository
                 .findById(createOrUpdateRentDto.getSpaceshipId())
-                .orElse(null);
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND,createOrUpdateRentDto)));
 
         RentEntity rent = converter.convertToEntity(createOrUpdateRentDto);
         rent.setUserEntity(user);
@@ -70,7 +72,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public List<RentDetailsDto> getRentByCustomerId(Long id) {
-        List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = userRepository.findById(id).orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND,id)) ).getRentEntity();
         return rentEntity.stream()
                 .map(converter::convertToRentDetailsDto)
                 .collect(Collectors.toList());
@@ -79,7 +81,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public List<RentDetailsDto> getRentBySpaceShipId(Long id) {
-        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND,id)) ).getRentEntity();
         return rentEntity.stream()
                 .map(converter::convertToRentDetailsDto)
                 .collect(Collectors.toList())

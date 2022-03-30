@@ -3,7 +3,7 @@ package com.mindera.school.spaceshiprent.exception;
 import lombok.Builder;
 import lombok.Data;
 
-@Data
+
 @Builder
 @Data
 public class SpaceshipError {

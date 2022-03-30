@@ -11,16 +11,16 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spaceship_database
-    username: ruiteixeira
-    password: dro
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
       ddl:auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        formate_sql: true
+        formate_sql: false
   springdoc:
     swagger-ui:
       path: /swagger-ui-html
@@ -28,5 +28,6 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASSWORD}
+

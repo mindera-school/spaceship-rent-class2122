@@ -1,0 +1,5 @@
+jpa:
+  show-sql: true
+  properties:
+    hibernate:
+      formate_sql: true
