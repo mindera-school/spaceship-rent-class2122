@@ -42,7 +42,7 @@ java.lang.IllegalArgumentException: SimpleMessageConverter only supports String,
 	at org.springframework.amqp.rabbit.core.RabbitTemplate.convertMessageIfNecessary(RabbitTemplate.java:1825)
 	at org.springframework.amqp.rabbit.core.RabbitTemplate.convertAndSend(RabbitTemplate.java:1140)
 	at org.springframework.amqp.rabbit.core.RabbitTemplate.convertAndSend(RabbitTemplate.java:1122)
-	at com.mindera.school.spaceshiprent.components.EmailSender.send(EmailSender.java:15)
+	at com.mindera.school.spaceshiprent.emailing.EmailSender.send(EmailSender.java:15)
 	at com.mindera.school.spaceshiprent.service.userService.UserServiceImpl.createUser(UserServiceImpl.java:29)
 	at com.mindera.school.spaceshiprent.controller.UserController.createUser(UserController.java:28)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
