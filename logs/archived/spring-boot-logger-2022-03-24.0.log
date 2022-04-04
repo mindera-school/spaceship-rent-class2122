@@ -42,7 +42,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:29)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:29)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -167,7 +167,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 2022-03-24 12:00:16,193 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
 2022-03-24 12:00:16,194 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-03-24 12:00:16,195 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
-2022-03-24 12:00:17,070 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [http-nio-8080-exec-1] {"health_status":"Everything's Chimpy!"}
+2022-03-24 12:00:17,070 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [http-nio-8080-exec-1] {"health_status":"Everything's Chimpy!"}
 2022-03-24 12:00:17,071 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-1] Request received to get all user
 2022-03-24 12:08:04,670 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
 2022-03-24 12:08:04,671 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
@@ -217,7 +217,7 @@ org.springframework.web.client.HttpClientErrorException$MethodNotAllowed: 405 Me
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:33)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:33)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -317,7 +317,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:37)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:37)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -417,7 +417,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:37)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:37)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -517,7 +517,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:37)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:37)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -617,7 +617,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:37)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:37)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -717,7 +717,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:39)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:39)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -817,7 +817,7 @@ org.springframework.web.client.HttpServerErrorException$InternalServerError: 500
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:777)
 	at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:711)
 	at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:602)
-	at com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(EmailConsumer.java:39)
+	at com.mindera.school.spaceshiprent.components.EmailConsumer.receive(EmailConsumer.java:39)
 	at com.mindera.school.spaceshiprent.controller.UserController.getUsers(UserController.java:35)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
@@ -1210,15 +1210,15 @@ org.postgresql.util.PSQLException: ERROR: null value in column "password" of rel
 2022-03-24 14:48:17,274 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [main] Attempting to connect to: [localhost:5672]
 2022-03-24 14:48:17,329 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [main] Created new connection: rabbitConnectionFactory#6719f206:0/SimpleConnection@7f7f544a [delegate=amqp://guest@127.0.0.1:5672/, localPort= 60456]
 2022-03-24 14:48:17,386 INFO org.springframework.boot.StartupInfoLogger [main] Started SpaceshipRentApplication in 9.618 seconds (JVM running for 10.173)
-2022-03-24 14:48:18,049 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
-2022-03-24 14:48:18,098 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
-2022-03-24 14:48:18,160 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
-2022-03-24 14:48:18,211 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
+2022-03-24 14:48:18,049 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
+2022-03-24 14:48:18,098 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
+2022-03-24 14:48:18,160 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
+2022-03-24 14:48:18,211 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: UserEmailingInfoDto(email=filipatitan@gmail.com, name=FLEPA)
 2022-03-24 14:48:18,216 WARN org.springframework.amqp.rabbit.listener.ConditionalRejectingErrorHandler [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Execution of Rabbit message listener failed.
 org.springframework.amqp.rabbit.support.ListenerExecutionFailedException: Listener method could not be invoked with the incoming message
 Endpoint handler details:
-Method [public void com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(com.mindera.school.spaceshiprent.dto.user.UserEmailingInfoDto) throws com.mailjet.client.errors.MailjetSocketTimeoutException,com.mailjet.client.errors.MailjetException]
-Bean [com.mindera.school.spaceshiprent.emailing.EmailConsumer@57167ccb]
+Method [public void com.mindera.school.spaceshiprent.components.EmailConsumer.receive(com.mindera.school.spaceshiprent.dto.user.UserEmailingInfoDto) throws com.mailjet.client.errors.MailjetSocketTimeoutException,com.mailjet.client.errors.MailjetException]
+Bean [com.mindera.school.spaceshiprent.components.EmailConsumer@57167ccb]
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:265)
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandlerAndProcessResult(MessagingMessageListenerAdapter.java:207)
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:146)
@@ -1256,8 +1256,8 @@ org.springframework.amqp.AmqpRejectAndDontRequeueException: Error Handler conver
 	at java.base/java.lang.Thread.run(Thread.java:833)
 Caused by: org.springframework.amqp.rabbit.support.ListenerExecutionFailedException: Listener method could not be invoked with the incoming message
 Endpoint handler details:
-Method [public void com.mindera.school.spaceshiprent.emailing.EmailConsumer.receive(com.mindera.school.spaceshiprent.dto.user.UserEmailingInfoDto) throws com.mailjet.client.errors.MailjetSocketTimeoutException,com.mailjet.client.errors.MailjetException]
-Bean [com.mindera.school.spaceshiprent.emailing.EmailConsumer@57167ccb]
+Method [public void com.mindera.school.spaceshiprent.components.EmailConsumer.receive(com.mindera.school.spaceshiprent.dto.user.UserEmailingInfoDto) throws com.mailjet.client.errors.MailjetSocketTimeoutException,com.mailjet.client.errors.MailjetException]
+Bean [com.mindera.school.spaceshiprent.components.EmailConsumer@57167ccb]
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandler(MessagingMessageListenerAdapter.java:265)
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.invokeHandlerAndProcessResult(MessagingMessageListenerAdapter.java:207)
 	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:146)
@@ -1315,7 +1315,7 @@ Caused by: org.springframework.messaging.converter.MessageConversionException: C
 2022-03-24 14:53:36,331 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
 2022-03-24 14:53:36,352 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-1] Request received to get all user
 2022-03-24 14:54:00,059 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-4] Request received to create user
-2022-03-24 14:54:00,490 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
+2022-03-24 14:54:00,490 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
 2022-03-24 14:55:08,946 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
 2022-03-24 14:55:09,721 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
 2022-03-24 14:55:09,743 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
@@ -1355,7 +1355,7 @@ Caused by: org.springframework.messaging.converter.MessageConversionException: C
 2022-03-24 14:55:26,271 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-03-24 14:55:26,272 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
 2022-03-24 14:55:26,398 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-1] Request received to create user
-2022-03-24 14:55:26,692 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
+2022-03-24 14:55:26,692 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
 2022-03-24 14:57:15,462 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
 2022-03-24 14:57:16,069 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
 2022-03-24 14:57:16,091 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
@@ -1395,7 +1395,7 @@ Caused by: org.springframework.messaging.converter.MessageConversionException: C
 2022-03-24 14:58:02,529 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-03-24 14:58:02,530 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
 2022-03-24 14:58:02,646 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-1] Request received to create user
-2022-03-24 14:58:03,053 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
+2022-03-24 14:58:03,053 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
 2022-03-24 15:02:04,335 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
 2022-03-24 15:02:04,925 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
 2022-03-24 15:02:04,959 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
@@ -1435,7 +1435,7 @@ Caused by: org.springframework.messaging.converter.MessageConversionException: C
 2022-03-24 15:02:24,911 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
 2022-03-24 15:02:24,912 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
 2022-03-24 15:02:25,033 INFO com.mindera.school.spaceshiprent.controller.UserController [http-nio-8080-exec-1] Request received to create user
-2022-03-24 15:02:25,368 INFO com.mindera.school.spaceshiprent.emailing.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
+2022-03-24 15:02:25,368 INFO com.mindera.school.spaceshiprent.components.EmailConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Emailing info: filipatitan@gmail.com FLEPA
 2022-03-24 15:13:05,587 INFO org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-4] Init duration for springdoc-openapi is: 387 ms
 2022-03-24 15:13:53,694 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
 2022-03-24 15:13:54,579 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
