@@ -23,8 +23,8 @@ public class SpaceShipEntity {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "spaceship_id_generator"
-    )
+            generator = "spaceship_id_generator")
+
     @SequenceGenerator(
             name = "spaceship_id_generator",
             allocationSize = 1,

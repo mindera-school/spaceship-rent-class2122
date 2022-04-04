@@ -30,17 +30,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDetailsDto> getAllUsers() {
-        return userRepository.findAll()
+        List<UserDetailsDto> usersList = userRepository.findAll()
                 .stream()
                 .map(UserConverter::toUserDetailsDto)
                 .collect(Collectors.toList());
+        if(usersList.size() > 0){
+            return usersList;
+        }else{
+            throw new UserNotFoundException(String.format(ErrorMessages.USERS_NOT_FOUND));
+        }
     }
 
     @Override
     public UserDetailsDto getUserById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
 
-        return userEntity.map(UserConverter::toUserDetailsDto)
+        return userEntity
+                .map(UserConverter::toUserDetailsDto)
                 .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND, id)));
     }
 
@@ -50,9 +56,9 @@ public class UserServiceImpl implements UserService {
         if (userEntityOptional.isPresent()) {
             UserEntity user = UserConverter.fromCreateOrUpdateDto(createOrUpdateUserDto);
             user.setId(id);
-            return UserConverter.toUserDetailsDto(userRepository.save(user));
 
+            return UserConverter.toUserDetailsDto(userRepository.save(user));
         }
-        return null;
+      throw new UserNotFoundException(String.format(ErrorMessages.USER_NOT_FOUND,id));
     }
 }

@@ -3,6 +3,8 @@ package com.mindera.school.spaceshiprent.service.rentService;
 import com.mindera.school.spaceshiprent.converter.RentConverter;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.RentNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -37,15 +39,21 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public List<RentDetailsDto> getAllRents() {
-        return rentRepository.findAll().stream()
+        List<RentDetailsDto> rentList =  rentRepository.findAll().stream()
                 .map(RentConverter::toRentDetailsDto)
                 .collect(Collectors.toList());
+        if(rentList.size() >0){
+            return rentList;
+        }else{
+            throw new RentNotFoundException(String.format(ErrorMessages.RENTS_NOT_FOUND));
+        }
     }
 
     @Override
     public RentDetailsDto getRentById(Long id) {
         Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
-        return rentEntityOptional.map(RentConverter::toRentDetailsDto).orElse(null);
+        return rentEntityOptional.map(RentConverter::toRentDetailsDto)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id)));
     }
 
     @Override
@@ -56,25 +64,24 @@ public class RentServiceImpl implements RentService {
             rent.setId(id);
             return RentConverter.toRentDetailsDto(rentRepository.save(rent));
         }
-        return null;
+        throw new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id));
     }
 
     @Override
     public List<RentDetailsDto> getRentByCustomerId(Long id) {
-        List<RentEntity> rentEntity = userRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = userRepository.findById(id).orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id))).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
+
     }
 
     @Override
     public List<RentDetailsDto> getRentBySpaceShipId(Long id) {
-        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElse(null).getRentEntity();
+        List<RentEntity> rentEntity = spaceShipRepository.findById(id).orElseThrow(()-> new RentNotFoundException(String.format(ErrorMessages.RENTS_NOT_FOUND,id))).getRentEntity();
         return rentEntity.stream()
                 .map(RentConverter::toRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -84,7 +91,7 @@ public class RentServiceImpl implements RentService {
             rentEntity.get().setPickupDate(LocalDate.now());
             return RentConverter.toRentDetailsDto(rentEntity.get());
         }
-        return null;
+         throw new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id));
     }
 
     @Override
@@ -94,6 +101,6 @@ public class RentServiceImpl implements RentService {
             rentEntity.get().setReturnDate(LocalDate.now());
             return RentConverter.toRentDetailsDto(rentEntity.get());
         }
-        return null;
+        throw new RentNotFoundException(String.format(ErrorMessages.RENT_NOT_FOUND,id));
     }
 }

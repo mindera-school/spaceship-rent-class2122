@@ -7,12 +7,19 @@ spring:
     locations: classpath:migration
     baselineOnMigrate: "true"
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    user: nunoneto
+    user: joaomoutinho
     password:
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    username: nunoneto
+    username: joaomoutinho
     password:
 
 

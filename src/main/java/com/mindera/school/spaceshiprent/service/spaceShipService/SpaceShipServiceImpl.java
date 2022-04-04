@@ -3,6 +3,8 @@ package com.mindera.school.spaceshiprent.service.spaceShipService;
 import com.mindera.school.spaceshiprent.converter.SpaceShipConverter;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceShipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.exception.ErrorMessages;
+import com.mindera.school.spaceshiprent.exception.SpaceShipNotFound;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceShipEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceShipRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,16 +29,21 @@ public class SpaceShipServiceImpl  implements SpaceShipService{
 
     @Override
     public List<SpaceShipDetailsDto> getAllSpaceShips() {
-        return spaceShipRepository.findAll().stream()
+        List<SpaceShipDetailsDto> spaceShipList = spaceShipRepository.findAll().stream()
                 .map(SpaceShipConverter::toSpaceShipDetailsDto)
                 .collect(Collectors.toList());
-
+        if(spaceShipList.size() > 0){
+            return spaceShipList;
+        }else{
+            throw new SpaceShipNotFound(String.format(ErrorMessages.SPACESHIPS_NOT_FOUND));
+        }
     }
 
     @Override
     public SpaceShipDetailsDto getSpaceShipById(Long id) {
         Optional<SpaceShipEntity> spaceShipEntity = spaceShipRepository.findById(id);
-        return spaceShipEntity.map(SpaceShipConverter::toSpaceShipDetailsDto).orElse(null);
+        return spaceShipEntity.map(SpaceShipConverter::toSpaceShipDetailsDto)
+                .orElseThrow(() -> new SpaceShipNotFound(String.format(ErrorMessages.SPACESHIP_NOT_FOUND,id)));
     }
 
     @Override
@@ -48,6 +55,6 @@ public class SpaceShipServiceImpl  implements SpaceShipService{
             spaceShip.setId(id);
             return SpaceShipConverter.toSpaceShipDetailsDto(spaceShipRepository.save(spaceShip));
         }
-        return null;
+        throw new SpaceShipNotFound(String.format(ErrorMessages.SPACESHIP_NOT_FOUND,id));
     }
 }

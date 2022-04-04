@@ -1,0 +1,23 @@
+version: "3.8"
+
+networks:
+  basic_net:
+    name: basic_net
+    driver: bridge
+
+volumes:
+  database-store:
+    driver: local
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.9.12-management
+    container_name: SpaceShip_Rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - database-store:/rabbitmq
+    networks:
+      - basic_net
+
