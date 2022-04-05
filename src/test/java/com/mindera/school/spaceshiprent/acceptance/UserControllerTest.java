@@ -85,6 +85,7 @@ public class UserControllerTest {
                 "exception name");
     }
 
+
     private UserEntity getMockedEntity() {
         return UserEntity.builder()
                 .id(5L)
