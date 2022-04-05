@@ -2,10 +2,17 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 spring:
+ # flyway:
+  #  enabled: true
+   # locations: classpath:migration
+    #baselineOnMigrate: "true"
+    #url: jdbc:postgresql://localhost:5432/spaceship_rent_db
+    #user: ${DB_USER}
+    #password: ${DB_PASS}
   datasource:
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
     username: ${DB_USER}
-    password: ${DB_PASS}
+    password:
   jpa:
     hibernate:
       ddl-auto: validate

@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.emailing;
+package com.mindera.school.spaceshiprent.components;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
@@ -27,6 +27,7 @@ public class EmailConsumer {
 
     @RabbitListener(queues = "emailQueue")
     public void receive(@Payload String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
+
         String email = emailingInfo.split(" ")[0];
         String name = emailingInfo.split(" ")[1];
         MailjetClient client;

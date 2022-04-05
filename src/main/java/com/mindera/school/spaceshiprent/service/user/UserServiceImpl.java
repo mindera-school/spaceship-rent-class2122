@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.service.user;
 
+import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
-        // emailSender.send(emailingInfo);
+        //emailSender.send(emailingInfo);
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }
 

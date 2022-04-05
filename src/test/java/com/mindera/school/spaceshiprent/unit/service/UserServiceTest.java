@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
+
     private UserServiceImpl userService;
 
     @Mock
@@ -30,8 +31,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+        this.userService = new UserServiceImpl(new UserConverter(), userRepository);
     }
 
     @Test
