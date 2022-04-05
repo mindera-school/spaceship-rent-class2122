@@ -23,6 +23,16 @@
 
         <sonar.organization>mindera-school</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>mindera-school_spaceship-rent-class2122</sonar.projectKey>
+
+        <sonar.coverage.exclusions>
+            **/dto/**/*,
+            **/persistence/entity/*,
+            **/config/*,
+            **/exception/*,
+            **/exception/**/*,
+            **/test/**/*
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
