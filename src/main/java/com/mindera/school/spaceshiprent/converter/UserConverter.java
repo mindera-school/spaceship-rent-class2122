@@ -32,6 +32,7 @@ public class UserConverter {
                 .planet(entity.getPlanet())
                 .email(entity.getEmail())
                 .userType(entity.getUserType())
+                .email(entity.getEmail())
                 .build();
     }
 }
