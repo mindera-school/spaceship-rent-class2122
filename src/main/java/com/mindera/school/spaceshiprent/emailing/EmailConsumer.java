@@ -25,7 +25,7 @@ public class EmailConsumer {
     private final String KEY = "26d4ec8cfda8f82be1c1a67d8f3e99a4";
     private final String SECRET_KEY = "39abedbf3999b62c2f072a70f3f0fdb8";
 
-    @RabbitListener(queues = "emailQueue")
+    @RabbitListener(queues = "email")
     public void receive(@Payload String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
         String email = emailingInfo.split(" ")[0];
         String name = emailingInfo.split(" ")[1];

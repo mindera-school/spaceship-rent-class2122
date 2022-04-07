@@ -11,7 +11,7 @@ public class EmailSender {
     private final RabbitTemplate rabbitTemplate;
 
     public void send(String emailingInfo) {
-        rabbitTemplate.convertAndSend("emailQueue", emailingInfo);
+        rabbitTemplate.convertAndSend("email", emailingInfo);
     }
 
 }

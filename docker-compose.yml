@@ -1,60 +1,34 @@
-version: '3.7'
+version: "3.8"
 
 networks:
-  spaceship-rent_net:
-    name: spaceship-rent_net
-    driver: bridge
   database_net:
     name: database_net
     driver: bridge
-  eventbus_net:
-    name: eventbus_net
+  basic_net:
+    name: basic_net
+    driver: bridge
 
 volumes:
-  spaceship-rent-postgres-data:
-
+  local-data:
+    driver: local
 services:
-  spaceship-rent:
-    container_name: spaceship-rent
-    build:
-      context: ''
-    ports:
-      - 8080:8080
-    depends_on:
-      -  postgres-spaceship-rent
-    environment:
-      DB_HOST: postgres-spaceship-rent
-      DB_PORT: 5432
-      DB_NAME: postgres
-      DB_USERNAME: postgres
-      DB_PASSWORD: 12345
-      DB_SHOW_SQL: "true"
-    networks:
-      - spaceship-rent_net
-      - eventbus_net
-      - database_net
-
-  postgres-db:
-    image: postgres
-    container_name: postgres-db
-    volumes:
-      - spaceship-rent-postgres-data:/var/lib/postgresql
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: postgres
-    networks:
-      - database_net
-
   rabbitmq:
     image: rabbitmq:3.9.12-management
-    container_name: rabbitmq
+    container_name: spaceship_rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
     volumes:
-      - database-store:/rabbitmq
+      - local-data:/rabbitmq
     networks:
-      - eventbus_net
+      - basic_net
+  db:
+    image: postgres
+    container_name: spaceship_postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: spaceship_rent_db
+    ports:
+      - 5432:5432
