@@ -28,12 +28,21 @@ import static org.mockito.Mockito.*;
 public class SpaceShipControllerTest {
 
     @MockBean
+<<<<<<< Updated upstream
     private SpaceshipRepository spaceshipRepository;
+=======
+    private SpaceshipRepository spaceShipRepository;
+
+
+    private SpaceShipController controllerSpaceShip;
+
+>>>>>>> Stashed changes
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
+<<<<<<< Updated upstream
     public void test_getspaceShipById_shouldReturn200(){
         //GIVEN
         SpaceshipEntity spaceShip = getMockedEntity();
@@ -46,6 +55,17 @@ public class SpaceShipControllerTest {
                 path,
                 HttpMethod.GET,
                 HttpEntity.EMPTY,
+=======
+    public void test_createSpaceShip_shouldReturnUserDetailsDTO() {
+
+        SpaceshipEntity entity = getMockedEntity();
+        when(controllerSpaceShip.createSpaceship(getSpaceShipDetailsDto(entity))).thenReturn(ResponseEntity.ok(getMockedDto(entity)));
+
+        String path = "/spaceships";
+
+        ResponseEntity<SpaceShipDetailsDto> response = restTemplate
+                .exchange(path, HttpMethod.POST, HttpEntity.EMPTY,
+>>>>>>> Stashed changes
                 SpaceShipDetailsDto.class);
 
         //THEN
