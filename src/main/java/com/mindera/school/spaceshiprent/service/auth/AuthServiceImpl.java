@@ -32,10 +32,12 @@ public class AuthServiceImpl implements AuthService {
             log.error("No account found with email: {}", dto.getEmail());
             return new AccountNotFoundException(ACCOUNT_NOT_FOUND);
         });
+
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             log.error("Invalid password for email {}", dto.getEmail());
             throw new AccountNotFoundException(ACCOUNT_NOT_FOUND);
         }
+
         String token = jwtUtil.generateToken(user);
 
         return userConverter.convertToValidLoginDto(user, token);
