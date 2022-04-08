@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -30,8 +31,9 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+                new UserConverter(encoder), userRepository);
     }
 
     @Test

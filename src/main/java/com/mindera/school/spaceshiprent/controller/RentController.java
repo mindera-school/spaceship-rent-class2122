@@ -25,7 +25,7 @@ public class RentController {
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
-    @GetMapping
+    @GetMapping("/rents")
     public ResponseEntity<List<RentDetailsDto>> getAllRents() {
         return ResponseEntity.ok(rentService.getAllRents());
     }
