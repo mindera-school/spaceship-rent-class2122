@@ -23,4 +23,4 @@ spring:
       hibernate:
         format_sql: true
 
-jwt_secret: ${JWT_SECRET}
+jwt_secret: ${SECRET}

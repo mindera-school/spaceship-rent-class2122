@@ -17,8 +17,8 @@ import java.util.Date;
 @Component
 public class JWTManager {
 
-    @Value("${jwt_secret}")
-    private final String SECRET;
+    @Value(value = "${jwt_secret}")
+    private String SECRET;
 
     public String createToken(UserEntity entity) {
         return JWT.create()
