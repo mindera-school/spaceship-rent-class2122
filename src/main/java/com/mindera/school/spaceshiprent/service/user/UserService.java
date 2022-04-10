@@ -1,6 +1,8 @@
 package com.mindera.school.spaceshiprent.service.user;
 
+import com.mindera.school.spaceshiprent.dto.user.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.CredentialsDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 
 import java.util.List;
@@ -14,5 +16,6 @@ public interface UserService {
 
     UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto);
 
+    LoginDto login(CredentialsDto credentials);
 
 }

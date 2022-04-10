@@ -1,25 +1,33 @@
 package com.mindera.school.spaceshiprent.service.user;
 
+import com.mindera.school.spaceshiprent.JWTManager;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
+import com.mindera.school.spaceshiprent.dto.user.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.CredentialsDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
+import com.mindera.school.spaceshiprent.exception.AccountNotFound;
 import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.exception.WrongCredentialsException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserConverter converter;
     private final UserRepository userRepository;
+    private final JWTManager jwtManager;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
@@ -51,8 +59,34 @@ public class UserServiceImpl implements UserService {
             UserEntity user = converter.convertToEntity(createOrUpdateUserDto);
             user.setId(id);
             return converter.convertToUserDetailsDto(userRepository.save(user));
-
         }
+
         return null;
     }
+
+    @Override
+    public LoginDto login(CredentialsDto credentials) {
+        UserEntity userEntity =
+                userRepository.findByEmail(credentials.getEmail()).orElseThrow(() -> {
+                    log.info("Email entered doesn't exist: {}", credentials.getEmail());
+                    return new AccountNotFound("There's no account with given email and password");
+                });
+
+        if (userEntity.getPassword().equals(credentials.getPassword())) {
+
+            String token = jwtManager.createToken(userEntity);
+
+            log.info("login token created: {}", token);
+
+            LoginDto convertedUser = converter.convertToLoginDto(userEntity);
+            convertedUser.setToken(token);
+
+            return convertedUser;
+        }
+
+        log.info("User inserted wrong credentials");
+
+        throw new WrongCredentialsException("Email or password are wrong");
+    }
+
 }

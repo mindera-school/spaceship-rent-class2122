@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
+import com.mindera.school.spaceshiprent.JWTManager;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
@@ -28,10 +29,13 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private JWTManager manager;
+
     @BeforeEach
     public void setup() {
         this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+                new UserConverter(), userRepository, manager);
     }
 
     @Test
