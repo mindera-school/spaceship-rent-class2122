@@ -32,7 +32,7 @@ public class RentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spaceship_id")
-    private SpaceShipEntity spaceShipEntity;
+    private SpaceshipEntity spaceShipEntity;
 
     @NotNull(message = "expectedPickupDate cannot be null")
     @Column(nullable = false)

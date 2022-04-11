@@ -1,19 +1,24 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
+import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
+import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
-import com.mindera.school.spaceshiprent.service.userService.UserServiceImpl;
+import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -24,23 +29,38 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    public void setup(){
-        this.userService = new UserServiceImpl(userRepository);
+    public void setup() {
+        this.userService = new UserServiceImpl(
+                new UserConverter(), userRepository);
     }
 
     @Test
-    public void test_getUserById_shouldReturnSuccess(){
-        //GIVEN
+    public void test_getUserById_shouldReturnSuccess() {
+        // GIVEN
         Long userId = 5L;
+
         UserEntity entity = getMockedEntity();
         when(userRepository.findById(userId))
                 .thenReturn(Optional.of(entity));
 
-        //WHEN
+        // WHEN
         UserDetailsDto response = userService.getUserById(userId);
 
-        //THEN
+        // THEN
         assertEquals(getUserDetailsDto(entity), response);
+    }
+
+    @Test
+    public void test_getUserById_shouldReturn_NotFound() {
+        // given
+        when(userRepository.findById(5L))
+                .thenReturn(Optional.empty());
+
+        // when
+        Executable action = () -> userService.getUserById(5L);
+
+        // then
+        assertThrows(UserNotFoundException.class, action);
     }
 
     private UserEntity getMockedEntity() {
