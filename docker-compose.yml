@@ -1,13 +1,8 @@
 version: "3.8"
-
 networks:
-  database_net:
-    name: database_net
-    driver: bridge
   basic_net:
     name: basic_net
     driver: bridge
-
 volumes:
   local-data:
     driver: local
@@ -16,19 +11,9 @@ services:
     image: rabbitmq:3.9.12-management
     container_name: spaceship_rabbitmq
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - local-data:/rabbitmq
     networks:
       - basic_net
-  db:
-    image: postgres
-    container_name: spaceship_postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: spaceship_rent_db
-    ports:
-      - 5432:5432
