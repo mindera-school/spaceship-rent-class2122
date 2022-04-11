@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent;
+package com.mindera.school.spaceshiprent.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
