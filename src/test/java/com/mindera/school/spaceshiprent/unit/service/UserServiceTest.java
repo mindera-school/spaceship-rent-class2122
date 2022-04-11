@@ -6,6 +6,7 @@ import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import com.mindera.school.spaceshiprent.service.user.UserService;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,9 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+       this.userService = new UserServiceImpl(new UserConverter(),userRepository);
     }
+
 
     @Test
     public void test_getUserById_shouldReturnSuccess() {

@@ -3,10 +3,18 @@ package com.mindera.school.spaceshiprent.converter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserConverter {
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserConverter() {
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    }
+
 
     public UserEntity convertToEntity(CreateOrUpdateUserDto dto) {
         return UserEntity.builder()
@@ -16,7 +24,7 @@ public class UserConverter {
                 .licenseNumber(dto.getLicenseNumber())
                 .ssn(dto.getSsn())
                 .planet(dto.getPlanet())
-                .password(dto.getPassword())
+                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .userType(dto.getUserType())
                 .build();
     }
