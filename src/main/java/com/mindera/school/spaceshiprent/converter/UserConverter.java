@@ -4,6 +4,7 @@ import com.mindera.school.spaceshiprent.dto.auth.ValidLoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
+import com.mindera.school.spaceshiprent.security.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class UserConverter {
 
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JWTUtil jwtUtil;
 
     public UserEntity convertToEntity(CreateOrUpdateUserDto dto) {
         return UserEntity.builder()
@@ -40,13 +42,13 @@ public class UserConverter {
                 .build();
     }
 
-    public ValidLoginDto convertToValidLoginDto(UserEntity userEntity, String token) {
+    public ValidLoginDto convertToValidLoginDto(UserEntity userEntity) {
         return ValidLoginDto.builder()
                 .id(userEntity.getId())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
                 .userType(userEntity.getUserType())
-                .token(token)
+                .token(jwtUtil.generateToken(userEntity))
                 .build();
     }
 }

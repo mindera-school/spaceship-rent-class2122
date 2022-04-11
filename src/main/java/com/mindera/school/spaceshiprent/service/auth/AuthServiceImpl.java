@@ -38,9 +38,7 @@ public class AuthServiceImpl implements AuthService {
             throw new AccountNotFoundException(ACCOUNT_NOT_FOUND);
         }
 
-        String token = jwtUtil.generateToken(user);
-
-        return userConverter.convertToValidLoginDto(user, token);
+        return userConverter.convertToValidLoginDto(user);
     }
 }
 
