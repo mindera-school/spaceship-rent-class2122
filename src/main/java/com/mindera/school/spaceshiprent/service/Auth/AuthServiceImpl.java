@@ -21,7 +21,6 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final UserConverter userConverter;
-    private final JWTUtil jwtUtil;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
