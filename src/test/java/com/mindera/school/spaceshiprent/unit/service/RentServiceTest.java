@@ -37,7 +37,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class RentServiceTest {
 
-
     @Mock
     private RentRepository rentRepository;
 
@@ -50,50 +49,40 @@ public class RentServiceTest {
     @InjectMocks
     private RentServiceImpl rentService;
 
-
     @BeforeEach
     public void setup() {
         this.rentService = new RentServiceImpl(new RentConverter(), rentRepository, userRepository, spaceshipRepository);
-
     }
 
-
     @Test
-    public void rentCreation_UserSet_SpaceShipSet_PriceSet() {
+    public void rentCreation_userSet_spaceShipSet_priceSet() {
 
         RentEntity entity = getMockedEntityRent();
         UserEntity userEntity = getMockedEntityUser();
         SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
 
-
         when(userRepository.findById(getMockedEntityUser().getId())).thenReturn(Optional.of(userEntity));
         when(spaceshipRepository.findById(getMockedEntitySpaceShip().getId())).thenReturn(Optional.of(spaceshipEntity));
         when(rentRepository.save(Mockito.any(RentEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
 
-
         RentDetailsDto response = rentService.createRent(getMockedCreateOrUpdateRent());
         response.setId(getRentDetailsDto(entity).getId());
         assertEquals(getRentDetailsDto(entity), response);
-
     }
 
     @Test
     public void rentCreation_UserNotFound() {
 
-
         when(userRepository.findById(getMockedEntityUser().getId())).thenReturn(Optional.empty());
-
 
         Executable action = () -> rentService.createRent(getMockedCreateOrUpdateRent());
         assertThrows(UserNotFoundException.class, action);
     }
 
-
     @Test
-    public void rentCreation_SpaceShipNotFound() {
+    public void rentCreation_spaceShipNotFound() {
 
         UserEntity userEntity = getMockedEntityUser();
-
 
         when(userRepository.findById(getMockedEntityUser().getId())).thenReturn(Optional.of(userEntity));
         when(spaceshipRepository.findById(getMockedEntitySpaceShip().getId())).thenReturn(Optional.empty());
@@ -101,13 +90,10 @@ public class RentServiceTest {
         Executable action = () -> rentService.createRent(getMockedCreateOrUpdateRent());
 
         assertThrows(SpaceshipNotFoundException.class, action);
-
     }
 
-
     @Test
-    public void getAllRents_ShouldReturnSuccess() {
-
+    public void getAllRents_shouldReturnSuccess() {
 
         when(rentRepository.findAll()).thenReturn(getRentEntityList());
 
@@ -116,11 +102,10 @@ public class RentServiceTest {
         List<RentDetailsDto> response = rentService.getAllRents();
 
         assertEquals(rentDetails, response);
-
     }
 
     @Test
-    public void getRentById_ShouldReturnSuccess() {
+    public void getRentById_shouldReturnSuccess() {
         RentEntity entity = getMockedEntityRent();
 
         when(rentRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -128,12 +113,10 @@ public class RentServiceTest {
         RentDetailsDto response = rentService.getRentById(1L);
 
         assertEquals(getRentDetailsDto(entity), response);
-
-
     }
 
     @Test
-    public void test_getRentById_shouldReturn_NotFound() {
+    public void test_getRentById_shouldReturn_notFound() {
         when(rentRepository.findById(5L))
                 .thenReturn(Optional.empty());
 
@@ -151,7 +134,6 @@ public class RentServiceTest {
 
         RentDetailsDto response = rentService.updateRent(1L, getMockedCreateOrUpdateRent());
 
-
         assertEquals(getRentDetailsDto(entity), response);
     }
 
@@ -166,7 +148,7 @@ public class RentServiceTest {
     }
 
     @Test
-    public void test_getRentByCostumerId_ShouldReturn_Rent() {
+    public void test_getRentByCostumerId_shouldReturn_Rent() {
         UserEntity userEntity = getMockedEntityUser();
         userEntity.setRentEntity(getRentEntityList());
 
@@ -176,18 +158,17 @@ public class RentServiceTest {
         List<RentDetailsDto> rentDetails = getRentEntityList().stream().map(this::getRentDetailsDto).collect(Collectors.toList());
 
         assertEquals(rentDetails, response);
-
     }
 
     @Test
-    public void test_getRentByCustomerId_ShouldReturn_Error(){
+    public void test_getRentByCustomerId_shouldReturn_Error(){
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThrows(RentNotFoundException.class,() -> rentService.getRentByCustomerId(anyLong()));
     }
 
     @Test
-    public void test_getRentBySpaceShipId_ShouldReturn_Success(){
+    public void test_getRentBySpaceShipId_shouldReturn_Success(){
         SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
         spaceshipEntity.setRentEntity(getRentEntityList());
 
@@ -206,7 +187,6 @@ public class RentServiceTest {
         assertThrows(RentNotFoundException.class,() -> rentService.getRentBySpaceShipId(anyLong()));
     }
 
-
     private RentEntity getMockedEntityRent() {
         return RentEntity.builder()
                 .id(1L)
@@ -218,7 +198,6 @@ public class RentServiceTest {
                 .spaceShipEntity(getMockedEntitySpaceShip())
                 .build();
     }
-
 
     private UserEntity getMockedEntityUser() {
         return UserEntity.builder()
@@ -233,7 +212,6 @@ public class RentServiceTest {
                 .email("email@email.com")
                 .build();
     }
-
 
     private SpaceshipEntity getMockedEntitySpaceShip() {
         return SpaceshipEntity.builder()
