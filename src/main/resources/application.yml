@@ -7,19 +7,20 @@ spring:
     locations: classpath:migration
     baselineOnMigrate: "true"
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    user: nunoneto
+    user: nunolima
     password:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    username: nunoneto
+    username: nunolima
     password:
 
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+jwt_secret: ${JWT_SECRET}

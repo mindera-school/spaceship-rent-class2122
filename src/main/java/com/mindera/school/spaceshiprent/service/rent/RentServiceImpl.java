@@ -89,8 +89,7 @@ public class RentServiceImpl implements RentService {
 
         return rentEntity.stream()
                 .map(converter::convertToRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override

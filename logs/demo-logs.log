@@ -1,0 +1,249 @@
+2022-04-07 10:45:31,588 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest], using SpringBootContextLoader
+2022-04-07 10:45:31,603 INFO org.springframework.test.context.support.AbstractContextLoader [main] Could not detect default resource locations for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-04-07 10:45:31,604 INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: RentControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2022-04-07 10:45:31,802 INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration com.mindera.school.spaceshiprent.SpaceshipRentApplication for test class com.mindera.school.spaceshiprent.acceptance.RentControllerTest
+2022-04-07 10:45:31,921 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-04-07 10:45:31,943 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@538613b3, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1eef9aef, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@11389053, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5db99216, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3ec11999, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5c1bd44c, org.springframework.test.context.transaction.TransactionalTestExecutionListener@9f46d94, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@18cc679e, org.springframework.test.context.event.EventPublishingTestExecutionListener@2e77b8cf, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2c4ca0f9, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@67ef029, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7df587ef, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6e57e95e, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@2755d705, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@56db847e]
+2022-04-07 10:45:32,362 WARN org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [main] 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/nunolima/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/Users/nunolima/.m2/repository/org/json/json/20140107/json-20140107.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2022-04-07 10:45:32,377 INFO org.springframework.boot.StartupInfoLogger [main] Starting RentControllerTest using Java 11.0.12 on Nunos-MacBook-Pro.local with PID 34261 (started by nunolima in /Users/nunolima/workspace/spaceship-rent-temp)
+2022-04-07 10:45:32,378 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-04-07 10:45:32,378 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.2.Final
+2022-04-07 10:45:33,111 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-07 10:45:33,173 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 54 ms. Found 3 JPA repository interfaces.
+2022-04-07 10:45:34,219 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 0 (http)
+2022-04-07 10:45:34,229 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:45:34,230 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-04-07 10:45:34,230 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-07 10:45:34,337 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-04-07 10:45:34,338 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1938 ms
+2022-04-07 10:45:34,493 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-04-07 10:45:34,655 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-04-07 10:45:34,712 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-07 10:45:34,757 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-07 10:45:34,791 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-07 10:45:34,912 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2022-04-07 10:45:35,405 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-07 10:45:35,412 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:45:35,828 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-07 10:45:37,040 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:45:37,070 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 61977 (http) with context path ''
+2022-04-07 10:45:37,072 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [main] Attempting to connect to: [localhost:5672]
+2022-04-07 10:45:37,081 INFO org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [main] Broker not available; cannot force queue declarations during start: java.net.ConnectException: Connection refused (Connection refused)
+2022-04-07 10:45:37,090 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:45:37,095 ERROR org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Failed to check/redeclare auto-delete queue(s).
+org.springframework.amqp.AmqpConnectException: java.net.ConnectException: Connection refused (Connection refused)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:61)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:602)
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:724)
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:252)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2175)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2148)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2128)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:463)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:447)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1925)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1906)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1349)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1195)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:60)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1223)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1173)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:640)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:615)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:565)
+	... 12 common frames omitted
+2022-04-07 10:45:37,097 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:45:37,109 INFO org.springframework.boot.StartupInfoLogger [main] Started RentControllerTest in 5.123 seconds (JVM running for 6.523)
+2022-04-07 10:45:37,336 INFO org.apache.juli.logging.DirectJDKLog [http-nio-auto-1-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-07 10:45:37,337 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-04-07 10:45:37,338 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Completed initialization in 1 ms
+2022-04-07 10:45:37,487 INFO com.mindera.school.spaceshiprent.controller.RentController [http-nio-auto-1-exec-1] Request received to create rent at 2022-04-07
+2022-04-07 10:45:37,491 ERROR com.mindera.school.spaceshiprent.exception.exceptionHandlers.SpaceshipRentExceptionHandler [http-nio-auto-1-exec-1] Can't find any user with the id 1
+2022-04-07 10:45:37,613 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
+2022-04-07 10:45:37,613 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
+2022-04-07 10:45:37,631 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:45:37,631 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-04-07 10:45:37,638 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-04-07 10:45:37,641 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-04-07 10:46:37,227 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest], using SpringBootContextLoader
+2022-04-07 10:46:37,237 INFO org.springframework.test.context.support.AbstractContextLoader [main] Could not detect default resource locations for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-04-07 10:46:37,239 INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: RentControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2022-04-07 10:46:37,398 INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration com.mindera.school.spaceshiprent.SpaceshipRentApplication for test class com.mindera.school.spaceshiprent.acceptance.RentControllerTest
+2022-04-07 10:46:37,585 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-04-07 10:46:37,601 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@538613b3, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@1eef9aef, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@11389053, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5db99216, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3ec11999, org.springframework.test.context.support.DirtiesContextTestExecutionListener@5c1bd44c, org.springframework.test.context.transaction.TransactionalTestExecutionListener@9f46d94, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@18cc679e, org.springframework.test.context.event.EventPublishingTestExecutionListener@2e77b8cf, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@2c4ca0f9, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@67ef029, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7df587ef, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6e57e95e, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@2755d705, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@56db847e]
+2022-04-07 10:46:37,984 WARN org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [main] 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/nunolima/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/Users/nunolima/.m2/repository/org/json/json/20140107/json-20140107.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2022-04-07 10:46:37,999 INFO org.springframework.boot.StartupInfoLogger [main] Starting RentControllerTest using Java 11.0.12 on Nunos-MacBook-Pro.local with PID 34284 (started by nunolima in /Users/nunolima/workspace/spaceship-rent-temp)
+2022-04-07 10:46:38,000 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-04-07 10:46:38,004 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.2.Final
+2022-04-07 10:46:38,810 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-07 10:46:38,879 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 59 ms. Found 3 JPA repository interfaces.
+2022-04-07 10:46:40,074 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 0 (http)
+2022-04-07 10:46:40,087 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:46:40,088 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-04-07 10:46:40,088 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-07 10:46:40,227 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-04-07 10:46:40,228 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2203 ms
+2022-04-07 10:46:40,439 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-04-07 10:46:40,639 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-04-07 10:46:40,717 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-07 10:46:40,776 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-07 10:46:40,814 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-07 10:46:40,939 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2022-04-07 10:46:41,492 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-07 10:46:41,500 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:46:41,960 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-07 10:46:43,188 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:46:43,223 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 61994 (http) with context path ''
+2022-04-07 10:46:43,225 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [main] Attempting to connect to: [localhost:5672]
+2022-04-07 10:46:43,232 INFO org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [main] Broker not available; cannot force queue declarations during start: java.net.ConnectException: Connection refused (Connection refused)
+2022-04-07 10:46:43,240 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:46:43,244 ERROR org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Failed to check/redeclare auto-delete queue(s).
+org.springframework.amqp.AmqpConnectException: java.net.ConnectException: Connection refused (Connection refused)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:61)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:602)
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:724)
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:252)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2175)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2148)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2128)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:463)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:447)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1925)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1906)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1349)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1195)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:60)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1223)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1173)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:640)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:615)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:565)
+	... 12 common frames omitted
+2022-04-07 10:46:43,247 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:46:43,259 INFO org.springframework.boot.StartupInfoLogger [main] Started RentControllerTest in 5.618 seconds (JVM running for 6.925)
+2022-04-07 10:46:43,461 INFO org.apache.juli.logging.DirectJDKLog [http-nio-auto-1-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-07 10:46:43,461 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-04-07 10:46:43,463 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Completed initialization in 2 ms
+2022-04-07 10:46:43,618 INFO com.mindera.school.spaceshiprent.controller.RentController [http-nio-auto-1-exec-1] Request received to create rent at 2022-04-07
+2022-04-07 10:46:43,622 ERROR com.mindera.school.spaceshiprent.exception.exceptionHandlers.SpaceshipRentExceptionHandler [http-nio-auto-1-exec-1] Can't find any user with the id 1
+2022-04-07 10:46:43,738 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
+2022-04-07 10:46:43,739 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
+2022-04-07 10:46:43,760 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:46:43,761 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-04-07 10:46:43,768 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-04-07 10:46:43,771 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2022-04-07 10:47:10,219 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest], using SpringBootContextLoader
+2022-04-07 10:47:10,228 INFO org.springframework.test.context.support.AbstractContextLoader [main] Could not detect default resource locations for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-04-07 10:47:10,229 INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils [main] Could not detect default configuration classes for test class [com.mindera.school.spaceshiprent.acceptance.RentControllerTest]: RentControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2022-04-07 10:47:10,395 INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper [main] Found @SpringBootConfiguration com.mindera.school.spaceshiprent.SpaceshipRentApplication for test class com.mindera.school.spaceshiprent.acceptance.RentControllerTest
+2022-04-07 10:47:10,553 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-04-07 10:47:10,570 INFO org.springframework.test.context.support.AbstractTestContextBootstrapper [main] Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5db99216, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3ec11999, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@5c1bd44c, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@9f46d94, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@18cc679e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2e77b8cf, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2c4ca0f9, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@67ef029, org.springframework.test.context.event.EventPublishingTestExecutionListener@7df587ef, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@6e57e95e, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2755d705, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@56db847e, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@740abb5, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@560cbf1a, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5fe8b721]
+2022-04-07 10:47:10,970 WARN org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer [main] 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/nunolima/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/Users/nunolima/.m2/repository/org/json/json/20140107/json-20140107.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2022-04-07 10:47:10,984 INFO org.springframework.boot.StartupInfoLogger [main] Starting RentControllerTest using Java 11.0.12 on Nunos-MacBook-Pro.local with PID 34293 (started by nunolima in /Users/nunolima/workspace/spaceship-rent-temp)
+2022-04-07 10:47:10,985 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-04-07 10:47:10,989 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.2.Final
+2022-04-07 10:47:11,921 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-04-07 10:47:11,996 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 65 ms. Found 3 JPA repository interfaces.
+2022-04-07 10:47:13,156 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 0 (http)
+2022-04-07 10:47:13,170 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:47:13,173 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-04-07 10:47:13,174 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-04-07 10:47:13,304 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-04-07 10:47:13,304 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2297 ms
+2022-04-07 10:47:13,483 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-04-07 10:47:13,667 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-04-07 10:47:13,734 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-04-07 10:47:13,784 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-04-07 10:47:13,817 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-04-07 10:47:13,957 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2022-04-07 10:47:14,499 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-04-07 10:47:14,508 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:47:14,957 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-04-07 10:47:16,259 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-auto-1"]
+2022-04-07 10:47:16,289 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 62008 (http) with context path ''
+2022-04-07 10:47:16,292 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [main] Attempting to connect to: [localhost:5672]
+2022-04-07 10:47:16,300 INFO org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [main] Broker not available; cannot force queue declarations during start: java.net.ConnectException: Connection refused (Connection refused)
+2022-04-07 10:47:16,308 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:47:16,312 ERROR org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Failed to check/redeclare auto-delete queue(s).
+org.springframework.amqp.AmqpConnectException: java.net.ConnectException: Connection refused (Connection refused)
+	at org.springframework.amqp.rabbit.support.RabbitExceptionTranslator.convertRabbitAccessException(RabbitExceptionTranslator.java:61)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:602)
+	at org.springframework.amqp.rabbit.connection.CachingConnectionFactory.createConnection(CachingConnectionFactory.java:724)
+	at org.springframework.amqp.rabbit.connection.ConnectionFactoryUtils.createConnection(ConnectionFactoryUtils.java:252)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.doExecute(RabbitTemplate.java:2175)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2148)
+	at org.springframework.amqp.rabbit.core.RabbitTemplate.execute(RabbitTemplate.java:2128)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueInfo(RabbitAdmin.java:463)
+	at org.springframework.amqp.rabbit.core.RabbitAdmin.getQueueProperties(RabbitAdmin.java:447)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.attemptDeclarations(AbstractMessageListenerContainer.java:1925)
+	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.redeclareElementsIfNecessary(AbstractMessageListenerContainer.java:1906)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.initialize(SimpleMessageListenerContainer.java:1349)
+	at org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer$AsyncMessageProcessingConsumer.run(SimpleMessageListenerContainer.java:1195)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:609)
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:60)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1223)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1173)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connectAddresses(AbstractConnectionFactory.java:640)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.connect(AbstractConnectionFactory.java:615)
+	at org.springframework.amqp.rabbit.connection.AbstractConnectionFactory.createBareConnection(AbstractConnectionFactory.java:565)
+	... 12 common frames omitted
+2022-04-07 10:47:16,314 INFO org.springframework.amqp.rabbit.connection.AbstractConnectionFactory [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Attempting to connect to: [localhost:5672]
+2022-04-07 10:47:16,325 INFO org.springframework.boot.StartupInfoLogger [main] Started RentControllerTest in 5.717 seconds (JVM running for 7.074)
+2022-04-07 10:47:16,522 INFO org.apache.juli.logging.DirectJDKLog [http-nio-auto-1-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-04-07 10:47:16,522 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-04-07 10:47:16,523 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-auto-1-exec-1] Completed initialization in 1 ms
+2022-04-07 10:47:16,682 INFO com.mindera.school.spaceshiprent.controller.RentController [http-nio-auto-1-exec-1] Request received to create rent at 2022-04-07
+2022-04-07 10:47:16,686 ERROR com.mindera.school.spaceshiprent.exception.exceptionHandlers.SpaceshipRentExceptionHandler [http-nio-auto-1-exec-1] Can't find any user with the id 1
+2022-04-07 10:47:16,796 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Waiting for workers to finish.
+2022-04-07 10:47:16,796 INFO org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer [SpringApplicationShutdownHook] Successfully waited for workers to finish.
+2022-04-07 10:47:16,815 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-04-07 10:47:16,815 INFO org.hibernate.tool.schema.internal.SchemaDropperImpl$DelayedDropActionImpl [SpringApplicationShutdownHook] HHH000477: Starting delayed evictData of schema as part of SessionFactory shut-down'
+2022-04-07 10:47:16,822 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-04-07 10:47:16,827 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
