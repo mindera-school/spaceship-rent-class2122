@@ -17,6 +17,7 @@ public class authJWT {
                 .withClaim("password", loginDTO.getPassword())
                 .withIssuedAt(new java.util.Date())
                 .withIssuer("SpaceshipRent")
+                .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .sign(Algorithm.HMAC256(secret));
     }
 
@@ -25,4 +26,5 @@ public class authJWT {
         return null;
     }
 }
+
 

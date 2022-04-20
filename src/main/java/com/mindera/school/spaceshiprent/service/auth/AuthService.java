@@ -6,3 +6,4 @@ public interface AuthService {
 
     SendTokenDTO effectuateLogin(LoginDTO loginDTO);
 }
+

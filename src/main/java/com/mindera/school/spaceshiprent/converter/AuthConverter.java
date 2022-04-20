@@ -5,7 +5,7 @@ import com.mindera.school.spaceshiprent.dto.auth.SendTokenDTO;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component  
 public class AuthConverter {
 
     public SendTokenDTO convertToSendTokenDTO(UserEntity user, String token) {
@@ -19,3 +19,4 @@ public class AuthConverter {
                 .build();
     }
 }
+

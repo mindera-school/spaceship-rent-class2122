@@ -16,3 +16,4 @@ public class RabbitConfiguration {
         return new Queue("spaceShipQueue", true);
     }
 }
+

@@ -14,3 +14,4 @@ public class SendTokenDTO {
     private UserType userType;
     private String token;
 }
+
