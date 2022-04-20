@@ -3,6 +3,7 @@ package com.mindera.school.spaceshiprent.service.login;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.login.UserLoginDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
+import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.user.UserService;
@@ -22,15 +23,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public UserDetailsDto checkCredentials(UserLoginDto userLoginDto) {
-
-        UserEntity userEntity = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(() -> new RuntimeException("Wrong credentials"));
+        UserEntity userEntity = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow(() -> new UserNotFoundException("Wrong credentials"));
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if(passwordEncoder.matches(userLoginDto.getPassword(), userEntity.getPassword())) {
+        if (passwordEncoder.matches(userLoginDto.getPassword(), userEntity.getPassword())) {
             return userConverter.convertToUserDetailsDto(userEntity);
         }
 
 
-        throw new RuntimeException("Wrong credentials");
+        throw new UserNotFoundException("Wrong credentials");
     }
 }
