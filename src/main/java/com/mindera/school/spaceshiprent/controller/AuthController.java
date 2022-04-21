@@ -1,8 +1,8 @@
 package com.mindera.school.spaceshiprent.controller;
 
-import com.mindera.school.spaceshiprent.dto.user.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CredentialsDto;
-import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
+import com.mindera.school.spaceshiprent.dto.user.LoginDto;
+import com.mindera.school.spaceshiprent.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserServiceImpl userService;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginDto> login(@RequestBody CredentialsDto credentials) {
-        log.info("user logged in");
-        return ResponseEntity.ok(userService.login(credentials));
+        log.info("user tried to login");
+        return ResponseEntity.ok(authService.login(credentials));
     }
 }

@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserConverter converter;
     private final UserRepository userRepository;
-    private final JWTManager jwtManager;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -66,27 +65,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public LoginDto login(CredentialsDto credentials) {
-
-        UserEntity userEntity =
-                userRepository.findByEmail(credentials.getEmail()).orElseThrow(() -> {
-                    log.info("Email entered doesn't exist: {}", credentials.getEmail());
-                    return new WrongCredentialsException(ErrorMessageConstants.WRONG_CREDENTIALS);
-                });
-
-        if (!passwordEncoder.matches(credentials.getPassword(), userEntity.getPassword())) {
-            log.info("User inserted wrong credentials");
-            throw new WrongCredentialsException(ErrorMessageConstants.WRONG_CREDENTIALS);
-        }
-
-        String token = jwtManager.createToken(userEntity);
-
-        log.info("login token created");
-
-        LoginDto convertedUser = converter.convertToLoginDto(userEntity);
-        convertedUser.setToken(token);
-
-        return convertedUser;
-    }
 }

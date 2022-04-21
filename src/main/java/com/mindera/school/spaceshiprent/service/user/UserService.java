@@ -15,7 +15,4 @@ public interface UserService {
     UserDetailsDto getUserById(Long id);
 
     UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto);
-
-    LoginDto login(CredentialsDto credentials);
-
 }

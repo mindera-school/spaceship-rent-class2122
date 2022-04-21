@@ -7,7 +7,6 @@ import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
-import com.mindera.school.spaceshiprent.util.JWTManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,15 +30,12 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private JWTManager manager;
-
-    @Mock
     private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setup() {
         this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository, manager,passwordEncoder );
+                new UserConverter(), userRepository, passwordEncoder);
     }
 
     @Test
