@@ -6,6 +6,7 @@ import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import com.mindera.school.spaceshiprent.security.JWTUtil;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -30,8 +32,10 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        JWTUtil jwtUtil = new JWTUtil();
         this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+                new UserConverter(bCryptPasswordEncoder, jwtUtil), userRepository);
     }
 
     @Test

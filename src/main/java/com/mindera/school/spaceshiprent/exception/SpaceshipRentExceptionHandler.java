@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {UserNotFoundException.class})
+    @ExceptionHandler(value = {UserNotFoundException.class, AccountNotFoundException.class})
     public ResponseEntity<SpaceshipError> handleNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipError error = SpaceshipError.builder()
                 .message(ex.getMessage())
