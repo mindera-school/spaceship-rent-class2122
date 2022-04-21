@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.mapping.Collection;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -60,6 +64,8 @@ public class UserEntity {
     @Column(nullable = false)
     private UserType userType;
 
+
+    // relation
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<RentEntity> rentEntity;
 }

@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDetailsDto {
+public class LoginDto {
+
+    private String token;
     private Long id;
     private String name;
-    private int age;
-    private String licenseNumber;
-    private Long ssn;
-    private String planet;
     private String email;
+    private Long ssn;
     private UserType userType;
+    private String licenseNumber;
 }

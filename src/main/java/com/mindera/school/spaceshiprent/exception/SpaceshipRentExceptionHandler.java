@@ -23,6 +23,18 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
     }
 
 
+    @ExceptionHandler(value = {AccountNotFound.class})
+    public ResponseEntity<SpaceshipError> handleAccountNotFoundException(Exception ex, HttpServletRequest req) {
+        SpaceshipError error = SpaceshipError.builder()
+                .message(ex.getMessage())
+                .exception(ex.getClass().getSimpleName())
+                .path(req.getRequestURI())
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+
     @ExceptionHandler(value = {SpaceshipNotFoundException.class})
     public ResponseEntity<SpaceshipError> handleSpaceshipNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipError error = SpaceshipError.builder()

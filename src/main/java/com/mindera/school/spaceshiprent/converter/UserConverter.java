@@ -1,6 +1,7 @@
 package com.mindera.school.spaceshiprent.converter;
 
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
+import com.mindera.school.spaceshiprent.dto.user.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 
@@ -29,6 +30,18 @@ public class UserConverter {
                 .ssn(entity.getSsn())
                 .planet(entity.getPlanet())
                 .userType(entity.getUserType())
+                .build();
+    }
+
+
+    public LoginDto toLoginDto (UserEntity userEntity) {
+        return LoginDto.builder()
+                .id(userEntity.getId())
+                .email(userEntity.getEmail())
+                .ssn(userEntity.getSsn())
+                .userType(userEntity.getUserType())
+                .name(userEntity.getName())
+                .licenseNumber(userEntity.getLicenseNumber())
                 .build();
     }
 }
