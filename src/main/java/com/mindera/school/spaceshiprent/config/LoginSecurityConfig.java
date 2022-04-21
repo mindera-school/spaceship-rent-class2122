@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.security;
+package com.mindera.school.spaceshiprent.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
