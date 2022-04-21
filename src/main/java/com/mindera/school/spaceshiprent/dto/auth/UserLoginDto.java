@@ -1,4 +1,4 @@
-package com.mindera.school.spaceshiprent.dto.login;
+package com.mindera.school.spaceshiprent.dto.auth;
 
 import lombok.Data;
 

@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.controller;
 
+import com.mindera.school.spaceshiprent.dto.auth.ValidLoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
@@ -21,7 +22,7 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserDetailsDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
+    public ResponseEntity<ValidLoginDto> createUser(@RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
         return ResponseEntity.ok(userService.createUser(createOrUpdateUserDto));
     }
 
