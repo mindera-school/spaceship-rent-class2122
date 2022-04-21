@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -72,60 +73,7 @@ public class RentControllerTest {
         assertEquals(expected, response.getBody());
 
     }
-/*
-    @Test
-    public void test_getAllRents_shouldReturn200(){
-        // GIVEN
-        RentEntity entity1 = getMockedRentEntity(1L);
-        RentEntity entity2 = getMockedRentEntity(2L);
 
-        when(rentRepository.findAll())
-                .thenReturn(Arrays.asList(entity1, entity2));
-        String path = "/rents";
-
-        // WHEN
-        ResponseEntity<List<RentDetailsDto>> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                List<RentDetailsDto>.class
-        );
-
-        // THEN
-        verify(rentRepository, times(1))
-                .findAll();
-
-        List<RentDetailsDto> expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
-        assertEquals(expected, response.getBody());
-
-    }
-
-
-    @Test
-    public void test_createRent_shouldReturn200(){
-        // GIVEN
-        RentEntity entity = getMockedRentEntity(1L);
-        when(rentRepository.save(entity))
-                .thenReturn(entity);
-        String path = "/rents";
-
-        // WHEN
-        ResponseEntity<RentDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.POST,
-                HttpEntity.EMPTY,
-                RentDetailsDto.class
-        );
-
-        // THEN
-        verify(rentRepository, times(1))
-                .save(entity);
-
-        RentDetailsDto expected = getRentDetailsDTO(entity);
-        assertEquals(expected, response.getBody());
-
-    }
-*/
     @Test
     public void test_getRentById_shouldReturn404 () {
         // GIVEN
@@ -152,6 +100,63 @@ public class RentControllerTest {
                 Objects.requireNonNull(response.getBody()).getException(),
                 "exception name");
     }
+
+    @Test
+    public void test_getAllRents_shouldReturn200(){
+
+        // GIVEN
+        RentEntity entity1 = getMockedRentEntity(1L);
+        RentEntity entity2 = getMockedRentEntity(2L);
+
+        when(rentRepository.findAll())
+                .thenReturn(Arrays.asList(entity1, entity2));
+        String path = "/rents";
+
+        // WHEN
+        ResponseEntity<List<RentDetailsDto>> response = restTemplate.exchange(
+                path,
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                new ParameterizedTypeReference<List<RentDetailsDto>>() {
+                }
+
+        );
+
+        // THEN
+        verify(rentRepository, times(1))
+                .findAll();
+
+        List<RentDetailsDto> expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
+        assertEquals(expected, response.getBody());
+    }
+
+
+        @Test
+        public void test_createRent_shouldReturn200(){
+            // GIVEN
+            RentEntity entity = getMockedRentEntity(1L);
+            when(rentRepository.save(entity))
+                    .thenReturn(entity);
+            String path = "/rents";
+
+            // WHEN
+            ResponseEntity<RentDetailsDto> response = restTemplate.exchange(
+                    path,
+                    HttpMethod.POST,
+                    HttpEntity.EMPTY,
+                    RentDetailsDto.class
+            );
+
+            // THEN
+            verify(rentRepository, times(1))
+                    .save(entity);
+
+            RentDetailsDto expected = getRentDetailsDTO(entity);
+            assertEquals(expected, response.getBody());
+
+        }
+
+
 
     private UserEntity getMockedUserEntity() {
         return UserEntity.builder()

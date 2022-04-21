@@ -1,8 +1,10 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 
+import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
+import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import org.junit.jupiter.api.Test;
@@ -11,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -83,7 +88,33 @@ public class SpaceShipControllerTest {
                 "exception name");
     }
 
+    @Test
+    public void test_getAllRents_shouldReturn200() {
 
+        // GIVEN
+        SpaceshipEntity entity1 = getMockedEntity();
+        SpaceshipEntity entity2 = getMockedEntity();
+
+        when(spaceshipRepository.findAll())
+                .thenReturn(Arrays.asList(entity1, entity2));
+        String path = "/rents";
+
+        // WHEN
+        ResponseEntity<List<SpaceShipDetailsDto>> response = restTemplate.exchange(
+                path,
+                HttpMethod.GET,
+                HttpEntity.EMPTY,
+                new ParameterizedTypeReference<List<SpaceShipDetailsDto>>() {
+                });
+
+        // THEN
+        verify(spaceshipRepository, times(1))
+                .findAll();
+
+        List<RentDetailsDto> expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
+        assertEquals(expected, response.getBody());
+
+    }
 
     private SpaceshipEntity getMockedEntity() {
         return SpaceshipEntity.builder()
