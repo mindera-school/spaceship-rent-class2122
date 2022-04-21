@@ -16,9 +16,8 @@ import java.util.Date;
 @Component
 public class JWTUtils {
 
-    @Value("${jwt_secret}")
+    @Value(value = "${jwt-secret}")
     private String secret;
-
 
     public String generateToken(UserEntity user) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()

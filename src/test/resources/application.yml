@@ -7,3 +7,4 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+jwt-secret: ${JWT_TOKEN:some_default_if_missing}
