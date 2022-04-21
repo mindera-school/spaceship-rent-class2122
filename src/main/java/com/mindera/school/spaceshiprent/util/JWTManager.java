@@ -13,12 +13,14 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import static java.lang.Long.parseLong;
+
 @RequiredArgsConstructor
 @Component
 public class JWTManager {
 
     @Value(value = "${jwt_secret}")
-    private String SECRET;
+    private String secret;
 
     public String createToken(UserEntity entity) {
         return JWT.create()
@@ -26,22 +28,21 @@ public class JWTManager {
                 .withClaim("name", entity.getName())
                 .withClaim("email", entity.getEmail())
                 .withClaim("id", entity.getId())
-                .withClaim("userType", entity.getUserType().getDeclaringClass().getName())
+                .withClaim("userType", entity.getUserType().name())
                 .withClaim("Ssn", entity.getSsn())
                 .withIssuedAt(Date.from(Instant.now()))
                 .withIssuer("Spaceship-Rent-Mindera-School")
                 .withExpiresAt(Date.from(Instant.now().plus(5L, ChronoUnit.MINUTES)))
-                .sign(Algorithm.HMAC256(SECRET));
+                .sign(Algorithm.HMAC256(secret));
     }
 
     public Long validateTokenAndGetId(String token) {
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET))
-                .withSubject("User Information")
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withIssuer("Spaceship-Rent-Mindera-School")
                 .build();
 
         DecodedJWT jwt = verifier.verify(token);
-        return jwt.getClaim("id").asLong();
+        return parseLong(jwt.getSubject());
     }
 
 }
