@@ -39,4 +39,6 @@ public class UserController {
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody CreateOrUpdateUserDto createOrUpdateUserDto) {
         return ResponseEntity.ok(userService.updateUserById(id,createOrUpdateUserDto));
     }
+
+
 }
