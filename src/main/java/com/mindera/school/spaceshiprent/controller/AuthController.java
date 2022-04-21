@@ -18,7 +18,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginDto> login(@RequestBody CredentialsDto credentials) {
-        log.info("user tried to login");
+        log.info("user trying to login");
         return ResponseEntity.ok(authService.login(credentials));
     }
 }
