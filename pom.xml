@@ -23,6 +23,16 @@
 
         <sonar.organization>mindera-school</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>mindera-school_spaceship-rent-class2122</sonar.projectKey>
+
+        <sonar.coverage.exclusions>
+            **/dto/**/*,
+            **/persistence/entity/*,
+            **/config/*,
+            **/exception/*,
+            **/exception/**/*,
+            **/test/**/*
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -92,6 +102,18 @@
             <artifactId>mailjet-client</artifactId>
             <version>4.2.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.19.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.1.5.RELEASE</version>
+        </dependency>
+
 
     </dependencies>
 
