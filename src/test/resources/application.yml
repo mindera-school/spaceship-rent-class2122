@@ -5,3 +5,9 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      expiration: 24 # hours
