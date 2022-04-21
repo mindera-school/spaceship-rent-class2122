@@ -12,20 +12,23 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.stereotype.Component;
 
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class EmailConsumer {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EmailConsumer.class);
-    private final String KEY = "26d4ec8cfda8f82be1c1a67d8f3e99a4";
-    private final String SECRET_KEY = "39abedbf3999b62c2f072a70f3f0fdb8";
 
-    @RabbitListener(queues = "emailQueue")
+    @Value(value = "${key}")
+    private String key;
+
+    @Value(value = "${secret-key}")
+    private String secretKey;
+
+    //@RabbitListener(queues = "emailQueue")
     public void receive(@Payload String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
 
         String email = emailingInfo.split(" ")[0];
@@ -33,7 +36,7 @@ public class EmailConsumer {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient(KEY, SECRET_KEY, new ClientOptions("v3.1"));
+        client = new MailjetClient(key, secretKey, new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()

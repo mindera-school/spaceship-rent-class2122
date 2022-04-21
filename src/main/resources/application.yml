@@ -25,3 +25,7 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+jwt-secret: ${JWT_TOKEN:some_default_if_missing}
+key: ${KEY}
+secret-key: ${SECRET_KEY}
