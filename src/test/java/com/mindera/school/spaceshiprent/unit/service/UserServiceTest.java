@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -28,10 +29,13 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     public void setup() {
         this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository);
+                new UserConverter(), userRepository, passwordEncoder);
     }
 
     @Test
@@ -89,4 +93,5 @@ public class UserServiceTest {
                 .email(entity.getEmail())
                 .build();
     }
+
 }
