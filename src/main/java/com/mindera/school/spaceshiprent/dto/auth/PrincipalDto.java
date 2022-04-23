@@ -1,17 +1,15 @@
-package com.mindera.school.spaceshiprent.dto.user;
+package com.mindera.school.spaceshiprent.dto.auth;
 
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
-public class LoginDto {
-    private String token;
+public class PrincipalDto {
+
     private Long id;
     private String name;
     private String email;
-    private Long ssn;
     private UserType userType;
-    private String licenseNumber;
 }

@@ -23,4 +23,12 @@ spring:
       hibernate:
         format_sql: true
 
-jwt_secret: ${SECRET}
+jwt-secret: ${SECRET}
+
+app:
+  security:
+    jwt:
+      secret: ${SECRET}
+      expiresIn: 3600000 # 24 hours
+    passwordEncoder:
+      saltSize: 13

@@ -1,6 +1,6 @@
 package com.mindera.school.spaceshiprent.converter;
 
-import com.mindera.school.spaceshiprent.dto.user.LoginDto;
+import com.mindera.school.spaceshiprent.dto.auth.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
