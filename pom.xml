@@ -23,6 +23,16 @@
 
         <sonar.organization>mindera-school</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>mindera-school_spaceship-rent-class2122</sonar.projectKey>
+
+        <sonar.coverage.exclusions>
+            **/dto/**/*,
+            **/persistence/entity/*,
+            **/config/*,
+            **/exception/*,
+            **/exception/**/*,
+            **/test/**/*
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -86,6 +96,18 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -105,7 +127,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>0.8.7</version>
                 <executions>
                     <execution>
                         <goals>

@@ -3,11 +3,12 @@ package com.mindera.school.spaceshiprent.unit.service;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
-import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import com.mindera.school.spaceshiprent.util.JWTManager;
+import com.mindera.school.spaceshiprent.util.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
+
 
     private UserServiceImpl userService;
 
@@ -38,8 +41,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(
-                new UserConverter(), userRepository, manager,passwordEncoder );
+        this.userService = new UserServiceImpl(new UserConverter(new BCryptPasswordEncoder(),new JWTUtils()), userRepository, manager,passwordEncoder );
     }
 
     @Test

@@ -1,19 +1,20 @@
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
+    username: ${DB_USER}
+    password: ${DB_PASS}
+
   flyway:
     enabled: true
     locations: classpath:migration
     baselineOnMigrate: "true"
     url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    user: ${DB_USER}
-    password:
-
-  datasource:
-    url: jdbc:postgresql://localhost:5432/spaceship_rent_db
-    username: ${DB_USER}
-    password:
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
 
   jpa:
     hibernate:
@@ -23,12 +24,16 @@ spring:
       hibernate:
         format_sql: true
 
-jwt-secret: ${SECRET}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 app:
   security:
     jwt:
-      secret: ${SECRET}
+      secret: ${JWT_SECRET:some_default}
       expiresIn: 3600000 # 24 hours
     passwordEncoder:
       saltSize: 13
