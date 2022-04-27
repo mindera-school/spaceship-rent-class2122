@@ -150,11 +150,14 @@ public class RentServiceTest {
     @Test
     public void test_getRentByCostumerId_shouldReturn_Rent() {
         UserEntity userEntity = getMockedEntityUser();
-        userEntity.setRentEntity(getRentEntityList());
+        userEntity.setRents(getRentEntityList());
 
-        when(userRepository.findById(userEntity.getId())).thenReturn(Optional.of(userEntity));
+        when(userRepository.findById(userEntity.getId()))
+                .thenReturn(Optional.of(userEntity));
+        when(rentRepository.findByUserId(userEntity.getId()))
+                .thenReturn(getRentEntityList());
 
-        List<RentDetailsDto> response = rentService.getRentByCustomerId(5L);
+        List<RentDetailsDto> response = rentService.getRentsByCustomerId(5L);
         List<RentDetailsDto> rentDetails = getRentEntityList().stream().map(this::getRentDetailsDto).collect(Collectors.toList());
 
         assertEquals(rentDetails, response);
@@ -164,17 +167,20 @@ public class RentServiceTest {
     public void test_getRentByCustomerId_shouldReturn_Error(){
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RentNotFoundException.class,() -> rentService.getRentByCustomerId(anyLong()));
+        assertThrows(UserNotFoundException.class,() -> rentService.getRentsByCustomerId(anyLong()));
     }
 
     @Test
     public void test_getRentBySpaceShipId_shouldReturn_Success(){
         SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
-        spaceshipEntity.setRentEntity(getRentEntityList());
+        spaceshipEntity.setRents(getRentEntityList());
 
-        when(spaceshipRepository.findById(spaceshipEntity.getId())).thenReturn(Optional.of(spaceshipEntity));
+        when(spaceshipRepository.findById(spaceshipEntity.getId()))
+                .thenReturn(Optional.of(spaceshipEntity));
+        when(rentRepository.findBySpaceshipId(spaceshipEntity.getId()))
+                .thenReturn(getRentEntityList());
 
-        List<RentDetailsDto> response = rentService.getRentBySpaceShipId(1L);
+        List<RentDetailsDto> response = rentService.getRentsBySpaceshipId(1L);
         List<RentDetailsDto> rentDetails = getRentEntityList().stream().map(this::getRentDetailsDto).collect(Collectors.toList());
 
         assertEquals(rentDetails, response);
@@ -184,7 +190,7 @@ public class RentServiceTest {
     public void test_getRentBySpaceShipId_ShouldReturn_Error(){
         when(spaceshipRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RentNotFoundException.class,() -> rentService.getRentBySpaceShipId(anyLong()));
+        assertThrows(SpaceshipNotFoundException.class,() -> rentService.getRentsBySpaceshipId(anyLong()));
     }
 
     private RentEntity getMockedEntityRent() {
@@ -195,7 +201,7 @@ public class RentServiceTest {
                 .expectedPickupDate(LocalDate.of(2022, 10, 20))
                 .userEntity(getMockedEntityUser())
                 .pricePerDay(12)
-                .spaceShipEntity(getMockedEntitySpaceShip())
+                .spaceshipEntity(getMockedEntitySpaceShip())
                 .build();
     }
 
@@ -227,7 +233,7 @@ public class RentServiceTest {
     private RentDetailsDto getRentDetailsDto(RentEntity rentEntity) {
         return RentDetailsDto.builder()
                 .id(rentEntity.getId())
-                .spaceshipId(rentEntity.getSpaceShipEntity().getId())
+                .spaceshipId(rentEntity.getSpaceshipEntity().getId())
                 .customerId(rentEntity.getUserEntity().getId())
                 .expectedPickupDate(rentEntity.getExpectedPickupDate())
                 .expectedReturnDate(rentEntity.getExpectedReturnDate())
@@ -241,7 +247,7 @@ public class RentServiceTest {
     private CreateOrUpdateRentDto getMockedCreateOrUpdateRent() {
         CreateOrUpdateRentDto createOrUpdateRentDto = new CreateOrUpdateRentDto();
         createOrUpdateRentDto.setCustomerId(getMockedEntityRent().getUserEntity().getId());
-        createOrUpdateRentDto.setSpaceshipId(getMockedEntityRent().getSpaceShipEntity().getId());
+        createOrUpdateRentDto.setSpaceshipId(getMockedEntityRent().getSpaceshipEntity().getId());
         createOrUpdateRentDto.setDiscount(20);
         createOrUpdateRentDto.setExpectedReturnDate(LocalDate.of(2022, 12, 20));
         createOrUpdateRentDto.setExpectedPickupDate(LocalDate.of(2022, 10, 20));

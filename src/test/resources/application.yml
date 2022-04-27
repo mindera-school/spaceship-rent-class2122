@@ -7,6 +7,17 @@ spring:
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-jwt-secret: ${JWT_TOKEN:some_default_if_missing}
-key: ${KEY}
-secret-key: ${SECRET_KEY}
+
+app:
+  security:
+    password-salt-size: 13
+    jwt-secret: some_jwt_secret
+    session-duration: 3600000 # 24 hours (in milliseconds)
+    session-cookie-name: session
+    api-key: test_api_key
+
+  mail:
+    third-party:
+      mailjet:
+        key: mailjet_test_key
+        secret: mailjet_test_secret

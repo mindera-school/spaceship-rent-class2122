@@ -1,7 +1,9 @@
 package com.mindera.school.spaceshiprent.dto.auth;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class CredentialsDto {
     private String email;
@@ -11,7 +13,6 @@ public class CredentialsDto {
     public String toString() {
         return "CredentialsDto{" +
                 "email='" + email + '\'' +
-                ", password='***'" +
                 '}';
     }
 }

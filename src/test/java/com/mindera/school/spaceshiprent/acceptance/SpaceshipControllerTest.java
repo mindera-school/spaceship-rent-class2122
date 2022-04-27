@@ -4,86 +4,64 @@ package com.mindera.school.spaceshiprent.acceptance;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
-import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Objects;
 import java.util.Optional;
 
+import static com.mindera.school.spaceshiprent.controller.SpaceshipController.PATH_GET_SPACESHIP_BY_ID;
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SpaceShipControllerTest {
-
-    @MockBean
-    private SpaceshipRepository spaceshipRepository;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
+class SpaceshipControllerTest extends BaseControllerTest {
 
     @Test
-    public void test_getspaceShipById_shouldReturn200(){
+    void test_getspaceshipById_shouldReturn200(){
         //GIVEN
         SpaceshipEntity spaceShip = getMockedEntity();
         when(spaceshipRepository.findById(5L))
                 .thenReturn(Optional.of(spaceShip));
-        String path = "/spaceships/5";
 
         //WHEN
-        ResponseEntity<SpaceShipDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                SpaceShipDetailsDto.class);
+        final var response = given()
+                .headers(getApiAuthenticatedHeader())
+                .when()
+                .get(PATH_GET_SPACESHIP_BY_ID, 5L)
+                .then().extract().response();
 
         //THEN
         verify(spaceshipRepository,times(1))
                 .findById(anyLong());
 
         SpaceShipDetailsDto expected = getSpaceShipDetailsDto(spaceShip);
-        assertEquals(expected, response.getBody());
-
+        assertEquals(expected, response.getBody().as(SpaceShipDetailsDto.class));
     }
 
     @Test
-    public void test_getspaceShipById_shouldReturn404(){
+    void test_getspaceShipById_shouldReturn404(){
         //GIVEN
         when(spaceshipRepository.findById(5L))
                 .thenReturn(Optional.empty());
         String path = "/spaceships/5";
 
         //WHEN
-        ResponseEntity<SpaceshipRentError> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                SpaceshipRentError.class);
+        final var response = given()
+                .headers(getApiAuthenticatedHeader())
+                .when()
+                .get(PATH_GET_SPACESHIP_BY_ID, 5L)
+                .then().extract().response();
 
         //THEN
         verify(spaceshipRepository, times(1))
                 .findById(anyLong());
 
-        assertEquals(HttpStatus.NOT_FOUND,
-                response.getStatusCode(),
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode(),
                 "status code");
         assertEquals("SpaceshipNotFoundException",
-                Objects.requireNonNull(response.getBody()).getException(),
+                response.getBody().as(SpaceshipRentError.class).getException(),
                 "exception name");
     }
-
-
 
     private SpaceshipEntity getMockedEntity() {
         return SpaceshipEntity.builder()

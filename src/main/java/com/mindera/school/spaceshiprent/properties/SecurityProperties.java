@@ -9,17 +9,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app.security")
 public class SecurityProperties {
 
-    private JwtProperties jwt;
-    private PasswordEncoderProperties passwordEncoder;
-
-    @Data
-    public static class JwtProperties {
-        private String secret;
-        private Long expiresIn;
-    }
-
-    @Data
-    public static class PasswordEncoderProperties {
-        private Integer saltSize;
-    }
+    private int passwordSaltSize;
+    private String jwtSecret;
+    private Long sessionDuration;
+    private String sessionCookieName;
+    private String apiKey;
 }

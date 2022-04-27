@@ -5,7 +5,6 @@ import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
-import com.mindera.school.spaceshiprent.util.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ public class UserConverterTest {
 
     @BeforeEach
     public void setup() {
-        this.userConverter = new UserConverter(new BCryptPasswordEncoder(), new JWTUtils());
+        this.userConverter = new UserConverter(new BCryptPasswordEncoder());
     }
 
     @Test
@@ -58,7 +57,7 @@ public class UserConverterTest {
         assertEquals(mockedEntity.getLicenseNumber(), userEntity.getLicenseNumber(), "license number");
         assertEquals(mockedEntity.getSsn(), userEntity.getSsn(), "ssn");
         //assertEquals(mockedEntity.getPassword(), userEntity.getPassword(), "password");
-        assertEquals(mockedEntity.getRentEntity(), userEntity.getRentEntity(), "rent");
+        assertEquals(mockedEntity.getRents(), userEntity.getRents(), "rent");
         assertEquals(mockedEntity.getId(), userEntity.getId(), "id");
     }
 

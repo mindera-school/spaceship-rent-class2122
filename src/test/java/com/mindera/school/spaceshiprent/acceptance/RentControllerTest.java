@@ -1,215 +1,598 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 
-import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
+import com.mindera.school.spaceshiprent.controller.RentController;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
-import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
-import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
-import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
-import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
-import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
-import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
-import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.http.MediaType;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
+import static com.mindera.school.spaceshiprent.MockedObjects.getMockedCreateRentDto;
+import static com.mindera.school.spaceshiprent.MockedObjects.getMockedRentEntity;
+import static com.mindera.school.spaceshiprent.MockedObjects.getMockedSpaceshipEntity;
+import static com.mindera.school.spaceshiprent.MockedObjects.getMockedUserEntity;
+import static com.mindera.school.spaceshiprent.MockedObjects.getRentDetailsDTO;
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RentControllerTest {
+class RentControllerTest extends BaseControllerTest {
 
-    @MockBean
-    private UserRepository userRepository;
+    @Nested
+    class CreateRentTest {
+        @Test
+        void test_createRent_shouldReturn200() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(2L);
 
-    @MockBean
-    private SpaceshipRepository spaceshipRepository;
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedUserEntity()));
+            when(spaceshipRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedSpaceshipEntity()));
 
-    @MockBean
-    private RentRepository rentRepository;
+            when(rentRepository.save(any()))
+                    .thenReturn(entity);
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .body(getMockedCreateRentDto())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .post(RentController.PATH_CREATE_RENT)
+                    .then().extract().response();
 
-    @Test
-    public void test_getRentById_shouldReturn200(){
-        // GIVEN
-        RentEntity entity = getMockedRentEntity(2L);
-        when(rentRepository.findById(2L))
-                .thenReturn(Optional.of(entity));
-        String path = "/rents/2";
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 
-        // WHEN
-        ResponseEntity<RentDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                RentDetailsDto.class
-        );
+            final var expected = getRentDetailsDTO(entity);
+            final var actual = response.getBody().as(RentDetailsDto.class);
 
-        // THEN
-        verify(rentRepository, times(1))
-                .findById(anyLong());
+            assertEquals(expected, actual);
+        }
 
-        RentDetailsDto expected = getRentDetailsDTO(entity);
-        assertEquals(expected, response.getBody());
+        @Test
+        void test_createRent_userNotFound_shouldReturn404() {
+            // ARRANGE
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.empty());
 
-    }
-/*
-    @Test
-    public void test_getAllRents_shouldReturn200(){
-        // GIVEN
-        RentEntity entity1 = getMockedRentEntity(1L);
-        RentEntity entity2 = getMockedRentEntity(2L);
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .body(getMockedCreateRentDto())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .post(RentController.PATH_CREATE_RENT)
+                    .then().extract().response();
 
-        when(rentRepository.findAll())
-                .thenReturn(Arrays.asList(entity1, entity2));
-        String path = "/rents";
+            // ASSERT
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
 
-        // WHEN
-        ResponseEntity<List<RentDetailsDto>> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                List<RentDetailsDto>.class
-        );
+            final var actual = response.getBody().as(SpaceshipRentError.class);
 
-        // THEN
-        verify(rentRepository, times(1))
-                .findAll();
+            assertEquals("UserNotFoundException", actual.getException());
+        }
 
-        List<RentDetailsDto> expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
-        assertEquals(expected, response.getBody());
+        @Test
+        void test_createRent_spaceshipNotFound_shouldReturn404() {
+            // ARRANGE
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedUserEntity()));
+            when(spaceshipRepository.findById(1L))
+                    .thenReturn(Optional.empty());
 
-    }
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .body(getMockedCreateRentDto())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .post(RentController.PATH_CREATE_RENT)
+                    .then().extract().response();
 
+            // ASSERT
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
 
-    @Test
-    public void test_createRent_shouldReturn200(){
-        // GIVEN
-        RentEntity entity = getMockedRentEntity(1L);
-        when(rentRepository.save(entity))
-                .thenReturn(entity);
-        String path = "/rents";
+            final var actual = response.getBody().as(SpaceshipRentError.class);
 
-        // WHEN
-        ResponseEntity<RentDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.POST,
-                HttpEntity.EMPTY,
-                RentDetailsDto.class
-        );
-
-        // THEN
-        verify(rentRepository, times(1))
-                .save(entity);
-
-        RentDetailsDto expected = getRentDetailsDTO(entity);
-        assertEquals(expected, response.getBody());
+            assertEquals("SpaceshipNotFoundException", actual.getException(),
+                    "Exception name");
+        }
 
     }
-*/
-    @Test
-    public void test_getRentById_shouldReturn404 () {
-        // GIVEN
-        when(rentRepository.findById(1L))
-                .thenReturn(Optional.empty());
-        String path = "/rents/1";
 
-        // WHEN
-        ResponseEntity<SpaceshipRentError> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                SpaceshipRentError.class
-        );
+    @Nested
+    class GetRents {
 
-        // THEN
-        verify(rentRepository, times(1))
-                .findById(anyLong());
+        @Test
+        void test_getAllRents_shouldReturn200() {
+            // ARRANGE
+            final var entity1 = getMockedRentEntity(1L);
+            final var entity2 = getMockedRentEntity(2L);
+            when(rentRepository.findAll())
+                    .thenReturn(Arrays.asList(entity1, entity2));
 
-        assertEquals(HttpStatus.NOT_FOUND,
-                response.getStatusCode(),
-                "status code");
-        assertEquals("RentNotFoundException",
-                Objects.requireNonNull(response.getBody()).getException(),
-                "exception name");
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENTS)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_getAllRents_emptyList_shouldReturn200() {
+            // ARRANGE
+            when(rentRepository.findAll())
+                    .thenReturn(List.of());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENTS)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertTrue(actual.isEmpty(), "list size");
+        }
+
     }
 
-    private UserEntity getMockedUserEntity() {
-        return UserEntity.builder()
-                .id(1L)
-                .name("Manel")
-                .age(20)
-                .ssn(123456789L)
-                .licenseNumber("1238127LSC")
-                .planet("Terra")
-                .userType(UserType.CUSTOMER)
-                .password("Password123")
-                .email("email@email.com")
-                .build();
+    @Nested
+    class GetRentById {
+
+        @Test
+        void test_getRentById_shouldReturn200() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(2L);
+            when(rentRepository.findById(2L))
+                    .thenReturn(Optional.of(entity));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_ID, 2L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var expected = getRentDetailsDTO(entity);
+            final var actual = response.getBody().as(RentDetailsDto.class);
+
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_getRentById_shouldReturn404() {
+            // ARRANGE
+            when(rentRepository.findById(1L))
+                    .thenReturn(Optional.empty());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_ID, 1L)
+                    .then().extract().response();
+
+            // THEN
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
     }
 
-    private SpaceshipEntity getMockedSpaceshipEntity () {
-        return SpaceshipEntity.builder()
-                .id(1L)
-                .name("Corsie")
-                .brand("Axeus Mk5")
-                .model("Corsair")
-                .registerNumber(123234345)
-                .priceDay(150)
-                .build();
+    @Nested
+    class GetRentByCustomerId {
+
+        @Test
+        void test_getRentCustomerById_shouldReturn200() {
+            // ARRANGE
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedUserEntity()));
+
+            final var entity1 = getMockedRentEntity(1L);
+            final var entity2 = getMockedRentEntity(2L);
+            when(rentRepository.findByUserId(1L))
+                    .thenReturn(List.of(entity1, entity2));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_CUSTOMER_ID, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_getRentByCustomerId_customerNotFound_shouldReturn404() {
+            // ARRANGE
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.empty());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_CUSTOMER_ID, 1L)
+                    .then().extract().response();
+
+            // THEN
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("UserNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+        @Test
+        void test_getRentCustomerById_emptyList_shouldReturn200() {
+            // ARRANGE
+            when(userRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedUserEntity()));
+
+            when(rentRepository.findByUserId(1L))
+                    .thenReturn(List.of());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_CUSTOMER_ID, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertTrue(actual.isEmpty(), "List size");
+        }
+
     }
 
-    private RentEntity getMockedRentEntity(Long id) {
-        return RentEntity.builder()
-                .id(id)
-                .userEntity(getMockedUserEntity())
-                .spaceShipEntity(getMockedSpaceshipEntity())
-                .expectedPickupDate(LocalDate.of(2022,11,12))
-                .expectedReturnDate(LocalDate.of(2022,12,13))
-                .pricePerDay(150)
-                .discount(0)
-                .build();
+    @Nested
+    class GetRentBySpaceshipId {
+
+        @Test
+        void test_getRentSpaceshipById_shouldReturn200() {
+            // ARRANGE
+            when(spaceshipRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedSpaceshipEntity()));
+
+            final var entity1 = getMockedRentEntity(1L);
+            final var entity2 = getMockedRentEntity(2L);
+            when(rentRepository.findBySpaceshipId(1L))
+                    .thenReturn(List.of(entity1, entity2));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_SPACESHIP_ID, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var expected = Arrays.asList(getRentDetailsDTO(entity1), getRentDetailsDTO(entity2));
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        void test_getRentBySpaceshipId_spaceshipNotFound_shouldReturn404() {
+            // ARRANGE
+            when(spaceshipRepository.findById(1L))
+                    .thenReturn(Optional.empty());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_SPACESHIP_ID, 1L)
+                    .then().extract().response();
+
+            // THEN
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("SpaceshipNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+        @Test
+        void test_getRentSpaceshipById_emptyList_shouldReturn200() {
+            // ARRANGE
+            when(spaceshipRepository.findById(1L))
+                    .thenReturn(Optional.of(getMockedSpaceshipEntity()));
+
+            when(rentRepository.findBySpaceshipId(1L))
+                    .thenReturn(List.of());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .get(RentController.PATH_GET_RENT_BY_SPACESHIP_ID, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var actual = Arrays.asList(response.getBody().as(RentDetailsDto[].class));
+
+            assertTrue(actual.isEmpty(), "List size");
+        }
+
     }
 
-    private CreateOrUpdateRentDto getMockedCreateDto () {
-        CreateOrUpdateRentDto dto = new CreateOrUpdateRentDto();
-        dto.setCustomerId(1L);
-        dto.setSpaceshipId(1L);
-        dto.setExpectedPickupDate(LocalDate.of(2022,12,12));
-        dto.setExpectedReturnDate(LocalDate.of(2022,12,13));
-        dto.setDiscount(0);
-        return dto;
+    @Nested
+    class UpdateRentTest {
+
+        @Test
+        void test_updateRent_shouldReturn200() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            when(rentRepository.findById(1L))
+                    .thenReturn(Optional.of(entity));
+            when(rentRepository.save(any()))
+                    .thenReturn(entity);
+
+            final var dto = getMockedCreateRentDto();
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .body(dto)
+                    .when()
+                    .put(RentController.PATH_UPDATE_RENT, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var actual = response.getBody().as(RentDetailsDto.class);
+            assertEquals(getRentDetailsDTO(entity), actual);
+        }
+
+        @Test
+        void test_updateRent_notFound_shouldReturn404() {
+            // ARRANGE
+            when(rentRepository.findById(1L))
+                    .thenReturn(Optional.empty());
+
+            final var dto = getMockedCreateRentDto();
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .body(dto)
+                    .when()
+                    .put(RentController.PATH_UPDATE_RENT, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
     }
 
-    private RentDetailsDto getRentDetailsDTO (RentEntity entity) {
-        return RentDetailsDto.builder()
-                .id(entity.getId())
-                .customerId(entity.getUserEntity().getId())
-                .spaceshipId(entity.getSpaceShipEntity().getId())
-                .expectedPickupDate(entity.getExpectedPickupDate())
-                .expectedReturnDate(entity.getExpectedReturnDate())
-                .pickDate(entity.getPickupDate())
-                .returnDate(entity.getReturnDate())
-                .pricePerDay(entity.getPricePerDay())
-                .build();
+    @Nested
+    class PickupRentTest {
+
+        @Test
+        void test_pickupRent_shouldReturn200() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.of(entity));
+            when(rentRepository.save(any()))
+                    .thenReturn(entity);
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_PICKUP_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+            final var actual = response.getBody().as(RentDetailsDto.class);
+            assertEquals(getRentDetailsDTO(entity), actual);
+        }
+
+        @Test
+        void test_pickupRent_notFound_shouldReturn404() {
+            // ARRANGE
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.empty());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_PICKUP_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+        @Test
+        void test_pickupRent_rentAlreadyPickedUp_shouldReturn409() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            entity.setPickupDate(LocalDate.now());
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.of(entity));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_PICKUP_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.CONFLICT.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentAlreadyPickedUpException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+    }
+
+    @Nested
+    class ReturnRentTest {
+
+        @Test
+        void test_returnRent_shouldReturn200() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            entity.setPickupDate(LocalDate.now());
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.of(entity));
+            when(rentRepository.save(any()))
+                    .thenReturn(entity);
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_RETURN_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        }
+
+        @Test
+        void test_returnRent_notFound_shouldReturn404() {
+            // ARRANGE
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.empty());
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_RETURN_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentNotFoundException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+        @Test
+        void test_returnRent_rentNotPickedUp_shouldReturn409() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.of(entity));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_RETURN_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.CONFLICT.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentNotPickedUpException", errorResponse.getException(),
+                    "Exception name");
+        }
+
+        @Test
+        void test_returnRent_rentAlreadyReturned_shouldReturn409() {
+            // ARRANGE
+            final var entity = getMockedRentEntity(1L);
+            entity.setPickupDate(LocalDate.now());
+            entity.setReturnDate(LocalDate.now());
+            when(rentRepository.findByIdAndUserId(1L, 1L))
+                    .thenReturn(Optional.of(entity));
+
+            // ACT
+            final var response = given()
+                    .headers(getApiAuthenticatedHeader())
+                    .when()
+                    .patch(RentController.PATH_RETURN_RENT, 1L, 1L)
+                    .then().extract().response();
+
+            // ASSERT
+            assertEquals(HttpStatus.CONFLICT.value(), response.getStatusCode());
+
+            final var errorResponse = response.getBody().as(SpaceshipRentError.class);
+
+            assertEquals("RentAlreadyReturnedException", errorResponse.getException(),
+                    "Exception name");
+        }
+
     }
 }

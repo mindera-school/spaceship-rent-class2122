@@ -6,7 +6,6 @@ import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
 import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
-import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

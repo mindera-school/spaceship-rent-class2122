@@ -12,7 +12,7 @@ public final class AuthConverter {
                 .id(userEntity.getId())
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
-                .userType(userEntity.getUserType())
+                .userRole(userEntity.getUserType().getUserRole())
                 .build();
     }
 }

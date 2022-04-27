@@ -1,10 +1,15 @@
 package com.mindera.school.spaceshiprent.exception.exceptionHandlers;
 
+import com.mindera.school.spaceshiprent.exception.exceptions.RentAlreadyPickedUpException;
+import com.mindera.school.spaceshiprent.exception.exceptions.RentAlreadyReturnedException;
 import com.mindera.school.spaceshiprent.exception.exceptions.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.RentNotPickedUpException;
 import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.exception.SpaceshipRentException;
+import com.mindera.school.spaceshiprent.exception.exceptions.WrongCredentialsException;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
 import com.mindera.school.spaceshiprent.exception.model.ValidationError;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -23,21 +28,39 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SpaceshipRentExceptionHandler.class);
-
     @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipRentException.class, RentNotFoundException.class})
     public ResponseEntity<SpaceshipRentError> handleNotFoundException(Exception ex, HttpServletRequest req) {
+        return buildDefaultErrorResponseEntity(ex, req, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {WrongCredentialsException.class})
+    public ResponseEntity<SpaceshipRentError> handleUnauthorizedException(Exception ex, HttpServletRequest req) {
+        return buildDefaultErrorResponseEntity(ex, req, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = {RentAlreadyPickedUpException.class, RentNotPickedUpException.class,
+            RentAlreadyReturnedException.class})
+    public ResponseEntity<SpaceshipRentError> handleConflictException(Exception ex, HttpServletRequest req) {
+        return buildDefaultErrorResponseEntity(ex, req, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<SpaceshipRentError> handleAllExceptions(Exception ex, HttpServletRequest req) {
+        return buildDefaultErrorResponseEntity(ex, req, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ResponseEntity<SpaceshipRentError> buildDefaultErrorResponseEntity(Exception ex, HttpServletRequest req, HttpStatus status) {
         SpaceshipRentError error = SpaceshipRentError.builder()
                 .message(ex.getMessage())
                 .exception(ex.getClass().getSimpleName())
                 .path(req.getRequestURI())
                 .build();
-        LOGGER.error(ex.getMessage());
-        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, new HttpHeaders(), status);
     }
 
     @Override
@@ -55,7 +78,7 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
                 .exception(ex.getClass().getSimpleName())
                 .build();
 
-        LOGGER.error("Validation error list : " + validationList);
+        log.error("Validation error list: " + validationList);
         return new ResponseEntity<>(error, status);
     }
 }

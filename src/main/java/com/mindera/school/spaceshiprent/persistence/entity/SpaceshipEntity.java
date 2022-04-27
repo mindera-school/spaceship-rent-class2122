@@ -47,6 +47,6 @@ public class SpaceshipEntity {
     @Column(nullable = false)
     private float priceDay;
 
-    @OneToMany(mappedBy="spaceShipEntity", cascade = CascadeType.ALL)
-    private List<RentEntity> rentEntity;
+    @OneToMany(mappedBy= "spaceshipEntity", cascade = CascadeType.ALL)
+    private List<RentEntity> rents;
 }

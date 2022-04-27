@@ -54,5 +54,5 @@ public class UserEntity {
     private UserType userType;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<RentEntity> rentEntity;
+    private List<RentEntity> rents;
 }

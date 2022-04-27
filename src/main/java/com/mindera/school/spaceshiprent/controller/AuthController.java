@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+    public static final String PATH_LOGIN = "/auth/login";
+
     private final AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping(PATH_LOGIN)
     public ResponseEntity<LoginResponseDto> login(@RequestBody final CredentialsDto credentials) {
         log.info("User trying to login with credentials: {}", credentials);
         return ResponseEntity.ok(authService.login(credentials));

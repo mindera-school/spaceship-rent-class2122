@@ -32,8 +32,14 @@ spring:
 
 app:
   security:
-    jwt:
-      secret: ${JWT_SECRET:some_default}
-      expiresIn: 3600000 # 24 hours
-    passwordEncoder:
-      saltSize: 13
+    password-salt-size: 13
+    jwt-secret: ${JWT_SECRET:some_default}
+    session-duration: 3600000 # 24 hours (in milliseconds)
+    session-cookie-name: session
+    api-key: ${API_KEY}
+
+  mail:
+    third-party:
+      mailjet:
+        key: ${MAILJET_KEY}
+        secret: ${MAILJET_SECRET}

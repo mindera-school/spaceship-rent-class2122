@@ -22,22 +22,15 @@ public class EmailConsumer {
 
     private final Logger LOGGER = LoggerFactory.getLogger(EmailConsumer.class);
 
-    @Value(value = "${key}")
-    private String key;
-
-    @Value(value = "${secret-key}")
-    private String secretKey;
+    private final MailjetClient mailjetClient;
 
     //@RabbitListener(queues = "emailQueue")
-    public void receive(@Payload String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
+    public void receive(@Payload final String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
 
-        String email = emailingInfo.split(" ")[0];
-        String name = emailingInfo.split(" ")[1];
-        MailjetClient client;
-        MailjetRequest request;
-        MailjetResponse response;
-        client = new MailjetClient(key, secretKey, new ClientOptions("v3.1"));
-        request = new MailjetRequest(Emailv31.resource)
+        final String email = emailingInfo.split(" ")[0];
+        final String name = emailingInfo.split(" ")[1];
+
+        final MailjetRequest request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
@@ -53,9 +46,9 @@ public class EmailConsumer {
                                         "you can start renting spaceships <a href='http://localhost:8080/swagger-ui/index.html#/'>here</a>!<br/>" +
                                         "Hope you enjoy our spaceships and customer service :)")
                                 .put(Emailv31.Message.CUSTOMID, "spaceshipRentMailingSystem")));
-        response = client.post(request);
-        System.out.println(response.getStatus());
-        System.out.println(response.getData());
+
+        mailjetClient.post(request);
+
         LOGGER.info("Sent an email to client");
     }
 

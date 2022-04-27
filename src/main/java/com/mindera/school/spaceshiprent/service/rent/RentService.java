@@ -15,12 +15,12 @@ public interface RentService {
 
     RentDetailsDto updateRent (Long id, CreateOrUpdateRentDto createOrUpdateRentDto);
 
-    List<RentDetailsDto> getRentByCustomerId (Long id);
+    List<RentDetailsDto> getRentsByCustomerId(Long id);
 
-    List<RentDetailsDto> getRentBySpaceShipId (Long id);
+    List<RentDetailsDto> getRentsBySpaceshipId(Long id);
 
-    RentDetailsDto updatePickUpDate (Long id);
+    RentDetailsDto pickupRent (Long userId, Long id);
 
-    RentDetailsDto updateReturnDate (Long id);
+    RentDetailsDto returnRent (Long userId, Long id);
 
 }

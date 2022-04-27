@@ -21,21 +21,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Objects;
 import java.util.Optional;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UserControllerTest {
-
-    @MockBean
-    private UserRepository userRepository;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
+class UserControllerTest extends BaseControllerTest {
 
     @Test
-    public void test_getUserById_shouldReturn200() {
+    void test_getUserById_shouldReturn200() {
         // GIVEN
         UserEntity entity = getMockedEntity();
         when(userRepository.findById(5L))
@@ -43,43 +36,44 @@ public class UserControllerTest {
         String path = "/users/5";
 
         // WHEN
-        ResponseEntity<UserDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                UserDetailsDto.class);
+        final var response = given()
+                .headers(getApiAuthenticatedHeader())
+                .when()
+                .get(path)
+                .then()
+                .extract().response();
 
         // THEN
         verify(userRepository, times(1))
                 .findById(anyLong());
 
         UserDetailsDto expected = getUserDetailsDto(entity);
-        assertEquals(expected, response.getBody());
+        assertEquals(expected, response.getBody().as(UserDetailsDto.class));
     }
 
     @Test
-    public void test_getUserById_shouldReturn404() {
+    void test_getUserById_shouldReturn404() {
         // GIVEN
         when(userRepository.findById(5L))
                 .thenReturn(Optional.empty());
         String path = "/users/5";
 
         // WHEN
-        ResponseEntity<SpaceshipRentError> response = restTemplate.exchange(
-                path,
-                HttpMethod.GET,
-                HttpEntity.EMPTY,
-                SpaceshipRentError.class);
+        final var response = given()
+                .headers(getApiAuthenticatedHeader())
+                .when()
+                .get(path)
+                .then()
+                .extract().response();
 
         // THEN
         verify(userRepository, times(1))
                 .findById(anyLong());
 
-        assertEquals(HttpStatus.NOT_FOUND,
-                response.getStatusCode(),
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode(),
                 "status code");
         assertEquals("UserNotFoundException",
-                Objects.requireNonNull(response.getBody()).getException(),
+                response.getBody().as(SpaceshipRentError.class).getException(),
                 "exception name");
     }
 

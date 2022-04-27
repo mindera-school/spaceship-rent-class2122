@@ -1,4 +1,6 @@
-package com.mindera.school.spaceshiprent.exception;
+package com.mindera.school.spaceshiprent.exception.exceptions;
+
+import com.mindera.school.spaceshiprent.exception.SpaceshipRentException;
 
 public class WrongCredentialsException extends SpaceshipRentException {
 

@@ -4,7 +4,7 @@ import com.mindera.school.spaceshiprent.converter.AuthConverter;
 import com.mindera.school.spaceshiprent.dto.auth.CredentialsDto;
 import com.mindera.school.spaceshiprent.dto.auth.LoginResponseDto;
 import com.mindera.school.spaceshiprent.dto.auth.PrincipalDto;
-import com.mindera.school.spaceshiprent.exception.WrongCredentialsException;
+import com.mindera.school.spaceshiprent.exception.exceptions.WrongCredentialsException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +28,12 @@ public class AuthServiceImpl implements AuthService {
     public LoginResponseDto login(final CredentialsDto credentials) {
         final UserEntity userEntity =
                 userRepository.findByEmail(credentials.getEmail()).orElseThrow(() -> {
-                    log.info("Email entered doesn't exist: {}", credentials.getEmail());
+                    log.error("Email entered doesn't exist: {}", credentials.getEmail());
                     return new WrongCredentialsException(WRONG_CREDENTIALS);
                 });
 
         if (!passwordEncoder.matches(credentials.getPassword(), userEntity.getPassword())) {
-            log.info("User inserted wrong credentials");
+            log.error("User inserted wrong credentials");
             throw new WrongCredentialsException("Email or password are wrong");
         }
 
