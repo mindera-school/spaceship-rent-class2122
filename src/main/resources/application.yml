@@ -26,6 +26,6 @@ spring:
     username: guest
     password: guest
 
-jwt-secret: ${JWT_TOKEN:some_default_if_missing}
+jwt-secret: ${JWT_TOKEN}
 key: ${KEY}
 secret-key: ${SECRET_KEY}

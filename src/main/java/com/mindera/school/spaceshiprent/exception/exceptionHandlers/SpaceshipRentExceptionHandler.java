@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SpaceshipRentExceptionHandler.class);
 
-    @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipRentException.class, RentNotFoundException.class})
+    @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipRentException.class, RentNotFoundException.class, AccountNotFoundException.class})
     public ResponseEntity<SpaceshipRentError> handleNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipRentError error = SpaceshipRentError.builder()
                 .message(ex.getMessage())

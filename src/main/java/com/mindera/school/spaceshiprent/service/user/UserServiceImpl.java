@@ -23,17 +23,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserConverter converter;
     private final UserRepository userRepository;
+    private final EmailSender emailSender;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    //private final EmailSender emailSender;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
         userEntity.setPassword(passwordEncoder.encoder().encode(userEntity.getPassword()));
-        //emailSender.send(emailingInfo);
+        emailSender.send(emailingInfo);
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }
 

@@ -1,5 +1,6 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
+import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
@@ -33,7 +35,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(new UserConverter(new BCryptPasswordEncoder(),new JWTUtils()), userRepository);
+        this.userService = new UserServiceImpl(new UserConverter(new BCryptPasswordEncoder(), new JWTUtils()), userRepository, new EmailSender(new RabbitTemplate()));
     }
 
     @Test
