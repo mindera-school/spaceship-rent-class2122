@@ -1,6 +1,7 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 
+import com.mindera.school.spaceshiprent.controller.RentController;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
@@ -11,6 +12,7 @@ import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +50,7 @@ public class RentControllerTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void test_getRentById_shouldReturn200(){
+    public void test_getRentById_shouldReturn200() {
         // GIVEN
         RentEntity entity = getMockedRentEntity(2L);
         when(rentRepository.findById(2L))
@@ -99,35 +100,45 @@ public class RentControllerTest {
         assertEquals(expected, response.getBody());
 
     }
-
+*/
 
     @Test
-    public void test_createRent_shouldReturn200(){
-        // GIVEN
-        RentEntity entity = getMockedRentEntity(1L);
-        when(rentRepository.save(entity))
-                .thenReturn(entity);
-        String path = "/rents";
+    public void test_createRent_shouldReturn200() {
+        // ARRANGE
+        final var entity = getMockedRentEntity(2L);
+        when(userRepository.findById(1L))
+                .thenReturn(Optional.of(getMockedUserEntity()));
+        when(spaceshipRepository.findById(1L))
+                .thenReturn(Optional.of(getMockedSpaceshipEntity()));
 
-        // WHEN
-        ResponseEntity<RentDetailsDto> response = restTemplate.exchange(
-                path,
-                HttpMethod.POST,
-                HttpEntity.EMPTY,
-                RentDetailsDto.class
-        );
+        when(rentRepository.save(any()))
+                .thenReturn((entity));
 
-        // THEN
+
+        // ACT
+        final var response = given()
+                .body(getMockedCreateRentDto())
+                .contentType(ContentType.JSON)
+                .when()
+                .post(RentController.PATH_CREATE_RENT)
+                .then().extract().response();
+
+
+        // ASSERT
         verify(rentRepository, times(1))
-                .save(entity);
+                .save(any());
 
-        RentDetailsDto expected = getRentDetailsDTO(entity);
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+        final var expected = getRentDetailsDTO(entity);
+        final var actual =response.getBody().as(RentDetailsDto.class);
+
         assertEquals(expected, response.getBody());
 
     }
-*/
+
     @Test
-    public void test_getRentById_shouldReturn404 () {
+    public void test_getRentById_shouldReturn404() {
         // GIVEN
         when(rentRepository.findById(1L))
                 .thenReturn(Optional.empty());
@@ -167,7 +178,7 @@ public class RentControllerTest {
                 .build();
     }
 
-    private SpaceshipEntity getMockedSpaceshipEntity () {
+    private SpaceshipEntity getMockedSpaceshipEntity() {
         return SpaceshipEntity.builder()
                 .id(1L)
                 .name("Corsie")
@@ -183,24 +194,24 @@ public class RentControllerTest {
                 .id(id)
                 .userEntity(getMockedUserEntity())
                 .spaceShipEntity(getMockedSpaceshipEntity())
-                .expectedPickupDate(LocalDate.of(2022,11,12))
-                .expectedReturnDate(LocalDate.of(2022,12,13))
+                .expectedPickupDate(LocalDate.of(2022, 11, 12))
+                .expectedReturnDate(LocalDate.of(2022, 12, 13))
                 .pricePerDay(150)
                 .discount(0)
                 .build();
     }
 
-    private CreateOrUpdateRentDto getMockedCreateDto () {
+    private CreateOrUpdateRentDto getMockedCreateRentDto() {
         CreateOrUpdateRentDto dto = new CreateOrUpdateRentDto();
         dto.setCustomerId(1L);
         dto.setSpaceshipId(1L);
-        dto.setExpectedPickupDate(LocalDate.of(2022,12,12));
-        dto.setExpectedReturnDate(LocalDate.of(2022,12,13));
+        dto.setExpectedPickupDate(LocalDate.of(2022, 12, 12));
+        dto.setExpectedReturnDate(LocalDate.of(2022, 12, 13));
         dto.setDiscount(0);
         return dto;
     }
 
-    private RentDetailsDto getRentDetailsDTO (RentEntity entity) {
+    private RentDetailsDto getRentDetailsDTO(RentEntity entity) {
         return RentDetailsDto.builder()
                 .id(entity.getId())
                 .customerId(entity.getUserEntity().getId())

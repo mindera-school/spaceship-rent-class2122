@@ -26,37 +26,44 @@ public class RentController {
     private final Logger LOGGER = LoggerFactory.getLogger(RentController.class);
     private final RentService rentService;
 
-    @PostMapping("/rents")
+    public static final String PATH_CREATE_RENT = "spaceship-rent/api/rents";
+    public static final String PATH_GET_RENT = "spaceship-rent/api/rents";
+    public static final String PATH_GET_RENT_BY_ID = "spaceship-rent/api/rents/{id}";
+    public static final String PATH_UPDATE_RENT_BY_ID = "spaceship-rent/api/rents/{id}";
+    public static final String PATH_GET_RENT_BY_CUSTOMER_ID = "spaceship-rent/customers/{customerId}/rents";
+    public static final String PATH_GET_RENT_BY_SPACESHIP_ID = "/spaceships/{spaceshipId}/rents";
+
+    @PostMapping(PATH_CREATE_RENT)
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody @Valid CreateOrUpdateRentDto dto) {
         LOGGER.info(LoggerMessages.POST_REQUEST, LoggerMessages.RENT, LocalDate.now());
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
-    @GetMapping("/rents")
+    @GetMapping(PATH_GET_RENT)
     public ResponseEntity<List<RentDetailsDto>> getAllRents() {
         LOGGER.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.RENT, LocalDate.now());
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
-    @GetMapping("/rents/{id}")
+    @GetMapping(PATH_GET_RENT_BY_ID)
     public ResponseEntity<RentDetailsDto> getRentById(@PathVariable Long id) {
         LOGGER.info(LoggerMessages.GET_REQUEST, LoggerMessages.RENT, LocalDate.now());
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
-    @GetMapping("/customers/{customerId}/rents")
+    @GetMapping(PATH_GET_RENT_BY_CUSTOMER_ID)
     public ResponseEntity<List<RentDetailsDto>> getRentByCostumerId(@PathVariable Long costumerId) {
         LOGGER.info(LoggerMessages.GET_REQUEST, "rents by customer id", LocalDate.now());
         return ResponseEntity.ok(rentService.getRentByCustomerId(costumerId));
     }
 
-    @GetMapping("/spaceships/{spaceshipId}/rents")
+    @GetMapping(PATH_GET_RENT_BY_SPACESHIP_ID)
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId) {
         LOGGER.info(LoggerMessages.GET_REQUEST, "rents by user id", LocalDate.now());
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
-    @PutMapping("/rents/{id}")
+    @PutMapping(PATH_UPDATE_RENT_BY_ID)
     public ResponseEntity<RentDetailsDto> updateRentById(
             @PathVariable Long id,
             @RequestBody @Valid CreateOrUpdateRentDto dto) {

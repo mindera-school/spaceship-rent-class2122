@@ -3,7 +3,7 @@ package com.mindera.school.spaceshiprent.controller;
 
 import com.mindera.school.spaceshiprent.dto.user.LoginDto.LoginDto;
 import com.mindera.school.spaceshiprent.dto.user.LoginDto.ValidLoginDto;
-import com.mindera.school.spaceshiprent.service.auth.AuthServiceImpl;
+import com.mindera.school.spaceshiprent.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +22,14 @@ import javax.security.auth.login.AccountNotFoundException;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthServiceImpl authServiceImpl;
+    private final AuthService authService;
 
     @PostMapping("/login")
 
     public ResponseEntity<ValidLoginDto> login(@RequestBody LoginDto loginDto) throws AccountNotFoundException {
         log.info("Login with email {}",loginDto.getEmail());
 
-        ValidLoginDto validLoginDto = authServiceImpl.validLoginDto(loginDto);
+        ValidLoginDto validLoginDto = authService.validLoginDto(loginDto);
 
         ResponseCookie cookie = ResponseCookie.from("SpaceShip",validLoginDto.getToken())
                 .httpOnly(true)
