@@ -16,7 +16,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -33,9 +33,12 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(new UserConverter( new JWTUtils()), userRepository, new EmailSender(new RabbitTemplate()));
+        this.userService = new UserServiceImpl(new UserConverter(), userRepository, new EmailSender(new RabbitTemplate()), passwordEncoder);
     }
 
     @Test

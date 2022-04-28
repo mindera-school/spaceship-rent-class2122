@@ -24,7 +24,7 @@ public class UserConverterTest {
 
     @BeforeEach
     public void setup() {
-        this.userConverter = new UserConverter(new JWTUtils());
+        this.userConverter = new UserConverter();
     }
 
     @Test

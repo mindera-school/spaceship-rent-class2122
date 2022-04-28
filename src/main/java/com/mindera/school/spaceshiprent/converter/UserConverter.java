@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserConverter {
 
-    private final JWTUtils jwtUtils;
 
     public UserEntity convertToEntity(CreateOrUpdateUserDto dto) {
         return UserEntity.builder()
@@ -46,7 +45,6 @@ public class UserConverter {
                 .email(entity.getEmail())
                 .name(entity.getName())
                 .userType(entity.getUserType())
-                .token(jwtUtils.generateToken(entity))
                 .build();
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
 
-import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.ACCOUNT_NOT_FOUND;
+import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.WRONG_CREDENTIALS;
 
 @Slf4j
 @Service
@@ -33,14 +33,18 @@ public class AuthServiceImpl implements AuthService {
         UserEntity user = userRepository
                 .findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> {
-                    log.error(ACCOUNT_NOT_FOUND);
-                    return new AccountNotFoundException((ACCOUNT_NOT_FOUND));
+                    log.error("Given email could not be found - {}", loginDto.getEmail());
+                    return new AccountNotFoundException((WRONG_CREDENTIALS));
                 });
 
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
-            throw new AccountNotFoundException(ACCOUNT_NOT_FOUND);
+            log.error("Given password doesn't match saved password");
+            throw new AccountNotFoundException(WRONG_CREDENTIALS);
         }
 
-        return userConverter.convertToValidLoginDto(user);
+        ValidLoginDto validLoginDto = userConverter.convertToValidLoginDto(user);
+        validLoginDto.setToken(jwtUtils.generateToken(user));
+        log.error("Login Successful");
+        return validLoginDto;
     }
 }

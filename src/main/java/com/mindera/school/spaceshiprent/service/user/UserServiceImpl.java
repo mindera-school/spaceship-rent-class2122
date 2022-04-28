@@ -1,7 +1,6 @@
 package com.mindera.school.spaceshiprent.service.user;
 
 import com.mindera.school.spaceshiprent.components.EmailSender;
-import com.mindera.school.spaceshiprent.config.PasswordEncoder;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
@@ -9,14 +8,17 @@ import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
 import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import com.mindera.school.spaceshiprent.util.JWTUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -24,14 +26,12 @@ public class UserServiceImpl implements UserService {
     private final UserConverter converter;
     private final UserRepository userRepository;
     private final EmailSender emailSender;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
-        userEntity.setPassword(passwordEncoder.encoder().encode(createOrUpdateUserDto.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(createOrUpdateUserDto.getPassword()));
 
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
 
