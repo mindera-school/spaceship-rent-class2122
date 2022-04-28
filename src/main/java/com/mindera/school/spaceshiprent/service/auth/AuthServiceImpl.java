@@ -29,8 +29,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ValidLoginDto validLoginDto(LoginDto loginDto) throws AccountNotFoundException {
-        System.out.println(userRepository.findByEmail(loginDto.getEmail()));
-        UserEntity user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new AccountNotFoundException((ACCOUNT_NOT_FOUND)));
+
+        UserEntity user = userRepository
+                .findByEmail(loginDto.getEmail())
+                .orElseThrow(() -> {
+                    log.error(ACCOUNT_NOT_FOUND);
+                    return new AccountNotFoundException((ACCOUNT_NOT_FOUND));
+                });
 
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
             throw new AccountNotFoundException(ACCOUNT_NOT_FOUND);

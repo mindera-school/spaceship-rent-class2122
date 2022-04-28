@@ -31,8 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
+        userEntity.setPassword(passwordEncoder.encoder().encode(createOrUpdateUserDto.getPassword()));
+
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
-        userEntity.setPassword(passwordEncoder.encoder().encode(userEntity.getPassword()));
+
         emailSender.send(emailingInfo);
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }

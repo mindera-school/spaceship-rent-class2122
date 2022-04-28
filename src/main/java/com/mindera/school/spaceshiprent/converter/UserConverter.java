@@ -6,14 +6,12 @@ import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.util.JWTUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class UserConverter {
 
-    private final BCryptPasswordEncoder passwordEncoder;
     private final JWTUtils jwtUtils;
 
     public UserEntity convertToEntity(CreateOrUpdateUserDto dto) {
@@ -24,7 +22,6 @@ public class UserConverter {
                 .licenseNumber(dto.getLicenseNumber())
                 .ssn(dto.getSsn())
                 .planet(dto.getPlanet())
-                .password(passwordEncoder.encode(dto.getPassword()))
                 .userType(dto.getUserType())
                 .build();
     }

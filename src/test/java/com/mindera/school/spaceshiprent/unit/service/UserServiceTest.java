@@ -35,7 +35,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(new UserConverter(new BCryptPasswordEncoder(), new JWTUtils()), userRepository, new EmailSender(new RabbitTemplate()));
+        this.userService = new UserServiceImpl(new UserConverter( new JWTUtils()), userRepository, new EmailSender(new RabbitTemplate()));
     }
 
     @Test

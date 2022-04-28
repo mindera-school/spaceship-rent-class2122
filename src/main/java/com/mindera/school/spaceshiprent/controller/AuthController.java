@@ -25,7 +25,6 @@ public class AuthController {
     private final AuthServiceImpl authServiceImpl;
 
     @PostMapping("/login")
-
     public ResponseEntity<ValidLoginDto> login(@RequestBody LoginDto loginDto) throws AccountNotFoundException {
         log.info("Login with email {}",loginDto.getEmail());
 
