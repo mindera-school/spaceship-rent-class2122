@@ -1,6 +1,5 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
-import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
@@ -8,15 +7,12 @@ import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundExcepti
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
-import com.mindera.school.spaceshiprent.util.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -33,12 +29,9 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(new UserConverter(), userRepository, new EmailSender(new RabbitTemplate()), passwordEncoder);
+        this.userService = new UserServiceImpl(new UserConverter(), userRepository);
     }
 
     @Test
