@@ -5,8 +5,6 @@ import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
 import com.mindera.school.spaceshiprent.exception.exceptions.RentNotFoundException;
-import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
-import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
@@ -33,11 +31,11 @@ public class RentServiceImpl implements RentService {
         RentEntity rent = converter.convertToEntity(rentDto);
 
         rent.setUserEntity(userRepository.findById(rentDto.getCustomerId())
-                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, rentDto.getCustomerId())))
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, rentDto.getCustomerId())))
         );
 
         rent.setSpaceShipEntity(spaceShipRepository.findById(rentDto.getSpaceshipId())
-                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, rentDto.getSpaceshipId())))
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, rentDto.getSpaceshipId())))
         );
 
         rent.setPricePerDay(rent.getSpaceShipEntity().getPriceDay());
@@ -68,9 +66,6 @@ public class RentServiceImpl implements RentService {
         if (rentEntityOptional.isPresent()) {
             RentEntity rent = converter.convertToEntity(createOrUpdateRentDto);
             rent.setId(id);
-            rent.setSpaceShipEntity(rentEntityOptional.get().getSpaceShipEntity());
-            rent.setUserEntity(rentEntityOptional.get().getUserEntity());
-            rent.setPricePerDay(rentEntityOptional.get().getPricePerDay());
             return converter.convertToRentDetailsDto(rentRepository.save(rent));
         }
 

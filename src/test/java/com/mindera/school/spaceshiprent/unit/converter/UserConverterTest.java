@@ -5,13 +5,11 @@ import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
-import com.mindera.school.spaceshiprent.util.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -24,7 +22,7 @@ public class UserConverterTest {
 
     @BeforeEach
     public void setup() {
-        this.userConverter = new UserConverter(new BCryptPasswordEncoder(), new JWTUtils());
+        this.userConverter = new UserConverter();
     }
 
     @Test
