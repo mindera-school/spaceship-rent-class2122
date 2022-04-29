@@ -76,18 +76,15 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto updateRent(Long id, CreateOrUpdateRentDto createOrUpdateRentDto) {
 
-        Optional<RentEntity> rentEntityOptional = rentRepository.findById(id);
+        RentEntity rentEntity = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id)));
 
-        if (rentEntityOptional.isPresent()) {
-            RentEntity rent = converter.convertToEntity(createOrUpdateRentDto);
-            rent.setId(id);
-            rent.setSpaceShipEntity(rentEntityOptional.get().getSpaceShipEntity());
-            rent.setUserEntity(rentEntityOptional.get().getUserEntity());
-            rent.setPricePerDay(rentEntityOptional.get().getPricePerDay());
-            return converter.convertToRentDetailsDto(rentRepository.save(rent));
-        }
+        rentEntity.setExpectedPickupDate(createOrUpdateRentDto.getExpectedPickupDate());
+        rentEntity.setExpectedReturnDate(createOrUpdateRentDto.getExpectedReturnDate());
+        rentEntity.setDiscount(createOrUpdateRentDto.getDiscount());
 
-        throw new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id));
+        return converter.convertToRentDetailsDto(rentRepository.save(rentEntity));
+
     }
 
     @Override
