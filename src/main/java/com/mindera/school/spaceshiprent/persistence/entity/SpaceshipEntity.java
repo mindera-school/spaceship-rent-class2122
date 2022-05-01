@@ -12,8 +12,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -48,5 +48,6 @@ public class SpaceshipEntity {
     private float priceDay;
 
     @OneToMany(mappedBy="spaceShipEntity", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<RentEntity> rentEntity;
 }

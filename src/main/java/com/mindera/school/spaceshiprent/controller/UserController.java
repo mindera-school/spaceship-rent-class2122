@@ -44,10 +44,4 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserById(id, createOrUpdateUserDto));
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
-        log.info(LoggerMessages.DELETE_REQUEST, LoggerMessages.USER, LocalDate.now());
-        userService.deleteUserById(id);
-        return ResponseEntity.ok("User with id " + id + " was removed.");
-    }
 }

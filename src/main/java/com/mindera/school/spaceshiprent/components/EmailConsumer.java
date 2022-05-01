@@ -7,37 +7,33 @@ import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Emailv31;
+import com.mindera.school.spaceshiprent.properties.ThirdPartyProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EmailConsumer {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EmailConsumer.class);
-
-    @Value(value = "${key}")
-    private String key;
-
-    @Value(value = "${secret-key}")
-    private String secretKey;
+    private final ThirdPartyProperties properties;
 
     @RabbitListener(queues = "emailQueue")
     public void receive(@Payload String emailingInfo) throws MailjetSocketTimeoutException, MailjetException {
         String email = emailingInfo.split(" ")[0];
         String name = emailingInfo.split(" ")[1];
+
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
-        client = new MailjetClient(key, secretKey, new ClientOptions("v3.1"));
+
+
+        client = new MailjetClient(properties.getMailjet().getKey(), properties.getMailjet().getSecretkey(), new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
@@ -55,9 +51,10 @@ public class EmailConsumer {
                                         "Hope you enjoy our spaceships and customer service :)")
                                 .put(Emailv31.Message.CUSTOMID, "spaceshipRentMailingSystem")));
         response = client.post(request);
-        System.out.println(response.getStatus());
-        System.out.println(response.getData());
-        LOGGER.info("Sent an email to client");
+
+        log.info("Response status: {}", response.getStatus());
+        log.info("Response information: {}", response.getData());
+        log.info("Sent an email to client");
     }
 
 }

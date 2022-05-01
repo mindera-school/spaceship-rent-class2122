@@ -26,6 +26,8 @@ spring:
     username: guest
     password: guest
 
-jwt-secret: ${JWT_TOKEN}
-key: ${KEY}
-secret-key: ${SECRET_KEY}
+app:
+  third-party:
+    mailjet:
+      key: ${KEY}
+      secretkey: ${SECRET_KEY}

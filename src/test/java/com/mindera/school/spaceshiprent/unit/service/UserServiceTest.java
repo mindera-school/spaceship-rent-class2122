@@ -1,23 +1,36 @@
 package com.mindera.school.spaceshiprent.unit.service;
 
+import com.mindera.school.spaceshiprent.MockedData;
+import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
-import com.mindera.school.spaceshiprent.enumerator.UserType;
+import com.mindera.school.spaceshiprent.exception.exceptions.UserAlreadyExists;
 import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import static com.mindera.school.spaceshiprent.MockedData.getCreateOrUpdateUserDto;
+import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
+import static com.mindera.school.spaceshiprent.MockedData.getUserDetailsDto;
+import static com.mindera.school.spaceshiprent.MockedData.getUserList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,64 +42,137 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private EmailSender sender;
+
     @BeforeEach
     public void setup() {
-        this.userService = new UserServiceImpl(new UserConverter(), userRepository);
+        this.userService = new UserServiceImpl(new UserConverter(), userRepository, sender);
     }
 
-    @Test
-    public void test_getUserById_shouldReturnSuccess() {
-        // GIVEN
-        Long userId = 5L;
+    @Nested
+    class GetUserById {
 
-        UserEntity entity = getMockedEntity();
-        when(userRepository.findById(userId))
-                .thenReturn(Optional.of(entity));
+        @Test
+        void test_getUserById_shouldReturnSuccess() {
+            // GIVEN
+            Long userId = 5L;
 
-        // WHEN
-        UserDetailsDto response = userService.getUserById(userId);
+            UserEntity entity = getMockedUserEntity();
+            when(userRepository.findById(userId))
+                    .thenReturn(Optional.of(entity));
 
-        // THEN
-        assertEquals(getUserDetailsDto(entity), response);
+            // WHEN
+            UserDetailsDto response = userService.getUserById(userId);
+
+            // THEN
+            assertEquals(getUserDetailsDto(entity), response);
+        }
+
+        @Test
+        void test_getUserById_shouldReturnNotFound() {
+            // given
+            when(userRepository.findById(5L))
+                    .thenReturn(Optional.empty());
+
+            // when
+            Executable action = () -> userService.getUserById(5L);
+
+            // then
+            assertThrows(UserNotFoundException.class, action);
+        }
     }
 
-    @Test
-    public void test_getUserById_shouldReturn_NotFound() {
-        // given
-        when(userRepository.findById(5L))
-                .thenReturn(Optional.empty());
+    @Nested
+    class CreateUser {
+        @Test
+        void test_createUser_shouldReturn_success() {
+            // GIVEN
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+            UserEntity entity = getMockedUserEntity();
 
-        // when
-        Executable action = () -> userService.getUserById(5L);
+            // WHEN
+            when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.empty());
 
-        // then
-        assertThrows(UserNotFoundException.class, action);
+            // shouldn't do anything when email service is called
+            doNothing().when(sender).send(isA(String.class));
+
+            when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
+
+            UserDetailsDto response = userService.createUser(dto);
+            response.setId(getMockedUserEntity().getId());
+
+            // THEN
+            assertEquals(getUserDetailsDto(entity), response);
+        }
+
+        @Test
+        void test_createUser_shouldReturn_userAlreadyExists() {
+            // GIVEN
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+            UserEntity entity = getMockedUserEntity();
+
+            // WHEN
+            when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.ofNullable(entity));
+
+            Executable action = () -> userService.createUser(dto);
+
+            // THEN
+            assertThrows(UserAlreadyExists.class, action);
+        }
     }
 
-    private UserEntity getMockedEntity() {
-        return UserEntity.builder()
-                .id(5L)
-                .name("Rafa")
-                .age(20)
-                .ssn(123456789L)
-                .licenseNumber("1238127LSC")
-                .planet("Terra")
-                .userType(UserType.CUSTOMER)
-                .password("Password123")
-                .email("email@email.com")
-                .build();
+    @Nested
+    class GetAllUsers {
+        @Test
+        void test_getAllUsers_shouldReturn_success() {
+            // given
+            List<UserDetailsDto> userDetails = getUserList().stream()
+                    .map(MockedData::getUserDetailsDto)
+                    .collect(Collectors.toList());
+
+            // when
+            when(userRepository.findAll()).thenReturn(getUserList());
+
+            List<UserDetailsDto> response = userService.getAllUsers();
+
+            // then
+            assertEquals(userDetails, response);
+        }
     }
 
-    private UserDetailsDto getUserDetailsDto(UserEntity entity) {
-        return UserDetailsDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .age(entity.getAge())
-                .ssn(entity.getSsn())
-                .licenseNumber(entity.getLicenseNumber())
-                .planet(entity.getPlanet())
-                .userType(entity.getUserType())
-                .email(entity.getEmail())
-                .build();
+    @Nested
+    class UpdateUserById {
+        @Test
+        void test_updateUserId_shouldReturn_success() {
+            // given
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+            UserEntity entity = getMockedUserEntity();
+            Long id = entity.getId();
+
+            // when
+            when(userRepository.findById(id)).thenReturn(Optional.of(entity));
+            when(userRepository.save(Mockito.any(UserEntity.class)))
+                    .thenAnswer(invocation -> invocation.getArguments()[0]);
+            UserDetailsDto response = userService.updateUserById(id, dto);
+
+            // then
+            assertEquals(getUserDetailsDto(entity), response);
+        }
+
+        @Test
+        void test_updateUserId_shouldReturn_notFound() {
+            // given
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+            Long id = getMockedUserEntity().getId();
+
+            // when
+            when(userRepository.findById(id)).thenReturn(Optional.empty());
+            Executable action = () -> userService.updateUserById(id, dto);
+
+            // then
+            assertThrows(UserNotFoundException.class, action);
+        }
     }
+
 }

@@ -2,14 +2,10 @@ package com.mindera.school.spaceshiprent.unit.service;
 
 
 import com.mindera.school.spaceshiprent.converter.SpaceshipConverter;
-import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
-import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
-import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
-import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import com.mindera.school.spaceshiprent.service.spaceship.SpaceShipServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

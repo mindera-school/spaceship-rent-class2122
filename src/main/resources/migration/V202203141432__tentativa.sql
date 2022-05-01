@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     license_number VARCHAR(256) NOT NULL,
     ssn BIGINT NOT NULL,
     planet VARCHAR(256) NOT NULL,
-    email VARCHAR(256) NOT NULL,
+    email VARCHAR(256) NOT NULL UNIQUE,
     password VARCHAR(256) NOT NULL,
     user_type VARCHAR(256) NOT NULL
 );

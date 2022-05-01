@@ -28,31 +28,31 @@ public class RentController {
 
     @PostMapping("/rents")
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody @Valid CreateOrUpdateRentDto dto) {
-        LOGGER.info(LoggerMessages.POST_REQUEST, LoggerMessages.RENT, LocalDate.now());
+        LOGGER.info(LoggerMessages.POST_REQUEST, LoggerMessages.RENT);
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
     @GetMapping("/rents")
     public ResponseEntity<List<RentDetailsDto>> getAllRents() {
-        LOGGER.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.RENT, LocalDate.now());
+        LOGGER.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.RENT);
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
     @GetMapping("/rents/{id}")
     public ResponseEntity<RentDetailsDto> getRentById(@PathVariable Long id) {
-        LOGGER.info(LoggerMessages.GET_REQUEST, LoggerMessages.RENT, LocalDate.now());
+        LOGGER.info(LoggerMessages.GET_REQUEST, LoggerMessages.RENT);
         return ResponseEntity.ok(rentService.getRentById(id));
     }
 
     @GetMapping("/customers/{customerId}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentByCostumerId(@PathVariable Long costumerId) {
-        LOGGER.info(LoggerMessages.GET_REQUEST, "rents by customer id", LocalDate.now());
+        LOGGER.info(LoggerMessages.GET_REQUEST, "rents by customer id");
         return ResponseEntity.ok(rentService.getRentByCustomerId(costumerId));
     }
 
     @GetMapping("/spaceships/{spaceshipId}/rents")
     public ResponseEntity<List<RentDetailsDto>> getRentBySpaceshipId(@PathVariable Long spaceshipId) {
-        LOGGER.info(LoggerMessages.GET_REQUEST, "rents by user id", LocalDate.now());
+        LOGGER.info(LoggerMessages.GET_REQUEST, "rents by user id");
         return ResponseEntity.ok(rentService.getRentBySpaceShipId(spaceshipId));
     }
 
@@ -60,7 +60,7 @@ public class RentController {
     public ResponseEntity<RentDetailsDto> updateRentById(
             @PathVariable Long id,
             @RequestBody @Valid CreateOrUpdateRentDto dto) {
-        LOGGER.info(LoggerMessages.PUT_REQUEST, LoggerMessages.RENT, LocalDate.now());
+        LOGGER.info(LoggerMessages.PUT_REQUEST, LoggerMessages.RENT);
         return ResponseEntity.ok(rentService.updateRent(id, dto));
     }
 }
