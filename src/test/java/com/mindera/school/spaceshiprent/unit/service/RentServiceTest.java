@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mindera.school.spaceshiprent.MockedData.getMockedCreateOrUpdateRent;
-import static com.mindera.school.spaceshiprent.MockedData.getMockedEntitySpaceShip;
+import static com.mindera.school.spaceshiprent.MockedData.getMockedSpaceshipEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getMockedRentEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getRentDetailsDto;
@@ -68,10 +68,10 @@ public class RentServiceTest {
 
             RentEntity entity = getMockedRentEntity();
             UserEntity userEntity = getMockedUserEntity();
-            SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
+            SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
 
             when(userRepository.findById(getMockedUserEntity().getId())).thenReturn(Optional.of(userEntity));
-            when(spaceshipRepository.findById(getMockedEntitySpaceShip().getId())).thenReturn(Optional.of(spaceshipEntity));
+            when(spaceshipRepository.findById(getMockedSpaceshipEntity().getId())).thenReturn(Optional.of(spaceshipEntity));
             when(rentRepository.save(Mockito.any(RentEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
             when(rentRepository.checkRentAvailability(entity.getExpectedPickupDate(),
                     entity.getExpectedReturnDate(),
@@ -98,7 +98,7 @@ public class RentServiceTest {
             UserEntity userEntity = getMockedUserEntity();
 
             when(userRepository.findById(getMockedUserEntity().getId())).thenReturn(Optional.of(userEntity));
-            when(spaceshipRepository.findById(getMockedEntitySpaceShip().getId())).thenReturn(Optional.empty());
+            when(spaceshipRepository.findById(getMockedSpaceshipEntity().getId())).thenReturn(Optional.empty());
 
             Executable action = () -> rentService.createRent(getMockedCreateOrUpdateRent());
 
@@ -109,10 +109,10 @@ public class RentServiceTest {
         public void rentCreation_spaceShipNotAvailable() {
             CreateOrUpdateRentDto dto = getMockedCreateOrUpdateRent();
             UserEntity userEntity = getMockedUserEntity();
-            SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
+            SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
 
             when(userRepository.findById(getMockedUserEntity().getId())).thenReturn(Optional.of(userEntity));
-            when(spaceshipRepository.findById(getMockedEntitySpaceShip().getId())).thenReturn(Optional.of(spaceshipEntity));
+            when(spaceshipRepository.findById(getMockedSpaceshipEntity().getId())).thenReturn(Optional.of(spaceshipEntity));
             when(rentRepository.checkRentAvailability(dto.getExpectedPickupDate(),
                     dto.getExpectedReturnDate(),
                     spaceshipEntity.getId()))
@@ -200,7 +200,7 @@ public class RentServiceTest {
     class GetRentBySpaceshipId {
         @Test
         public void test_getRentBySpaceShipId_shouldReturn_Success() {
-            SpaceshipEntity spaceshipEntity = getMockedEntitySpaceShip();
+            SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
             spaceshipEntity.setRentEntity(getRentEntityList());
 
             when(spaceshipRepository.findById(spaceshipEntity.getId())).thenReturn(Optional.of(spaceshipEntity));

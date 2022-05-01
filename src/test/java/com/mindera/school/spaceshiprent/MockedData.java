@@ -2,6 +2,8 @@ package com.mindera.school.spaceshiprent;
 
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
@@ -53,7 +55,7 @@ public class MockedData {
                 .expectedPickupDate(LocalDate.of(2022, 10, 20))
                 .userEntity(getMockedUserEntity())
                 .pricePerDay(12)
-                .spaceShipEntity(getMockedEntitySpaceShip())
+                .spaceShipEntity(getMockedSpaceshipEntity())
                 .build();
     }
 
@@ -71,7 +73,7 @@ public class MockedData {
                 .build();
     }
 
-    public static SpaceshipEntity getMockedEntitySpaceShip() {
+    public static SpaceshipEntity getMockedSpaceshipEntity() {
         return SpaceshipEntity.builder()
                 .id(1L)
                 .name("nave")
@@ -109,6 +111,31 @@ public class MockedData {
 
     public static List<RentEntity> getRentEntityList() {
         return Collections.singletonList(getMockedRentEntity());
+    }
+
+    public static SpaceShipDetailsDto getSpaceshipDetailsDto(SpaceshipEntity entity) {
+        return SpaceShipDetailsDto.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .brand(entity.getBrand())
+                .model(entity.getModel())
+                .registerNumber(entity.getRegisterNumber())
+                .priceDay(entity.getPriceDay())
+                .build();
+    }
+
+    public static CreateOrUpdateSpaceshipDto getCreateOrUpdateSpaceshipDto() {
+        return CreateOrUpdateSpaceshipDto.builder()
+                .name("nave")
+                .brand("mercedes")
+                .model("x5")
+                .registerNumber(10)
+                .priceDay(12)
+                .build();
+    }
+
+    public static List<SpaceshipEntity> getSpaceshipEntityList() {
+        return Collections.singletonList(getMockedSpaceshipEntity());
     }
 
 }
