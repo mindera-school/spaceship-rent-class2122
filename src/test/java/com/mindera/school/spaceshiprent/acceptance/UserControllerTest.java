@@ -4,13 +4,16 @@ import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.Before;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -38,6 +41,14 @@ public class UserControllerTest {
 
     @MockBean
     private EmailSender sender;
+
+    @LocalServerPort
+    private int port;
+
+    @Before
+    public void setUp() {
+        RestAssured.port = port;
+    }
 
     @Nested
     class GetUserById {
@@ -107,6 +118,7 @@ public class UserControllerTest {
 
             // act
             final var response = given()
+                    .port(port)
                     .body(getCreateOrUpdateUserDto())
                     .contentType(ContentType.JSON)
                     .when()
