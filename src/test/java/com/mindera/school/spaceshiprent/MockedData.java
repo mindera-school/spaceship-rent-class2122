@@ -38,7 +38,7 @@ public class MockedData {
                 .licenseNumber("1238127LSC")
                 .planet("Terra")
                 .userType(UserType.CUSTOMER)
-                .password("Password123")
+                .password("P@ssword123")
                 .email("email@email.com")
                 .build();
     }
