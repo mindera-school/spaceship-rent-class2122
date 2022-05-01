@@ -31,7 +31,8 @@
             **/config/*,
             **/exception/*,
             **/exception/**/*,
-            **/test/**/*
+            **/test/**/*,
+            **/properties/*
         </sonar.coverage.exclusions>
     </properties>
 
