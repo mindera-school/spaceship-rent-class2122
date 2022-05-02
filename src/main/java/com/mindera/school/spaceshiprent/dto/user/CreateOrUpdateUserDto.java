@@ -29,7 +29,7 @@ public class CreateOrUpdateUserDto {
     @Email(message = "Insert a valid email.")
     private String email;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#@$!%*?&])[A-Za-z\\d@$#!%*?&]{8,}$",
             message = "password doesn't match the requirements")
     private String password;
 

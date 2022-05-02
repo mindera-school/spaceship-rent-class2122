@@ -1,11 +1,16 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 
+import com.mindera.school.spaceshiprent.controller.UserController;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
+import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
+import com.mindera.school.spaceshiprent.exception.exceptionHandlers.SpaceshipRentExceptionHandler;
+import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
@@ -63,9 +68,9 @@ public class SpaceShipControllerTest {
         final var spaceShip = getMockedEntity();
         final var user = getMockedUserEntity();
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(spaceshipRepository.save(spaceShip)).thenReturn(Optional.of(spaceShip));
+        when(spaceshipRepository.save(any(SpaceshipEntity.class))).thenReturn(getMockedEntity());
 
+        when(spaceshipRepository.findById(5L)).thenReturn(Optional.of(spaceShip));
 
         //WHEN
         final var response = given()
@@ -84,14 +89,19 @@ public class SpaceShipControllerTest {
         assertEquals(expected, actual);
     }
 
-    @Test
+   @Test
     public void test_createSpaceship_shouldReturn400() {
         //GIVEN
         final var spaceShip = getMockedEntity();
         final var user = getMockedUserEntity();
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
         when(spaceshipRepository.save(any(SpaceshipEntity.class))).thenReturn(getMockedEntity());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+
+
         final var response = given()
                 .body(getCreateOrUpdateSpaceshipDto(spaceShip))
                 .contentType(ContentType.JSON)
@@ -102,10 +112,7 @@ public class SpaceShipControllerTest {
                 .response();
 
         //THEN
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
-        final var actual = response.body().as(SpaceShipDetailsDto.class);
-        final var expected = getSpaceShipDetailsDto(spaceShip);
-        assertEquals(expected, actual);
+         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
     }
 
 
@@ -146,6 +153,7 @@ public class SpaceShipControllerTest {
 
         //ASSERT
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
     }
 
     @Test
@@ -196,6 +204,38 @@ public class SpaceShipControllerTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    final void test_updateSpaceShip_shouldReturn200() {
+        //ARRANGE
+
+        final var updatedEntity = getMockedEntity();
+
+        when(spaceshipRepository.findById(5L)).thenReturn(Optional.of(getMockedEntity()));
+
+        when(spaceshipRepository.save(any())).thenReturn(updatedEntity);
+
+        //ACT
+        final var response = given()
+                .body(getCreateOrUpdateSpaceshipDto(getMockedEntity()))
+                .contentType(ContentType.JSON)
+                .when()
+                .put("/spaceships/{id}", "5")
+                .then()
+                .extract()
+                .response();
+
+        //ASSERT
+        //verify(spaceshipRepository, times(1)).findById(5L);
+        //verify(spaceshipRepository, times(1)).save(any());
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+
+        final var expected = getSpaceShipDetailsDto(updatedEntity);
+        final var actual = response.getBody().as(SpaceShipDetailsDto.class);
+
+        assertEquals(expected, actual);
+
+    }
 
 
 
@@ -206,7 +246,7 @@ public class SpaceShipControllerTest {
                 .brand("mercedes")
                 .model("x5")
                 .registerNumber(10)
-                .priceDay(12)
+                .priceDay(121)
                 .build();
     }
     private UserEntity getMockedUserEntity() {
@@ -242,6 +282,19 @@ public class SpaceShipControllerTest {
                 .model(entity.getModel())
                 .registerNumber(entity.getRegisterNumber())
                 .priceDay(entity.getPriceDay())
+                .build();
+    }
+
+    private CreateOrUpdateUserDto getMockedCreateOrUpdateUserDto(int age) {
+        return CreateOrUpdateUserDto.builder()
+                .name("Quim")
+                .age(age)
+                .licenseNumber("1238127LSC")
+                .ssn(123456789L)
+                .planet("Terra")
+                .password("Password#123")
+                .email("email@email.com")
+                .userType(UserType.CUSTOMER)
                 .build();
     }
 }
