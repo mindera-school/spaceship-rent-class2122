@@ -1,6 +1,8 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
+import com.mindera.school.spaceshiprent.MockedData;
 import com.mindera.school.spaceshiprent.components.EmailSender;
+import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
@@ -22,10 +24,18 @@ import java.util.Optional;
 import static com.mindera.school.spaceshiprent.MockedData.getCreateOrUpdateUserDto;
 import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getUserDetailsDto;
+import static com.mindera.school.spaceshiprent.MockedData.getUserList;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_CREATE_USER;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USERS;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USER_BY_ID;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_UPDATE_USER_BY_ID;
+import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.USER_ALREADY_EXISTS;
+import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.USER_NOT_FOUND;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -51,61 +61,6 @@ public class UserControllerTest {
     }
 
     @Nested
-    class GetUserById {
-        @Test
-        void test_getUserById_shouldReturn200() {
-            // GIVEN
-            UserEntity entity = getMockedUserEntity();
-            when(userRepository.findById(5L))
-                    .thenReturn(Optional.of(entity));
-            String path = "/users/5";
-
-            // WHEN
-
-            /*ResponseEntity<UserDetailsDto> response = given()
-                    .body(getCreateOrUpdateUserDto())
-
-                    path,
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
-                    UserDetailsDto.class);*/
-
-            // THEN
-            verify(userRepository, times(1))
-                    .findById(anyLong());
-
-            UserDetailsDto expected = getUserDetailsDto(entity);
-            //assertEquals(expected, response.getBody());
-        }
-
-        @Test
-        void test_getUserById_shouldReturn404() {
-            // GIVEN
-            when(userRepository.findById(5L))
-                    .thenReturn(Optional.empty());
-            String path = "/users/5";
-
-            // WHEN
-           /* ResponseEntity<SpaceshipRentError> response = restTemplate.exchange(
-                    path,
-                    HttpMethod.GET,
-                    HttpEntity.EMPTY,
-                    SpaceshipRentError.class);
-*/
-            // THEN
-            verify(userRepository, times(1))
-                    .findById(anyLong());
-
-           /* assertEquals(HttpStatus.NOT_FOUND,
-                    response.getStatusCode(),
-                    "status code");
-            assertEquals("UserNotFoundException",
-                    Objects.requireNonNull(response.getBody()).getException(),
-                    "exception name");*/
-        }
-    }
-
-    @Nested
     class CreateUser {
         @Test
         void test_createUser_shouldReturn200() {
@@ -113,6 +68,8 @@ public class UserControllerTest {
             final var entity = getMockedUserEntity();
 
             when(userRepository.save(Mockito.any(UserEntity.class))).thenReturn(entity);
+            when(userRepository.findByEmail(Mockito.any(String.class)))
+                    .thenReturn(Optional.empty());
 
             doNothing().when(sender).send(isA(String.class));
 
@@ -126,6 +83,10 @@ public class UserControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(userRepository, times(1)).findByEmail(anyString());
+            verify(userRepository, times(1)).save(any(UserEntity.class));
+            verify(sender, times(1)).send(anyString());
+
             assertEquals(HttpStatus.OK.value(), response.statusCode());
 
             final var expected = getUserDetailsDto(entity);
@@ -134,6 +95,166 @@ public class UserControllerTest {
             assertEquals(expected, actual);
         }
 
+        @Test
+        void test_createUser_shouldReturn400() {
+            // arrange
+            final var entity = getMockedUserEntity();
+
+            when(userRepository.findByEmail(entity.getEmail()))
+                    .thenReturn(Optional.of(entity));
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .body(getCreateOrUpdateUserDto())
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .post(PATH_CREATE_USER)
+                    .then().contentType(ContentType.JSON).extract().response();
+
+            // assert
+            verify(userRepository, times(1)).findByEmail(anyString());
+
+            assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+
+            final String actualMessage = response.jsonPath().getString("message");
+
+            assertEquals(USER_ALREADY_EXISTS, actualMessage);
+        }
+    }
+
+    @Nested
+    class GetUserById {
+        @Test
+        void test_getUserById_shouldReturn200() {
+            // arrange
+            UserEntity entity = getMockedUserEntity();
+            when(userRepository.findById(5L))
+                    .thenReturn(Optional.of(entity));
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_USER_BY_ID, 5L)
+                    .then().extract().response();
+
+            // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
+            UserDetailsDto expected = getUserDetailsDto(entity);
+            assertEquals(expected, response.getBody().as(UserDetailsDto.class));
+        }
+
+        @Test
+        void test_getUserById_shouldReturn404() {
+            // arrange
+            when(userRepository.findById(5L))
+                    .thenReturn(Optional.empty());
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_USER_BY_ID, 5L)
+                    .then().contentType(ContentType.JSON).extract().response();
+
+            // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode(), "status code");
+
+            final String expectedMessage = String.format(USER_NOT_FOUND, 5L);
+            final String actualMessage = response.jsonPath().getString("message");
+
+            assertEquals(expectedMessage, actualMessage, "error message");
+        }
+    }
+
+    @Nested
+    class GetAllUsers {
+        @Test
+        void test_getAllUsers_shouldReturn200() {
+            // arrange
+            when(userRepository.findAll())
+                    .thenReturn(getUserList());
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_USERS)
+                    .then().extract().response();
+
+            // assert
+            verify(userRepository, times(1)).findAll();
+
+            final var expected = getUserList().stream().map(MockedData::getUserDetailsDto).toArray();
+
+            assertEquals(expected[0], response.getBody().as(UserDetailsDto[].class)[0]);
+        }
+    }
+
+    @Nested
+    class UpdateUser {
+        @Test
+        void test_updateUserById_shouldReturn200() {
+            // arrange
+            UserEntity entity = getMockedUserEntity();
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+
+            when(userRepository.findById(anyLong()))
+                    .thenReturn(Optional.of(entity));
+            when(userRepository.save(any(UserEntity.class)))
+                    .thenReturn(entity);
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .body(dto)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .put(PATH_UPDATE_USER_BY_ID, 5L)
+                    .then().extract().response();
+
+            // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
+            UserDetailsDto expected = getUserDetailsDto(entity);
+            assertEquals(expected, response.getBody().as(UserDetailsDto.class));
+        }
+
+        @Test
+        void test_updateUserById_shouldReturn404() {
+            // arrange
+            UserEntity entity = getMockedUserEntity();
+            CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
+
+            when(userRepository.findById(5L))
+                    .thenReturn(Optional.of(entity));
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .body(dto)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .post(PATH_UPDATE_USER_BY_ID, 5L)
+                    .then().extract().response();
+
+            // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
+            UserDetailsDto expected = getUserDetailsDto(entity);
+            assertEquals(expected, response.getBody().as(UserDetailsDto.class));
+        }
     }
 
 }

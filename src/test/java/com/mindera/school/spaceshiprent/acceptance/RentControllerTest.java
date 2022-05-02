@@ -7,6 +7,8 @@ import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import io.restassured.RestAssured;
+import org.junit.Before;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -47,6 +50,13 @@ public class RentControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @LocalServerPort
+    private int port;
+
+    @Before
+    public void setUp() {
+        RestAssured.port = port;
+    }
 
     @Nested
     class GetRentById {

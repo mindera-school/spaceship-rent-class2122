@@ -33,7 +33,7 @@ public class MockedData {
     public static CreateOrUpdateUserDto getCreateOrUpdateUserDto() {
         return CreateOrUpdateUserDto.builder()
                 .name("Rafa")
-                .age(20)
+                .age(22)
                 .ssn(123456789L)
                 .licenseNumber("1238127LSC")
                 .planet("Terra")
@@ -63,7 +63,7 @@ public class MockedData {
         return UserEntity.builder()
                 .id(5L)
                 .name("Rafa")
-                .age(20)
+                .age(22)
                 .ssn(123456789L)
                 .licenseNumber("1238127LSC")
                 .planet("Terra")
