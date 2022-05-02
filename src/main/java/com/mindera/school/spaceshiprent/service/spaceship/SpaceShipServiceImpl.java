@@ -27,11 +27,9 @@ public class SpaceShipServiceImpl implements SpaceShipService {
 
         SpaceshipEntity spaceshipEntity = converter.convertToEntity(createOrUpdateSpaceShipDto);
         SpaceshipEntity savedSpaceShip = spaceShipRepository.save(spaceshipEntity);
-        Optional<SpaceshipEntity> spaceShipEntityOptional = spaceShipRepository.findById(savedSpaceShip.getId());
 
-        return spaceShipEntityOptional
-                .map(converter::convertToSpaceShipDetailsDto)
-                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND,savedSpaceShip.getId())));
+
+        return converter.convertToSpaceShipDetailsDto(savedSpaceShip);
     }
 
     @Override

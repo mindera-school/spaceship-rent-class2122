@@ -1,18 +1,11 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 
-import com.mindera.school.spaceshiprent.controller.UserController;
-import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
+
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
-import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
-import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
-import com.mindera.school.spaceshiprent.exception.exceptionHandlers.SpaceshipRentExceptionHandler;
-import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
-import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
-import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
@@ -23,24 +16,16 @@ import io.restassured.parsing.Parser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -98,12 +83,12 @@ public class SpaceShipControllerTest {
 
         when(spaceshipRepository.save(any(SpaceshipEntity.class))).thenReturn(getMockedEntity());
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(4L)).thenReturn(Optional.of(user));
 
 
 
         final var response = given()
-                .body(getCreateOrUpdateSpaceshipDto(spaceShip))
+                .body("ola")
                 .contentType(ContentType.JSON)
                 .when()
                 .post("/spaceships").peek()
@@ -112,7 +97,8 @@ public class SpaceShipControllerTest {
                 .response();
 
         //THEN
-         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+         assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatusCode());
+
     }
 
 
