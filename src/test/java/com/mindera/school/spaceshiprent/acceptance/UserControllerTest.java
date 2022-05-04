@@ -236,8 +236,8 @@ public class UserControllerTest {
             UserEntity entity = getMockedUserEntity();
             CreateOrUpdateUserDto dto = getCreateOrUpdateUserDto();
 
-            when(userRepository.findById(5L))
-                    .thenReturn(Optional.of(entity));
+            when(userRepository.findById(anyLong()))
+                    .thenReturn(Optional.empty());
 
             // act
             final var response = given()
@@ -245,7 +245,7 @@ public class UserControllerTest {
                     .body(dto)
                     .contentType(ContentType.JSON)
                     .when()
-                    .post(PATH_UPDATE_USER_BY_ID, 5L)
+                    .put(PATH_UPDATE_USER_BY_ID, 5L)
                     .then().extract().response();
 
             // assert
@@ -253,7 +253,13 @@ public class UserControllerTest {
                     .findById(anyLong());
 
             UserDetailsDto expected = getUserDetailsDto(entity);
-            assertEquals(expected, response.getBody().as(UserDetailsDto.class));
+
+            assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode());
+
+            final String expectedMessage = String.format(USER_NOT_FOUND, 5L);
+            final String actualMessage = response.jsonPath().getString("message");
+
+            assertEquals(expectedMessage, actualMessage);
         }
     }
 
