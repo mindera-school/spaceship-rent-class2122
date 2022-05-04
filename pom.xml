@@ -112,7 +112,6 @@
             <artifactId>rest-assured</artifactId>
         </dependency>
 
-
     </dependencies>
 
     <build>

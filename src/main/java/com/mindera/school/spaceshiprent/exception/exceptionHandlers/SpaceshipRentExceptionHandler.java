@@ -2,6 +2,8 @@ package com.mindera.school.spaceshiprent.exception.exceptionHandlers;
 
 import com.mindera.school.spaceshiprent.exception.SpaceshipRentException;
 import com.mindera.school.spaceshiprent.exception.exceptions.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.UnavailableRentDatesException;
+import com.mindera.school.spaceshiprent.exception.exceptions.UserAlreadyExists;
 import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
 import com.mindera.school.spaceshiprent.exception.model.ValidationError;
@@ -30,7 +32,7 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
     @ExceptionHandler(value = {
             UserNotFoundException.class,
             SpaceshipRentException.class,
-            RentNotFoundException.class
+            RentNotFoundException.class,
     })
     public ResponseEntity<SpaceshipRentError> handleNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipRentError error = SpaceshipRentError.builder()
@@ -40,6 +42,20 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
                 .build();
         log.error(ex.getMessage());
         return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = {
+            UnavailableRentDatesException.class,
+            UserAlreadyExists.class
+    })
+    public ResponseEntity<SpaceshipRentError> handleBadRequestException(Exception ex, HttpServletRequest req) {
+        SpaceshipRentError error = SpaceshipRentError.builder()
+                .message(ex.getMessage())
+                .exception(ex.getClass().getSimpleName())
+                .path(req.getRequestURI())
+                .build();
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(error, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
     @Override

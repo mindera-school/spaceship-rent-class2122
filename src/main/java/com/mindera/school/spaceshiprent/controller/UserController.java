@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_CREATE_USER;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USERS;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USER_BY_ID;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_UPDATE_USER_BY_ID;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -24,25 +29,25 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    @PostMapping("/users")
+    @PostMapping(PATH_CREATE_USER)
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody @Valid CreateOrUpdateUserDto userDto) {
         log.info(LoggerMessages.POST_REQUEST, LoggerMessages.USER);
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
-    @GetMapping("/users")
+    @GetMapping(PATH_GET_USERS)
     public ResponseEntity<List<UserDetailsDto>> getUsers() {
         log.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.USER);
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(PATH_GET_USER_BY_ID)
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
         log.info(LoggerMessages.GET_REQUEST, LoggerMessages.USER);
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(PATH_UPDATE_USER_BY_ID)
     public ResponseEntity<UserDetailsDto> updateUser(
             @PathVariable Long id,
             @RequestBody @Valid CreateOrUpdateUserDto createOrUpdateUserDto) {

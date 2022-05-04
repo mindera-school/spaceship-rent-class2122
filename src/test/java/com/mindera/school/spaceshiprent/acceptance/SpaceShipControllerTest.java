@@ -42,7 +42,7 @@ public class SpaceShipControllerTest {
     @Nested
     class GetSpaceshipByID {
         @Test
-        public void test_getspaceShipById_shouldReturn200() {
+        public void test_getSpaceShipById_shouldReturn200() {
             //GIVEN
             SpaceshipEntity spaceShip = getMockedSpaceshipEntity();
             when(spaceshipRepository.findById(1L))
@@ -66,7 +66,7 @@ public class SpaceShipControllerTest {
         }
 
         @Test
-        public void test_getspaceShipById_shouldReturn404() {
+        public void test_getSpaceShipById_shouldReturn404() {
             //GIVEN
             when(spaceshipRepository.findById(5L))
                     .thenReturn(Optional.empty());

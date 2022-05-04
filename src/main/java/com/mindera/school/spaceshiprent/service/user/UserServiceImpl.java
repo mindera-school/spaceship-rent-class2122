@@ -9,6 +9,7 @@ import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundExcepti
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,10 @@ import java.util.stream.Collectors;
 
 import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.USER_ALREADY_EXISTS;
 import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.USER_NOT_FOUND;
+import static com.mindera.school.spaceshiprent.util.LoggerMessages.CREATED;
+import static com.mindera.school.spaceshiprent.util.LoggerMessages.USER;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -34,8 +38,11 @@ public class UserServiceImpl implements UserService {
                 });
 
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
+
         String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
         emailSender.send(emailingInfo);
+
+        log.info(CREATED, USER);
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }
 
@@ -58,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
-        UserEntity userEntityOptional = userRepository.findById(id)
+        userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND, id)));
 
         UserEntity user = converter.convertToEntity(createOrUpdateUserDto);
