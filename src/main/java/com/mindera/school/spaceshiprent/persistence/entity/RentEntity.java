@@ -1,6 +1,11 @@
 package com.mindera.school.spaceshiprent.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -34,7 +39,6 @@ public class RentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spaceship_id")
-    @ToString.Exclude
     private SpaceshipEntity spaceShipEntity;
 
     @Column(nullable = false)

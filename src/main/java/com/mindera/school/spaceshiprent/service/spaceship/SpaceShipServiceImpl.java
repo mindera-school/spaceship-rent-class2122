@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +31,6 @@ public class SpaceShipServiceImpl implements SpaceShipService {
 
     @Override
     public List<SpaceShipDetailsDto> getAllSpaceShips() {
-
         return spaceShipRepository.findAll().stream()
                 .map(converter::convertToSpaceShipDetailsDto)
                 .collect(Collectors.toList());
@@ -40,25 +38,25 @@ public class SpaceShipServiceImpl implements SpaceShipService {
 
     @Override
     public SpaceShipDetailsDto getSpaceShipById(Long id) {
-       Optional<SpaceshipEntity> spaceshipEntity = spaceShipRepository.findById(id);
+        SpaceshipEntity spaceshipEntity = spaceShipRepository.findById(id)
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, id)));
 
-       return spaceshipEntity
-               .map(converter::convertToSpaceShipDetailsDto)
-               .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND,id)));
-
+        return converter.convertToSpaceShipDetailsDto(spaceshipEntity);
     }
 
     @Override
-    public SpaceShipDetailsDto updateSpaceShipById(Long id, CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto) {
-        Optional<SpaceshipEntity> spaceShipEntityOptional = spaceShipRepository.findById(id);
+    public SpaceShipDetailsDto updateSpaceShipById(
+            Long id,
+            CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto
+    ) {
+        SpaceshipEntity spaceshipFromDb = spaceShipRepository.findById(id)
+                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, id)));
 
-        if (spaceShipEntityOptional.isPresent()) {
-            SpaceshipEntity spaceShip = converter.convertToEntity(createOrUpdateSpaceShipDto);
-            spaceShip.setId(id);
-            return converter.convertToSpaceShipDetailsDto(
-                    spaceShipRepository.save(spaceShip));
-        }
+        SpaceshipEntity spaceShip = converter.convertToEntity(createOrUpdateSpaceShipDto);
+        spaceShip.setId(id);
 
-        throw new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, id));
+        return converter.convertToSpaceShipDetailsDto(
+                spaceShipRepository.save(spaceShip));
     }
+
 }

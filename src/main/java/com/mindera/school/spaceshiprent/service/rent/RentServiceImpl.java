@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.SPACESHIP_NOT_FOUND;
@@ -64,6 +63,7 @@ public class RentServiceImpl implements RentService {
 
         RentEntity savedEntity = rentRepository.save(rent);
         log.info(CREATED, RENT);
+
         return converter.convertToRentDetailsDto(savedEntity);
     }
 
@@ -115,33 +115,26 @@ public class RentServiceImpl implements RentService {
                 .getRentEntity()
                 .stream()
                 .map(converter::convertToRentDetailsDto)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
     }
 
     @Override
     public RentDetailsDto updatePickUpDate(Long id) {
 
-        Optional<RentEntity> rentEntity = rentRepository.findById(id);
+        RentEntity rentEntity = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id)));
 
-        if (rentEntity.isPresent()) {
-            rentEntity.get().setPickupDate(LocalDate.now());
-            return converter.convertToRentDetailsDto(rentEntity.get());
-        }
-
-        throw new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id));
+        rentEntity.setPickupDate(LocalDate.now());
+        return converter.convertToRentDetailsDto(rentEntity);
     }
 
     @Override
     public RentDetailsDto updateReturnDate(Long id) {
 
-        Optional<RentEntity> rentEntity = rentRepository.findById(id);
+        RentEntity rentEntity = rentRepository.findById(id)
+                .orElseThrow(() -> new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id)));
 
-        if (rentEntity.isPresent()) {
-            rentEntity.get().setReturnDate(LocalDate.now());
-            return converter.convertToRentDetailsDto(rentEntity.get());
-        }
-
-        throw new RentNotFoundException(String.format(ErrorMessageConstants.RENT_NOT_FOUND, id));
+        rentEntity.setReturnDate(LocalDate.now());
+        return converter.convertToRentDetailsDto(rentEntity);
     }
 }
