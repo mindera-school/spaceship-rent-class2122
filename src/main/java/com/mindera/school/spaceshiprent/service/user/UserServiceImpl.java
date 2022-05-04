@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.USER_ALREADY_EXISTS;
@@ -56,20 +55,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsDto getUserById(Long id) {
-        Optional<UserEntity> userEntity = userRepository.findById(id);
-
-        return userEntity
-                .map(converter::convertToUserDetailsDto)
+        UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND, id)));
+
+        return converter.convertToUserDetailsDto(userEntity);
     }
 
     @Override
     public UserDetailsDto updateUserById(Long id, CreateOrUpdateUserDto createOrUpdateUserDto) {
-        userRepository.findById(id)
+        UserEntity userFromDb = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND, id)));
 
         UserEntity user = converter.convertToEntity(createOrUpdateUserDto);
         user.setId(id);
+
         return converter.convertToUserDetailsDto(userRepository.save(user));
     }
 

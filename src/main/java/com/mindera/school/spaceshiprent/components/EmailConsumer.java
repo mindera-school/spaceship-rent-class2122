@@ -33,7 +33,7 @@ public class EmailConsumer {
         MailjetResponse response;
 
 
-        client = new MailjetClient(properties.getMailjet().getKey(), properties.getMailjet().getSecretkey(), new ClientOptions("v3.1"));
+        client = new MailjetClient(properties.getKeys().getKey(), properties.getKeys().getSecretkey(), new ClientOptions("v3.1"));
         request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
