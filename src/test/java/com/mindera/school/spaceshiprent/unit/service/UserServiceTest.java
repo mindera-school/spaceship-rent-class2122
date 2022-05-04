@@ -95,7 +95,7 @@ public class UserServiceTest {
             when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.empty());
 
             // shouldn't do anything when email service is called
-            doNothing().when(sender).send(isA(String.class));
+            doNothing().when(sender).send(isA(String.class), isA(String.class));
 
             when(userRepository.save(Mockito.any(UserEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
 

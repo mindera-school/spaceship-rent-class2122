@@ -71,7 +71,7 @@ public class UserControllerTest {
             when(userRepository.findByEmail(Mockito.any(String.class)))
                     .thenReturn(Optional.empty());
 
-            doNothing().when(sender).send(isA(String.class));
+            doNothing().when(sender).send(isA(String.class), isA(String.class));
 
             // act
             final var response = given()
@@ -85,7 +85,7 @@ public class UserControllerTest {
             // assert
             verify(userRepository, times(1)).findByEmail(anyString());
             verify(userRepository, times(1)).save(any(UserEntity.class));
-            verify(sender, times(1)).send(anyString());
+            verify(sender, times(1)).send(anyString(), anyString());
 
             assertEquals(HttpStatus.OK.value(), response.statusCode());
 
