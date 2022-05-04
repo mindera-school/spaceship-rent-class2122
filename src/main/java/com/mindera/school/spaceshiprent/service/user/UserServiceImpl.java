@@ -38,8 +38,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
 
-        String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
-        emailSender.send(emailingInfo);
+        emailSender.send(userEntity.getEmail(), userEntity.getName());
 
         log.info(CREATED, USER);
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));

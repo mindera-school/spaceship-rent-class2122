@@ -10,7 +10,8 @@ public class EmailSender {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void send(String emailingInfo) {
+    public void send(String email, String name) {
+        String emailingInfo = email + " " + name;
         rabbitTemplate.convertAndSend("emailQueue", emailingInfo);
     }
 
