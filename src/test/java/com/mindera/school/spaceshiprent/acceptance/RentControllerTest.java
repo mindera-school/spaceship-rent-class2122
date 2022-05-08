@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static com.mindera.school.spaceshiprent.MockedData.getMockedCreateOrUpdateRent;
@@ -241,6 +242,30 @@ public class RentControllerTest {
             // arrange
             when(rentRepository.findAll())
                     .thenReturn(getRentEntityList());
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_RENTS)
+                    .then().extract().response();
+
+            // assert
+            verify(rentRepository, times(1))
+                    .findAll();
+
+            final var expected = getRentEntityList().stream().map(MockedData::getRentDetailsDto).toArray();
+            final var actual = response.getBody().as(RentDetailsDto[].class);
+
+            assertEquals(expected[0], actual[0]);
+        }
+
+        @Test
+        public void test_getAllRents_shouldReturnEmpty() {
+            // arrange
+            when(rentRepository.findAll())
+                    .thenReturn(new ArrayList<>());
 
             // act
             final var response = given()
