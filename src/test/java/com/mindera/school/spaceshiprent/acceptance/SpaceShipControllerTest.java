@@ -1,6 +1,7 @@
 package com.mindera.school.spaceshiprent.acceptance;
 
 import com.mindera.school.spaceshiprent.MockedData;
+import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
 import com.mindera.school.spaceshiprent.dto.spaceship.SpaceshipDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
@@ -18,12 +19,15 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.mindera.school.spaceshiprent.MockedData.getCreateOrUpdateSpaceshipDto;
 import static com.mindera.school.spaceshiprent.MockedData.getMockedSpaceshipEntity;
+import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getSpaceshipDetailsDto;
 import static com.mindera.school.spaceshiprent.MockedData.getSpaceshipEntityList;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_RENTS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIPS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIP_BY_ID;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_POST_SPACESHIP;
@@ -104,6 +108,28 @@ public class SpaceShipControllerTest {
             final var actual = response.getBody().as(SpaceshipDetailsDto[].class)[0];
             final var expected = getSpaceshipEntityList().stream().map(MockedData::getSpaceshipDetailsDto).toArray();
             assertEquals(expected[0], actual);
+        }
+
+        @Test
+        public void test_getAll_shouldReturnEmpty() {
+            // arrange
+            final Long id = 5L;
+
+            when(spaceshipRepository.findAll())
+                    .thenReturn(List.of());
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_SPACESHIPS)
+                    .then().extract().response();
+
+            final var actual = response.getBody().jsonPath().getList("", RentDetailsDto.class);
+
+            assertEquals(List.of(), actual);
+            assertEquals(0, actual.size());
         }
     }
 

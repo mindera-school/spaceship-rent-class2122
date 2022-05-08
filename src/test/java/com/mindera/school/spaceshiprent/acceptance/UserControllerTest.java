@@ -2,6 +2,7 @@ package com.mindera.school.spaceshiprent.acceptance;
 
 import com.mindera.school.spaceshiprent.MockedData;
 import com.mindera.school.spaceshiprent.components.EmailSender;
+import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
@@ -19,6 +20,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.mindera.school.spaceshiprent.MockedData.getCreateOrUpdateUserDto;
@@ -26,6 +28,7 @@ import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getUserDetailsDto;
 import static com.mindera.school.spaceshiprent.MockedData.getUserList;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_CREATE_USER;
+import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIPS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USERS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USER_BY_ID;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_UPDATE_USER_BY_ID;
@@ -197,6 +200,28 @@ public class UserControllerTest {
             final var expected = getUserList().stream().map(MockedData::getUserDetailsDto).toArray();
 
             assertEquals(expected[0], response.getBody().as(UserDetailsDto[].class)[0]);
+        }
+
+        @Test
+        public void test_getAll_shouldReturnEmpty() {
+            // arrange
+            final Long id = 5L;
+
+            when(userRepository.findAll())
+                    .thenReturn(List.of());
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_USERS)
+                    .then().extract().response();
+
+            final var actual = response.getBody().jsonPath().getList("", RentDetailsDto.class);
+
+            assertEquals(List.of(), actual);
+            assertEquals(0, actual.size());
         }
     }
 

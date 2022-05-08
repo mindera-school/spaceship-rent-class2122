@@ -5,6 +5,8 @@ import com.mindera.school.spaceshiprent.MockedData;
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
+import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
+import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
@@ -22,7 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.mindera.school.spaceshiprent.MockedData.getMockedCreateOrUpdateRent;
@@ -265,7 +267,7 @@ public class RentControllerTest {
         public void test_getAllRents_shouldReturnEmpty() {
             // arrange
             when(rentRepository.findAll())
-                    .thenReturn(new ArrayList<>());
+                    .thenReturn(List.of());
 
             // act
             final var response = given()
@@ -278,11 +280,11 @@ public class RentControllerTest {
             // assert
             verify(rentRepository, times(1))
                     .findAll();
+            final var expected = List.of();
+            final var actual = response.getBody().jsonPath().getList("", RentDetailsDto.class);
 
-            final var expected = getRentEntityList().stream().map(MockedData::getRentDetailsDto).toArray();
-            final var actual = response.getBody().as(RentDetailsDto[].class);
-
-            assertEquals(expected[0], actual[0]);
+            assertEquals(expected, actual);
+            assertEquals(0, actual.size());
         }
     }
 
@@ -479,6 +481,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
             final var expected = getRentEntityList().stream()
                     .map(MockedData::getRentDetailsDto)
                     .toArray();
@@ -504,10 +509,36 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(userRepository, times(1))
+                    .findById(anyLong());
+
             final var expectedMessage = String.format(USER_NOT_FOUND, id);
             final var actualMessage = response.getBody().jsonPath().getString("message");
 
             assertEquals(expectedMessage, actualMessage);
+        }
+
+        @Test
+        public void test_getAllRents_shouldReturnEmpty() {
+            // arrange
+            final Long id = 5L;
+            final UserEntity user = getMockedUserEntity();
+            user.setRentEntity(List.of());
+            when(userRepository.findById(id))
+                    .thenReturn(Optional.of(user));
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_RENTS_BY_CUSTOMER, id)
+                    .then().extract().response();
+
+            final var actual = response.getBody().jsonPath().getList("", RentDetailsDto.class);
+
+            assertEquals(List.of(), actual);
+            assertEquals(0, actual.size());
         }
     }
 
@@ -530,6 +561,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(spaceshipRepository, times(1))
+                    .findById(anyLong());
+
             final var expected = getRentEntityList().stream()
                     .map(MockedData::getRentDetailsDto)
                     .toArray();
@@ -555,10 +589,37 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(spaceshipRepository, times(1))
+                    .findById(anyLong());
+
             final var expectedMessage = String.format(SPACESHIP_NOT_FOUND, id);
             final var actualMessage = response.getBody().jsonPath().getString("message");
 
             assertEquals(expectedMessage, actualMessage);
+        }
+
+        @Test
+        public void test_getAllRents_shouldReturnEmpty() {
+            // arrange
+            final Long id = 5L;
+            final SpaceshipEntity spaceship = getMockedSpaceshipEntity();
+            spaceship.setRentEntity(List.of());
+
+            when(spaceshipRepository.findById(id))
+                    .thenReturn(Optional.of(spaceship));
+
+            // act
+            final var response = given()
+                    .port(port)
+                    .contentType(ContentType.JSON)
+                    .when()
+                    .get(PATH_GET_RENTS_BY_SPACESHIP, id)
+                    .then().extract().response();
+
+            final var actual = response.getBody().jsonPath().getList("", RentDetailsDto.class);
+
+            assertEquals(List.of(), actual);
+            assertEquals(0, actual.size());
         }
     }
 
@@ -579,6 +640,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(rentRepository, times(1))
+                    .findById(anyLong());
+
             final var expected = getRentDetailsDto(getMockedRentEntity());
             expected.setPickDate(LocalDate.now());
             assertEquals(expected, response.getBody().as(RentDetailsDto.class));
@@ -599,6 +663,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(rentRepository, times(1))
+                    .findById(anyLong());
+
             final var expectedMessage = String.format(RENT_NOT_FOUND, id);
             final var actualMessage = response.getBody().jsonPath().getString("message");
 
@@ -624,6 +691,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(rentRepository, times(1))
+                    .findById(anyLong());
+
             final var expected = getRentDetailsDto(getMockedRentEntity());
             expected.setReturnDate(LocalDate.now());
             assertEquals(expected, response.getBody().as(RentDetailsDto.class));
@@ -644,6 +714,9 @@ public class RentControllerTest {
                     .then().extract().response();
 
             // assert
+            verify(rentRepository, times(1))
+                    .findById(anyLong());
+
             final var expectedMessage = String.format(RENT_NOT_FOUND, id);
             final var actualMessage = response.getBody().jsonPath().getString("message");
 
