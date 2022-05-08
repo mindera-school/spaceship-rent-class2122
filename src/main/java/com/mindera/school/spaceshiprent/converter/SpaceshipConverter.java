@@ -1,7 +1,7 @@
 package com.mindera.school.spaceshiprent.converter;
 
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
-import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceshipDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,8 @@ public class SpaceshipConverter {
                 .build();
     }
 
-    public SpaceShipDetailsDto convertToSpaceShipDetailsDto(SpaceshipEntity entity){
-        return SpaceShipDetailsDto.builder()
+    public SpaceshipDetailsDto convertToSpaceShipDetailsDto(SpaceshipEntity entity){
+        return SpaceshipDetailsDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .brand(entity.getBrand())

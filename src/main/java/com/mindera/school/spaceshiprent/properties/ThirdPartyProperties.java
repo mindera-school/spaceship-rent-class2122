@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app.third-party")
 public class ThirdPartyProperties {
 
-    private Keys keys;
+    private Keys mailjet;
 
     public static class Keys {
         private String key;

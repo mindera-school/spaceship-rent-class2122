@@ -34,7 +34,6 @@ public class RentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @ToString.Exclude
     private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)

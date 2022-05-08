@@ -3,7 +3,7 @@ package com.mindera.school.spaceshiprent.unit.service;
 
 import com.mindera.school.spaceshiprent.MockedData;
 import com.mindera.school.spaceshiprent.converter.SpaceshipConverter;
-import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceshipDetailsDto;
 import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
@@ -56,7 +56,7 @@ public class SpaceShipServiceTest {
                     .thenReturn(Optional.of(entity));
 
             //WHEN
-            SpaceShipDetailsDto response = spaceShipService.getSpaceShipById(spaceShipId);
+            SpaceshipDetailsDto response = spaceShipService.getSpaceShipById(spaceShipId);
 
             //THEN
             assertEquals(getSpaceshipDetailsDto(entity), response);
@@ -85,7 +85,7 @@ public class SpaceShipServiceTest {
 
             when(spaceshipRepository.save(Mockito.any(SpaceshipEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
 
-            SpaceShipDetailsDto response = spaceShipService.createSpaceShip(getCreateOrUpdateSpaceshipDto());
+            SpaceshipDetailsDto response = spaceShipService.createSpaceShip(getCreateOrUpdateSpaceshipDto());
             response.setId(getSpaceshipDetailsDto(entity).getId());
 
             assertEquals(getSpaceshipDetailsDto(entity), response);
@@ -98,9 +98,9 @@ public class SpaceShipServiceTest {
         public void test_getAllSpaceships_shouldReturn_Success() {
             when(spaceshipRepository.findAll()).thenReturn(getSpaceshipEntityList());
 
-            List<SpaceShipDetailsDto> spaceShipList = getSpaceshipEntityList().stream().map(MockedData::getSpaceshipDetailsDto).collect(Collectors.toList());
+            List<SpaceshipDetailsDto> spaceShipList = getSpaceshipEntityList().stream().map(MockedData::getSpaceshipDetailsDto).collect(Collectors.toList());
 
-            List<SpaceShipDetailsDto> response = spaceShipService.getAllSpaceShips();
+            List<SpaceshipDetailsDto> response = spaceShipService.getAllSpaceShips();
 
             assertEquals(spaceShipList, response);
         }
@@ -115,7 +115,7 @@ public class SpaceShipServiceTest {
             when(spaceshipRepository.findById(1L)).thenReturn(Optional.of(entity));
             when(spaceshipRepository.save(Mockito.any(SpaceshipEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
 
-            SpaceShipDetailsDto response = spaceShipService.updateSpaceShipById(1L, getCreateOrUpdateSpaceshipDto());
+            SpaceshipDetailsDto response = spaceShipService.updateSpaceShipById(1L, getCreateOrUpdateSpaceshipDto());
             response.setId(getSpaceshipDetailsDto(entity).getId());
 
             assertEquals(getSpaceshipDetailsDto(entity), response);
