@@ -225,6 +225,8 @@ public class UserControllerTest {
             // assert
             verify(userRepository, times(1))
                     .findById(anyLong());
+            verify(userRepository, times(1))
+                    .save(Mockito.any(UserEntity.class));
 
             UserDetailsDto expected = getUserDetailsDto(entity);
             assertEquals(expected, response.getBody().as(UserDetailsDto.class));

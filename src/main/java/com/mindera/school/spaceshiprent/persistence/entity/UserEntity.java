@@ -69,6 +69,5 @@ public class UserEntity {
     private UserType userType;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    @ToString.Exclude
     private List<RentEntity> rentEntity;
 }

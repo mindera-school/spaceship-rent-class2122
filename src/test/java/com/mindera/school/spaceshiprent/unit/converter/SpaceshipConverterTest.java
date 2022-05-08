@@ -2,7 +2,7 @@ package com.mindera.school.spaceshiprent.unit.converter;
 
 import com.mindera.school.spaceshiprent.converter.SpaceshipConverter;
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
-import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceshipDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.SpaceshipEntity;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ public class SpaceshipConverterTest {
             SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
 
             // WHEN
-            SpaceShipDetailsDto detailsDto = spaceshipConverter.convertToSpaceShipDetailsDto(spaceshipEntity);
+            SpaceshipDetailsDto detailsDto = spaceshipConverter.convertToSpaceShipDetailsDto(spaceshipEntity);
 
             // THEN
             assertEquals(getSpaceshipDetailsDto(spaceshipEntity), detailsDto);
