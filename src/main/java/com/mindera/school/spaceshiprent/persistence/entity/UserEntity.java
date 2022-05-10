@@ -17,9 +17,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -29,10 +29,18 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-
 public class UserEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "users_id_generator"
+    )
+    @SequenceGenerator(
+            name = "users_id_generator",
+            allocationSize = 1,
+            sequenceName = "users_id_generator"
+    )
     private Long id;
 
     @Column(nullable = false)

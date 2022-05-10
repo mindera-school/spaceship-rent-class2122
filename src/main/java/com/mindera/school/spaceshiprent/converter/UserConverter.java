@@ -31,6 +31,7 @@ public class UserConverter {
                 .ssn(entity.getSsn())
                 .planet(entity.getPlanet())
                 .userType(entity.getUserType())
+                .email(entity.getEmail())
                 .build();
     }
 }

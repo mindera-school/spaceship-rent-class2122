@@ -1,6 +1,5 @@
 package com.mindera.school.spaceshiprent.converter;
 
-
 import com.mindera.school.spaceshiprent.dto.rent.CreateOrUpdateRentDto;
 import com.mindera.school.spaceshiprent.dto.rent.RentDetailsDto;
 import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
@@ -13,7 +12,6 @@ public final class RentConverter {
         return RentEntity.builder()
                 .expectedPickupDate(dto.getExpectedPickupDate())
                 .expectedReturnDate(dto.getExpectedReturnDate())
-                .pricePerDay(dto.getPricePerDay())
                 .discount(dto.getDiscount())
                 .build();
     }

@@ -1,17 +1,17 @@
 package com.mindera.school.spaceshiprent.service.spaceship;
 
 import com.mindera.school.spaceshiprent.dto.spaceship.CreateOrUpdateSpaceshipDto;
-import com.mindera.school.spaceshiprent.dto.spaceship.SpaceShipDetailsDto;
+import com.mindera.school.spaceshiprent.dto.spaceship.SpaceshipDetailsDto;
 
 import java.util.List;
 
 public interface SpaceShipService {
 
-    SpaceShipDetailsDto createSpaceShip(CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto);
+    SpaceshipDetailsDto createSpaceShip(CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto);
 
-    List<SpaceShipDetailsDto> getAllSpaceShips();
+    List<SpaceshipDetailsDto> getAllSpaceShips();
 
-    SpaceShipDetailsDto getSpaceShipById(Long id);
+    SpaceshipDetailsDto getSpaceShipById(Long id);
 
-    SpaceShipDetailsDto updateSpaceShipById(Long id, CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto);
+    SpaceshipDetailsDto updateSpaceShipById(Long id, CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto);
 }
