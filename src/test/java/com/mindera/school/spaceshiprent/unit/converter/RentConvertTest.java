@@ -26,7 +26,7 @@ public class RentConvertTest {
     @Nested
     class ConvertToSpaceshipDetailsDto {
         @Test
-        public void test_convertEntityToSpaceshipDetailsDto_shouldReturnSuccess() {
+        void test_convertEntityToSpaceshipDetailsDto_shouldReturnSuccess() {
             // GIVEN
             RentEntity entity = getMockedRentEntity();
 
@@ -41,7 +41,7 @@ public class RentConvertTest {
     @Nested
     class ConvertToEntity {
         @Test
-        public void test_convertDtoToEntity_shouldHaveTheSameValues() {
+        void test_convertDtoToEntity_shouldHaveTheSameValues() {
             // GIVEN
             CreateOrUpdateRentDto dto = getMockedCreateOrUpdateRent();
             RentEntity mockedEntity = getMockedRentEntity();
@@ -57,7 +57,7 @@ public class RentConvertTest {
         }
 
         @Test
-        public void convertToEntity_shouldNotHaveId() {
+        void convertToEntity_shouldNotHaveId() {
             // GIVEN
             CreateOrUpdateRentDto dto = getMockedCreateOrUpdateRent();
 

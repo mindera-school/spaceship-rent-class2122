@@ -28,7 +28,6 @@ import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getUserDetailsDto;
 import static com.mindera.school.spaceshiprent.MockedData.getUserList;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_CREATE_USER;
-import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIPS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USERS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_USER_BY_ID;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_UPDATE_USER_BY_ID;
@@ -203,7 +202,7 @@ public class UserControllerTest {
         }
 
         @Test
-        public void test_getAll_shouldReturnEmpty() {
+        void test_getAll_shouldReturnEmpty() {
             // arrange
             final Long id = 5L;
 

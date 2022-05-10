@@ -46,7 +46,7 @@ public class SpaceShipServiceTest {
     @Nested
     class GetSpaceshipById {
         @Test
-        public void test_getSpaceShipById_shouldReturnSuccess() {
+        void test_getSpaceShipById_shouldReturnSuccess() {
             //GIVEN
             Long spaceShipId = 1L;
 
@@ -64,7 +64,7 @@ public class SpaceShipServiceTest {
         }
 
         @Test
-        public void test_getSpaceShipById_shouldReturn_NotFound() {
+        void test_getSpaceShipById_shouldReturn_NotFound() {
             //GIVEN
             when(spaceshipRepository.findById(5L))
                     .thenReturn(Optional.empty());
@@ -80,7 +80,7 @@ public class SpaceShipServiceTest {
     @Nested
     class CreateSpaceship {
         @Test
-        public void test_createSpaceShip_shouldReturn_Success() {
+        void test_createSpaceShip_shouldReturn_Success() {
             SpaceshipEntity entity = getMockedSpaceshipEntity();
 
             when(spaceshipRepository.save(Mockito.any(SpaceshipEntity.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
@@ -95,7 +95,7 @@ public class SpaceShipServiceTest {
     @Nested
     class GetAllSpaceships {
         @Test
-        public void test_getAllSpaceships_shouldReturn_Success() {
+        void test_getAllSpaceships_shouldReturn_Success() {
             when(spaceshipRepository.findAll()).thenReturn(getSpaceshipEntityList());
 
             List<SpaceshipDetailsDto> spaceShipList = getSpaceshipEntityList().stream().map(MockedData::getSpaceshipDetailsDto).collect(Collectors.toList());
@@ -109,7 +109,7 @@ public class SpaceShipServiceTest {
     @Nested
     class UpdateSpaceshipById {
         @Test
-        public void test_updateSpaceshipById_shouldReturn_Success() {
+        void test_updateSpaceshipById_shouldReturn_Success() {
             SpaceshipEntity entity = getMockedSpaceshipEntity();
 
             when(spaceshipRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -122,7 +122,7 @@ public class SpaceShipServiceTest {
         }
 
         @Test
-        public void test_updateSpaceshipById_shouldReturn_Error() {
+        void test_updateSpaceshipById_shouldReturn_Error() {
             when(spaceshipRepository.findById(1L)).thenReturn(Optional.empty());
 
             Executable action = () -> spaceShipService.updateSpaceShipById(1L, getCreateOrUpdateSpaceshipDto());

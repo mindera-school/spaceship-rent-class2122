@@ -31,7 +31,7 @@ public class SpaceshipConverterTest {
     @Nested
     class ConvertToSpaceshipDetailsDto {
         @Test
-        public void test_convertEntityToSpaceshipDetailsDto_shouldReturnSuccess() {
+        void test_convertEntityToSpaceshipDetailsDto_shouldReturnSuccess() {
             // GIVEN
             SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
 
@@ -46,7 +46,7 @@ public class SpaceshipConverterTest {
     @Nested
     class ConvertToEntity {
         @Test
-        public void test_convertDtoToEntity_shouldHaveTheSameValues() {
+        void test_convertDtoToEntity_shouldHaveTheSameValues() {
             // GIVEN
             CreateOrUpdateSpaceshipDto spaceshipDto = getCreateOrUpdateSpaceshipDto();
             SpaceshipEntity mockedEntity = getMockedSpaceshipEntity();
@@ -65,7 +65,7 @@ public class SpaceshipConverterTest {
         }
 
         @Test
-        public void convertToEntity_shouldNotHaveId() {
+        void convertToEntity_shouldNotHaveId() {
             // GIVEN
             CreateOrUpdateSpaceshipDto spaceshipDto = getCreateOrUpdateSpaceshipDto();
 

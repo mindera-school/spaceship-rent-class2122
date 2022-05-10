@@ -19,4 +19,7 @@ public final class Paths {
     public static final String PATH_GET_SPACESHIPS = "/spaceships";
     public static final String PATH_GET_SPACESHIP_BY_ID = "/spaceships/{id}";
     public static final String PATH_UPDATE_SPACESHIP_BY_ID = "/spaceships/{id}";
+
+    private Paths() {
+    }
 }

@@ -31,7 +31,7 @@ public class UserConverterTest {
     @Nested
     class ConvertToUserDetailsDto {
         @Test
-        public void test_convertEntityToUserDetailsDto_shouldReturnSuccess() {
+        void test_convertEntityToUserDetailsDto_shouldReturnSuccess() {
             // GIVEN
             UserEntity entity = getMockedUserEntity();
 
@@ -46,7 +46,7 @@ public class UserConverterTest {
     @Nested
     class ConvertToUserEntity {
         @Test
-        public void test_convertDtoToEntity_shouldHaveTheSameValues() {
+        void test_convertDtoToEntity_shouldHaveTheSameValues() {
             // GIVEN
             CreateOrUpdateUserDto userDto = getCreateOrUpdateUserDto();
             UserEntity mockedEntity = getMockedUserEntity();
@@ -69,7 +69,7 @@ public class UserConverterTest {
         }
 
         @Test
-        public void convertToEntity_shouldNotHaveId() {
+        void convertToEntity_shouldNotHaveId() {
             // GIVEN
             CreateOrUpdateUserDto userDto = getCreateOrUpdateUserDto();
 

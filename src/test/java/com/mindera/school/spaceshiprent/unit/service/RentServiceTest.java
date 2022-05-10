@@ -67,7 +67,7 @@ public class RentServiceTest {
     class CreateRent {
 
         @Test
-        public void rentCreation_userSet_spaceshipSet_priceSet() {
+        void rentCreation_userSet_spaceshipSet_priceSet() {
 
             RentEntity entity = getMockedRentEntity();
             UserEntity userEntity = getMockedUserEntity();
@@ -87,7 +87,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void rentCreation_UserNotFound() {
+        void rentCreation_UserNotFound() {
 
             when(userRepository.findById(getMockedUserEntity().getId())).thenReturn(Optional.empty());
 
@@ -96,7 +96,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void rentCreation_spaceShipNotFound() {
+        void rentCreation_spaceShipNotFound() {
 
             UserEntity userEntity = getMockedUserEntity();
 
@@ -109,7 +109,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void rentCreation_spaceShipNotAvailable() {
+        void rentCreation_spaceShipNotAvailable() {
             CreateOrUpdateRentDto dto = getMockedCreateOrUpdateRent();
             UserEntity userEntity = getMockedUserEntity();
             SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
@@ -134,7 +134,7 @@ public class RentServiceTest {
     @Nested
     class GetRentById {
         @Test
-        public void getRentById_shouldReturnSuccess() {
+        void getRentById_shouldReturnSuccess() {
             RentEntity entity = getMockedRentEntity();
 
             when(rentRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -145,7 +145,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_getRentById_shouldReturn_notFound() {
+        void test_getRentById_shouldReturn_notFound() {
             when(rentRepository.findById(5L))
                     .thenReturn(Optional.empty());
 
@@ -158,7 +158,7 @@ public class RentServiceTest {
     @Nested
     class UpdateRent {
         @Test
-        public void test_updateRent_shouldReturnSuccess() {
+        void test_updateRent_shouldReturnSuccess() {
             RentEntity entity = getMockedRentEntity();
 
             when(rentRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -179,7 +179,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_updateRentById_shouldReturn_NotFound() {
+        void test_updateRentById_shouldReturn_NotFound() {
             when(rentRepository.findById(1L))
                     .thenReturn(Optional.empty());
 
@@ -189,7 +189,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_updateRentById_shouldReturn_spaceshipUnavailable() {
+        void test_updateRentById_shouldReturn_spaceshipUnavailable() {
             RentEntity entity = getMockedRentEntity();
 
             when(rentRepository.findById(anyLong()))
@@ -212,7 +212,7 @@ public class RentServiceTest {
     @Nested
     class GetRentByCostumerId {
         @Test
-        public void test_getRentByCostumerId_shouldReturn_Rent() {
+        void test_getRentByCostumerId_shouldReturn_Rent() {
             UserEntity userEntity = getMockedUserEntity();
             userEntity.setRentEntity(getRentEntityList());
 
@@ -225,7 +225,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_getRentByCustomerId_shouldReturn_Error() {
+        void test_getRentByCustomerId_shouldReturn_Error() {
             when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
 
             assertThrows(UserNotFoundException.class, () -> rentService.getRentByCustomerId(anyLong()));
@@ -235,7 +235,7 @@ public class RentServiceTest {
     @Nested
     class GetRentBySpaceshipId {
         @Test
-        public void test_getRentBySpaceShipId_shouldReturn_Success() {
+        void test_getRentBySpaceShipId_shouldReturn_Success() {
             SpaceshipEntity spaceshipEntity = getMockedSpaceshipEntity();
             spaceshipEntity.setRentEntity(getRentEntityList());
 
@@ -248,7 +248,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_getRentBySpaceShipId_ShouldReturn_Error() {
+        void test_getRentBySpaceShipId_ShouldReturn_Error() {
             when(spaceshipRepository.findById(anyLong()))
                     .thenReturn(Optional.empty());
 
@@ -259,7 +259,7 @@ public class RentServiceTest {
     @Nested
     class UpdatePickUpDate {
         @Test
-        public void test_updatePickup_shouldReturn_Success() {
+        void test_updatePickup_shouldReturn_Success() {
             RentEntity entity = getMockedRentEntity();
 
             when(rentRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -269,7 +269,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_updatePickup_shouldReturn_Error() {
+        void test_updatePickup_shouldReturn_Error() {
             when(rentRepository.findById(1L)).thenReturn(Optional.empty());
 
             assertThrows(RentNotFoundException.class, () -> rentService.updatePickUpDate(1L));
@@ -280,7 +280,7 @@ public class RentServiceTest {
     class UpdateReturnDate {
 
         @Test
-        public void test_updateReturn_shouldReturn_Success() {
+        void test_updateReturn_shouldReturn_Success() {
             RentEntity entity = getMockedRentEntity();
 
             when(rentRepository.findById(1L)).thenReturn(Optional.of(entity));
@@ -290,7 +290,7 @@ public class RentServiceTest {
         }
 
         @Test
-        public void test_updateReturn_shouldReturn_Error() {
+        void test_updateReturn_shouldReturn_Error() {
             when(rentRepository.findById(1L)).thenReturn(Optional.empty());
 
             assertThrows(RentNotFoundException.class, () -> rentService.updateReturnDate(1L));
@@ -300,7 +300,7 @@ public class RentServiceTest {
     @Nested
     class GetAllRents {
         @Test
-        public void getAllRents_shouldReturnSuccess() {
+        void getAllRents_shouldReturnSuccess() {
 
             when(rentRepository.findAll()).thenReturn(getRentEntityList());
 

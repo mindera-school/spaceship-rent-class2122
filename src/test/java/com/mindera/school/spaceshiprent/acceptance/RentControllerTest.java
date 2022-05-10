@@ -240,7 +240,7 @@ public class RentControllerTest {
     class GetAllRents {
 
         @Test
-        public void test_getAllRents_shouldReturn200() {
+        void test_getAllRents_shouldReturn200() {
             // arrange
             when(rentRepository.findAll())
                     .thenReturn(getRentEntityList());
@@ -264,7 +264,7 @@ public class RentControllerTest {
         }
 
         @Test
-        public void test_getAllRents_shouldReturnEmpty() {
+        void test_getAllRents_shouldReturnEmpty() {
             // arrange
             when(rentRepository.findAll())
                     .thenReturn(List.of());
@@ -291,7 +291,7 @@ public class RentControllerTest {
     @Nested
     class GetRentById {
         @Test
-        public void test_getRentById_shouldReturn200() {
+        void test_getRentById_shouldReturn200() {
             // arrange
             RentEntity entity = getMockedRentEntity();
             when(rentRepository.findById(1L))
@@ -314,7 +314,7 @@ public class RentControllerTest {
         }
 
         @Test
-        public void test_getRentById_shouldReturn404() {
+        void test_getRentById_shouldReturn404() {
             // arrange
             when(rentRepository.findById(1L))
                     .thenReturn(Optional.empty());
@@ -519,7 +519,7 @@ public class RentControllerTest {
         }
 
         @Test
-        public void test_getAllRents_shouldReturnEmpty() {
+        void test_getAllRents_shouldReturnEmpty() {
             // arrange
             final Long id = 5L;
             final UserEntity user = getMockedUserEntity();
@@ -599,7 +599,7 @@ public class RentControllerTest {
         }
 
         @Test
-        public void test_getAllRents_shouldReturnEmpty() {
+        void test_getAllRents_shouldReturnEmpty() {
             // arrange
             final Long id = 5L;
             final SpaceshipEntity spaceship = getMockedSpaceshipEntity();

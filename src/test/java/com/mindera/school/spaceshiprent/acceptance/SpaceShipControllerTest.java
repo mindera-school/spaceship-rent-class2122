@@ -24,10 +24,8 @@ import java.util.Optional;
 
 import static com.mindera.school.spaceshiprent.MockedData.getCreateOrUpdateSpaceshipDto;
 import static com.mindera.school.spaceshiprent.MockedData.getMockedSpaceshipEntity;
-import static com.mindera.school.spaceshiprent.MockedData.getMockedUserEntity;
 import static com.mindera.school.spaceshiprent.MockedData.getSpaceshipDetailsDto;
 import static com.mindera.school.spaceshiprent.MockedData.getSpaceshipEntityList;
-import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_RENTS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIPS;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_GET_SPACESHIP_BY_ID;
 import static com.mindera.school.spaceshiprent.controller.Paths.PATH_POST_SPACESHIP;
@@ -111,7 +109,7 @@ public class SpaceShipControllerTest {
         }
 
         @Test
-        public void test_getAll_shouldReturnEmpty() {
+        void test_getAll_shouldReturnEmpty() {
             // arrange
             final Long id = 5L;
 
