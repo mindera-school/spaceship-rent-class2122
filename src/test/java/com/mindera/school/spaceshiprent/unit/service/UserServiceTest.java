@@ -3,10 +3,9 @@ package com.mindera.school.spaceshiprent.unit.service;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.enumerator.UserType;
-import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
-import com.mindera.school.spaceshiprent.service.user.UserService;
 import com.mindera.school.spaceshiprent.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +23,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
+
     private UserServiceImpl userService;
 
     @Mock
@@ -31,9 +31,8 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setup() {
-       this.userService = new UserServiceImpl(new UserConverter(),userRepository);
+        this.userService = new UserServiceImpl(new UserConverter(), userRepository);
     }
-
 
     @Test
     public void test_getUserById_shouldReturnSuccess() {

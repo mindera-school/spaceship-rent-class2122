@@ -2,6 +2,11 @@ spring:
   datasource:
     url: jdbc:h2:mem:test_db
     driverClassName: org.h2.Driver
+  flyway:
+    enabled: false
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+jwt-secret: ${JWT_TOKEN:some_default_if_missing}
+key: ${KEY}
+secret-key: ${SECRET_KEY}
