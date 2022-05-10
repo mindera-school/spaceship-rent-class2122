@@ -1,8 +1,7 @@
 package com.mindera.school.spaceshiprent.persistence.entity;
-
 import lombok.*;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -26,6 +25,7 @@ public class RentEntity {
     )
     private Long id;
 
+    @NotNull(message = "User cannot be null")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -34,12 +34,15 @@ public class RentEntity {
     @JoinColumn(name = "spaceship_id")
     private SpaceshipEntity spaceShipEntity;
 
+    @NotNull(message = "expectedPickupDate cannot be null")
     @Column(nullable = false)
     private LocalDate expectedPickupDate;
 
+    @NotNull(message = "expectedReturnDate cannot be null")
     @Column(nullable = false)
     private LocalDate expectedReturnDate;
 
+    @NotNull(message = "PickupDate cannot be null")
     @Column(nullable = true)
     private LocalDate pickupDate;
 

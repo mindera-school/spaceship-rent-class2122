@@ -1,10 +1,11 @@
 package com.mindera.school.spaceshiprent.service.user;
 
+import com.mindera.school.spaceshiprent.components.EmailSender;
 import com.mindera.school.spaceshiprent.converter.UserConverter;
 import com.mindera.school.spaceshiprent.dto.user.CreateOrUpdateUserDto;
 import com.mindera.school.spaceshiprent.dto.user.UserDetailsDto;
 import com.mindera.school.spaceshiprent.exception.ErrorMessageConstants;
-import com.mindera.school.spaceshiprent.exception.UserNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +21,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserConverter converter;
     private final UserRepository userRepository;
+    //private final EmailSender emailSender;
 
     @Override
     public UserDetailsDto createUser(CreateOrUpdateUserDto createOrUpdateUserDto) {
         UserEntity userEntity = converter.convertToEntity(createOrUpdateUserDto);
+        String emailingInfo = userEntity.getEmail() + " " + userEntity.getName();
+        //emailSender.send(emailingInfo);
+
         return converter.convertToUserDetailsDto(userRepository.save(userEntity));
     }
 
@@ -51,8 +56,12 @@ public class UserServiceImpl implements UserService {
             UserEntity user = converter.convertToEntity(createOrUpdateUserDto);
             user.setId(id);
             return converter.convertToUserDetailsDto(userRepository.save(user));
-
         }
-        return null;
+        throw new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, id));
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+        userRepository.flush();
     }
 }

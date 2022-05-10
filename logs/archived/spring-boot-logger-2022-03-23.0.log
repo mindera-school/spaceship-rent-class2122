@@ -1,0 +1,31 @@
+2022-03-23 11:42:02,373 WARN org.springframework.boot.StartupInfoLogger [main] InetAddress.getLocalHost().getHostName() took 5008 milliseconds to respond. Please verify your network configuration (macOS machines may need to add entries to /etc/hosts).
+2022-03-23 11:42:02,379 INFO org.springframework.boot.StartupInfoLogger [main] Starting SpaceshipRentApplication using Java 11.0.13 on joaos-MacBook-Pro.local with PID 19255 (/Users/joaomoutinho/school/spaceship-rent-temp/target/classes started by joaomoutinho in /Users/joaomoutinho/school/spaceship-rent-temp)
+2022-03-23 11:42:02,380 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-03-23 11:42:03,238 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-23 11:42:03,310 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 58 ms. Found 3 JPA repository interfaces.
+2022-03-23 11:42:03,976 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2022-03-23 11:42:03,989 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-23 11:42:03,990 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-03-23 11:42:03,990 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-23 11:42:04,119 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-03-23 11:42:04,119 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1687 ms
+2022-03-23 11:42:04,637 INFO org.flywaydb.core.internal.logging.slf4j.Slf4jLog [main] Flyway Community Edition 8.4.0 by Redgate
+2022-03-23 11:42:04,638 INFO org.flywaydb.core.internal.logging.slf4j.Slf4jLog [main] Database: jdbc:postgresql://localhost:5432/spaceship_rent_db (PostgreSQL 14.2)
+2022-03-23 11:42:04,886 INFO org.flywaydb.core.internal.logging.slf4j.Slf4jLog [main] Successfully validated 1 migration (execution time 00:00.135s)
+2022-03-23 11:42:04,928 INFO org.flywaydb.core.internal.logging.slf4j.Slf4jLog [main] Current version of schema "public": 202203141432
+2022-03-23 11:42:04,930 INFO org.flywaydb.core.internal.logging.slf4j.Slf4jLog [main] Schema "public" is up to date. No migration necessary.
+2022-03-23 11:42:05,058 INFO org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-03-23 11:42:05,127 INFO org.hibernate.Version [main] HHH000412: Hibernate ORM core version 5.6.5.Final
+2022-03-23 11:42:05,325 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [main] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-03-23 11:42:05,453 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+2022-03-23 11:42:05,520 INFO com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+2022-03-23 11:42:05,561 INFO org.hibernate.dialect.Dialect [main] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2022-03-23 11:42:06,530 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-03-23 11:42:06,540 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-03-23 11:42:07,064 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-03-23 11:42:07,993 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2022-03-23 11:42:08,021 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-23 11:42:08,038 INFO org.springframework.boot.StartupInfoLogger [main] Started SpaceshipRentApplication in 11.404 seconds (JVM running for 12.279)
+2022-03-23 12:13:45,581 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-03-23 12:13:45,584 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2022-03-23 12:13:45,587 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
