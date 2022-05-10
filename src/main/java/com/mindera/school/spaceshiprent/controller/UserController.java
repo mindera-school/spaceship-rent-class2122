@@ -20,34 +20,32 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
-    @PostMapping("/users")
+    public static final String PATH_CREATE_USER = "spaceship-rent/api/users";
+    public static final String PATH_GET_ALL_USERS = "spaceship-rent/api/users";
+    public static final String PATH_GET_USER_BY_ID = "spaceship-rent/api/users/{id}";
+    public static final String PATH_UPDATE_USER_BY_ID = "spaceship-rent/api/users/{id}";
+
+    @PostMapping(PATH_CREATE_USER)
     public ResponseEntity<UserDetailsDto> createUser(@RequestBody @Valid CreateOrUpdateUserDto userDto) {
         log.info(LoggerMessages.POST_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.createUser(userDto));
     }
 
-    @GetMapping("/users")
+    @GetMapping(PATH_GET_ALL_USERS)
     public ResponseEntity<List<UserDetailsDto>> getUsers() {
         log.info(LoggerMessages.GET_ALL_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(PATH_GET_USER_BY_ID)
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
         log.info(LoggerMessages.GET_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(PATH_UPDATE_USER_BY_ID)
     public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long id, @RequestBody @Valid CreateOrUpdateUserDto createOrUpdateUserDto) {
         log.info(LoggerMessages.PUT_REQUEST, LoggerMessages.USER, LocalDate.now());
         return ResponseEntity.ok(userService.updateUserById(id, createOrUpdateUserDto));
-    }
-
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id) {
-        log.info(LoggerMessages.DELETE_REQUEST, LoggerMessages.USER, LocalDate.now());
-        userService.deleteUserById(id);
-        return ResponseEntity.ok("User with id " + id + " was removed.");
     }
 }

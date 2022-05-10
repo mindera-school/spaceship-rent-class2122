@@ -12,6 +12,7 @@ import com.mindera.school.spaceshiprent.persistence.repository.RentRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.SpaceshipRepository;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RentServiceImpl implements RentService {
 
     private final RentConverter converter;
@@ -31,18 +33,29 @@ public class RentServiceImpl implements RentService {
     @Override
     public RentDetailsDto createRent(CreateOrUpdateRentDto rentDto) {
         RentEntity rent = converter.convertToEntity(rentDto);
-
-        rent.setUserEntity(userRepository.findById(rentDto.getCustomerId())
-                .orElseThrow(() -> new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND, rentDto.getCustomerId())))
+         log.info(rent.toString());
+         rent.setUserEntity(userRepository.findById(rentDto.getCustomerId())
+                .orElseThrow(() -> {
+                    log.info("Rent Created with invalid user");
+                    return new UserNotFoundException(String.format(ErrorMessageConstants.USER_NOT_FOUND,
+                    rentDto.getCustomerId()
+                    ));})
         );
 
         rent.setSpaceShipEntity(spaceShipRepository.findById(rentDto.getSpaceshipId())
-                .orElseThrow(() -> new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND, rentDto.getSpaceshipId())))
+                .orElseThrow(() -> {
+                    log.info("Rent Created with invalid spaceship");
+                    return new SpaceshipNotFoundException(String.format(ErrorMessageConstants.SPACESHIP_NOT_FOUND,
+                            rentDto.getSpaceshipId())
+                    );})
+
         );
 
-        rent.setPricePerDay(rent.getSpaceShipEntity().getPriceDay());
-
-        return converter.convertToRentDetailsDto(rentRepository.save(rent));
+          rent.setPricePerDay(rent.getSpaceShipEntity().getPriceDay());
+          RentEntity savedRent = rentRepository.save(rent);
+          log.info("Rent Created");
+          log.info(converter.convertToRentDetailsDto(savedRent).toString());
+          return converter.convertToRentDetailsDto(savedRent);
     }
 
     @Override

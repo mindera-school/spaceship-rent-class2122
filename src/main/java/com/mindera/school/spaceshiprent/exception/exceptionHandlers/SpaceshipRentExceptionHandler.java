@@ -1,6 +1,7 @@
 package com.mindera.school.spaceshiprent.exception.exceptionHandlers;
 
 import com.mindera.school.spaceshiprent.exception.exceptions.RentNotFoundException;
+import com.mindera.school.spaceshiprent.exception.exceptions.SpaceshipNotFoundException;
 import com.mindera.school.spaceshiprent.exception.exceptions.UserNotFoundException;
 import com.mindera.school.spaceshiprent.exception.SpaceshipRentException;
 import com.mindera.school.spaceshiprent.exception.model.SpaceshipRentError;
@@ -29,7 +30,7 @@ public class SpaceshipRentExceptionHandler extends ResponseEntityExceptionHandle
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SpaceshipRentExceptionHandler.class);
 
-    @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipRentException.class, RentNotFoundException.class})
+    @ExceptionHandler(value = {UserNotFoundException.class, SpaceshipNotFoundException.class,SpaceshipRentException.class, RentNotFoundException.class})
     public ResponseEntity<SpaceshipRentError> handleNotFoundException(Exception ex, HttpServletRequest req) {
         SpaceshipRentError error = SpaceshipRentError.builder()
                 .message(ex.getMessage())

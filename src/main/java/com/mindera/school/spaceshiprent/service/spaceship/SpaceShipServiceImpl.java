@@ -26,9 +26,10 @@ public class SpaceShipServiceImpl implements SpaceShipService {
     public SpaceShipDetailsDto createSpaceShip(CreateOrUpdateSpaceshipDto createOrUpdateSpaceShipDto) {
 
         SpaceshipEntity spaceshipEntity = converter.convertToEntity(createOrUpdateSpaceShipDto);
+        SpaceshipEntity savedSpaceShip = spaceShipRepository.save(spaceshipEntity);
 
-        return converter.convertToSpaceShipDetailsDto(
-                spaceShipRepository.save(spaceshipEntity));
+
+        return converter.convertToSpaceShipDetailsDto(savedSpaceShip);
     }
 
     @Override

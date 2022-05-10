@@ -6,7 +6,7 @@ import com.mindera.school.spaceshiprent.persistence.entity.RentEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class RentConverter {
+public class RentConverter {
 
     public RentEntity convertToEntity(CreateOrUpdateRentDto dto) {
         return RentEntity.builder()

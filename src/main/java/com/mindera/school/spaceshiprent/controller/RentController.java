@@ -22,6 +22,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class RentController {
+    public static final String PATH_CREATE_RENT = "spaceship-rent/api/rents";
+    public static final String PATH_GET_ALL_RENTS = "spaceship-rent/api/rents";
+    public static final String PATH_GET_RENT_BY_ID = "spaceship-rent/api/rents/{id}";
+    public static final String PATH_UPDATE_RENT_BY_ID = "spaceship-rent/api/rents/{id}";
+    public static final String PATH_GET_RENT_BY_CUSTOMER_ID = "spaceship-rent/customers/{customerId}/rents";
+    public static final String PATH_GET_RENT_BY_SPACESHIP_ID = "/spaceships/{spaceshipId}/rents";
+
+
 
     private final Logger LOGGER = LoggerFactory.getLogger(RentController.class);
     private final RentService rentService;
@@ -29,6 +37,7 @@ public class RentController {
     @PostMapping("/rents")
     public ResponseEntity<RentDetailsDto> createRent(@RequestBody @Valid CreateOrUpdateRentDto dto) {
         LOGGER.info(LoggerMessages.POST_REQUEST, LoggerMessages.RENT, LocalDate.now());
+        LOGGER.info(dto.getSpaceshipId().toString());
         return ResponseEntity.ok(rentService.createRent(dto));
     }
 
