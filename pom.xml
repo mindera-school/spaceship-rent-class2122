@@ -33,7 +33,7 @@
             **/exception/**/*,
             **/test/**/*,
             **/properties/*,
-            **/controller/Paths
+            **/controller/Paths.java
         </sonar.coverage.exclusions>
     </properties>
 
