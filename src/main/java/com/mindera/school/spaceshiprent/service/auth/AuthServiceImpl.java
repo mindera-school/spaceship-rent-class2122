@@ -1,13 +1,12 @@
 package com.mindera.school.spaceshiprent.service.auth;
 
-import com.mindera.school.spaceshiprent.Security.Jwt;
+
 import com.mindera.school.spaceshiprent.converter.AuthConverter;
 import com.mindera.school.spaceshiprent.dto.auth.LoginDto;
 import com.mindera.school.spaceshiprent.dto.auth.SendTokenDto;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
