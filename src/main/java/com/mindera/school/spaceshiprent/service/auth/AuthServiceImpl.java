@@ -7,12 +7,15 @@ import com.mindera.school.spaceshiprent.dto.auth.PrincipalDto;
 import com.mindera.school.spaceshiprent.exception.exceptions.WrongCredentialsException;
 import com.mindera.school.spaceshiprent.persistence.entity.UserEntity;
 import com.mindera.school.spaceshiprent.persistence.repository.UserRepository;
+import com.mindera.school.spaceshiprent.util.LoggerHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.mindera.school.spaceshiprent.exception.ErrorMessageConstants.WRONG_CREDENTIALS;
+import static com.mindera.school.spaceshiprent.util.LoggerHelper.EMAIL;
+import static com.mindera.school.spaceshiprent.util.LoggerHelper.newLogMessage;
 
 @Slf4j
 @Service
@@ -28,19 +31,30 @@ public class AuthServiceImpl implements AuthService {
     public LoginResponseDto login(final CredentialsDto credentials) {
         final UserEntity userEntity =
                 userRepository.findByEmail(credentials.getEmail()).orElseThrow(() -> {
-                    log.error("Email entered doesn't exist: {}", credentials.getEmail());
+                    log.error(newLogMessage()
+                            .message("User with the provided email was not found")
+                            .field(EMAIL, credentials.getEmail())
+                            .build());
                     return new WrongCredentialsException(WRONG_CREDENTIALS);
                 });
 
         if (!passwordEncoder.matches(credentials.getPassword(), userEntity.getPassword())) {
-            log.error("User inserted wrong credentials");
-            throw new WrongCredentialsException("Email or password are wrong");
+            log.error(newLogMessage()
+                    .message("User's password does not match with the provided one")
+                    .userId(userEntity.getId())
+                    .field("email", credentials.getEmail())
+                    .build());
+            throw new WrongCredentialsException(WRONG_CREDENTIALS);
         }
 
         final PrincipalDto principalDto = authConverter.convertToPrincipalDto(userEntity);
         final String token = tokenService.createToken(principalDto);
 
-        log.info("User {} successfully authenticated", principalDto.getId());
+        log.info(newLogMessage()
+                .message("User authenticated successfully. Retrieving session information")
+                .userId(userEntity.getId())
+                .field("email", credentials.getEmail())
+                .build());
 
         return LoginResponseDto.builder()
                 .principal(principalDto)

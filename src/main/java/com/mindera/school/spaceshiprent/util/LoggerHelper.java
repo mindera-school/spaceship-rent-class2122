@@ -1,7 +1,13 @@
 package com.mindera.school.spaceshiprent.util;
 
-import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+
+@Slf4j
 public class LoggerHelper {
 
     // information about type of request
@@ -10,7 +16,7 @@ public class LoggerHelper {
     public static final String GET_ALL_REQUEST = "Request to get all {}s";
     public static final String GET_ALL_BY_REQUEST = "Request to get all {}s by {}";
     public static final String PUT_REQUEST = "Request to update {}";
-    public static final String PATCH_REQUEST = "Request to {}";
+    public static final String REQUEST_TO = "Request to {}";
     public static final String DELETE_REQUEST = "Request to delete {}";
 
     // specify the target entity of the request
@@ -22,6 +28,7 @@ public class LoggerHelper {
     public static final String RENT = "rent";
     public static final String RENT_PICKUP = "pickup rent";
     public static final String RENT_RETURN = "return rent";
+    public static final String LOGIN = "login";
 
     // other information
     public static final String COULD_NOT_FIND = "Couldn't find {}";
@@ -30,6 +37,13 @@ public class LoggerHelper {
     public static final String RENT_ALREADY_PICKED_UP = "Rent already picked up";
     public static final String RENT_NOT_PICKED_UP = "Rent not picked up";
     public static final String RENT_ALREADY_RETURNED = "Rent already returned";
+
+    // fields
+    public static final String EMAIL = "email";
+    public static final String USER_ID = "userId";
+    public static final String SPACESHIP_ID = "spaceshipId";
+    public static final String RENT_ID = "rentId";
+    public static final String CUSTOMER_ID = "customerId";
 
     private final Map<String, Object> fields;
     private String message;
@@ -53,22 +67,22 @@ public class LoggerHelper {
     }
 
     public LoggerHelper userId(Long userId) {
-        fields.put("userId", userId.toString());
+        fields.put(USER_ID, userId.toString());
         return this;
     }
 
     public LoggerHelper customerId(Long userId) {
-        fields.put("customerId", userId.toString());
+        fields.put(CUSTOMER_ID, userId.toString());
         return this;
     }
 
     public LoggerHelper spaceshipId(Long spaceshipId) {
-        fields.put("spaceshipId", spaceshipId.toString());
+        fields.put(SPACESHIP_ID, spaceshipId.toString());
         return this;
     }
 
     public LoggerHelper rentId(Long rentId) {
-        fields.put("rentId", rentId.toString());
+        fields.put(RENT_ID, rentId.toString());
         return this;
     }
 
@@ -93,10 +107,12 @@ public class LoggerHelper {
     }
 
     private String mapPlaceHolders(String string, Object... args) {
-        String[] placeHolders = string.split("\\{}");
-        if (placeHolders.length != args.length + 1) {
-            throw new IllegalArgumentException("Number of placeholders does not match number of arguments");
+        int placeholderCount = StringUtils.countMatches(string, "{}");
+        if (Objects.isNull(args) || args.length != placeholderCount) {
+            log.warn("Placeholders are not matching - returning original string followed by its arguments");
+            return string + Arrays.toString(args);
         }
+        String[] placeHolders = string.split("\\{}", -1);
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < placeHolders.length; i++) {
             builder.append(placeHolders[i]);

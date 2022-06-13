@@ -3,6 +3,7 @@ package com.mindera.school.spaceshiprent.security.filter;
 import com.mindera.school.spaceshiprent.security.UserAuthenticationProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
@@ -17,10 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-
-    private final static Logger LOGGER = LogManager.getLogger(JwtAuthFilter.class);
 
     private static final String BEARER_PREFIX = "Bearer";
 
@@ -42,10 +42,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(auth);
 
-                    LOGGER.info("Successfully authenticated with token");
+                    log.info("Successfully authenticated with token");
                 } catch (RuntimeException e) {
                     SecurityContextHolder.clearContext();
-                    LOGGER.error("Failed to parse token", e);
+                    log.error("Failed to parse token", e);
                     throw e;
                 }
             }

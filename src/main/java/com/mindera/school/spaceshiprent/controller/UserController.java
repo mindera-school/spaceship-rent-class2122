@@ -7,6 +7,7 @@ import com.mindera.school.spaceshiprent.util.LoggerHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
+    @PreAuthorize("@authorize.isUser(#id) || @authorize.hasRole('ADMIN')")
     public ResponseEntity<UserDetailsDto> getUserById(@PathVariable Long id) {
         log.info(LoggerHelper.GET_REQUEST, LoggerHelper.USER, LocalDate.now());
         return ResponseEntity.ok(userService.getUserById(id));

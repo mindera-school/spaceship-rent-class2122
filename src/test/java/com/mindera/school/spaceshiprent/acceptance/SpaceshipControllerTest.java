@@ -43,7 +43,6 @@ class SpaceshipControllerTest extends BaseControllerTest {
         //GIVEN
         when(spaceshipRepository.findById(5L))
                 .thenReturn(Optional.empty());
-        String path = "/spaceships/5";
 
         //WHEN
         final var response = given()

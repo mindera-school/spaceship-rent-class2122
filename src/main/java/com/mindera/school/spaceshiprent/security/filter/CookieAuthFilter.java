@@ -23,7 +23,7 @@ public class CookieAuthFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = LogManager.getLogger(CookieAuthFilter.class);
 
-    public static final String COOKIE_NAME = "auth_by_cookie";
+    public static final String COOKIE_NAME = "session";
 
     private final UserAuthenticationProvider userAuthenticationProvider;
 
